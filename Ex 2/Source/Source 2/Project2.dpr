@@ -17,7 +17,7 @@ Var
   //Tick - the number of ticks
   //SavedGreen, SavedRed, SavedTick - last correct numbers
   //Input - input string
-  //Temp - auxiliary argument for swap
+  //Temp - auxiliary argument
   //Temp1 - saved pre-pre-data for the even tick
   //Temp2 - saved pre-pre-data for the odd tick
   //Error - auxiliary operator for checking input
@@ -58,7 +58,7 @@ Begin
       WriteLn('Invalid input. Enter another number.');
   Until (Tick > 0) And (Error = 0);
 
-  //Integer Limit is not exceeded yet
+  //Integer limit is not exceeded yet
   Limit:= False;
 
   //To prevent from random false value

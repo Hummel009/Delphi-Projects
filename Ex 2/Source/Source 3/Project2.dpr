@@ -17,13 +17,14 @@ Var
   //Tick - the number of ticks
   //SavedGreen, SavedRed, SavedTick - last correct numbers
   //Input - input string
-  //Temp - auxiliary argument for the first tick
+  //Temp - auxiliary argument
   //Temp1 - saved pre-pre-data for the even tick
   //Temp2 - saved pre-pre-data for the odd tick
   //Error - auxiliary operator for checking input
   //I - parameter for cycle
   //Limit - condition to finish the cycle
 Begin
+
   //Checking for the correct input
   Repeat
     Write('Enter the number of red viruses: ');
@@ -74,7 +75,7 @@ Begin
     If (Limit = False) Then
     Begin
 
-      //First tick has no pre-pre data
+      //First tick has no pre-pre step
       If I = 1 Then
       Begin
         Temp1:= Red;

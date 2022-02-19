@@ -15,15 +15,15 @@ Type
 //Declare vars
 Var
   Op:TOp;
-  OpName, HasSecond: String;
+  OpName, Str:String;
   OpNames:Array[TOp] Of String = ('ARCCOS', 'ARCCTG', 'ARCSIN', 'ARCTG', 'COS', 'CTG', 'DIVIDE', 'FACTORIAL', 'LOGARITHM', 'MINUS', 'MULTIPLE', 'PERCENT', 'PLUS', 'POWER', 'SIN', 'SQRT', 'TG', 'SQARE', 'CUBE', 'LG', 'LN', 'CH', 'SH', 'TH', 'CTH', 'TEN', 'BACK', 'DOUBLEFACT');
-  Output, Input1, Input2: Real;
-  I: Integer;
+  Output, Input1, Input2:Real;
+  Error:Boolean;
 
 //Double factorial function
-Function getDoubleFactorial(Var Input: Real): Integer;
+Function getDoubleFactorial(Var Input:Real):Integer;
 Var
-  Fctr, Rounded: Integer;
+  Fctr, Rounded:Integer;
 Begin
   Fctr:= 1;
   rounded:= Trunc(Input1);
@@ -35,10 +35,79 @@ Begin
   Result:= Fctr;
 End;
 
-//Factorial function
-Function getFactorial(Var Input: Real): Integer;
+//Normal power function like in java
+Function getPower(Const Number, Power:Real):Real;
 Var
-  Fctr, Rounded, I: Integer;
+  PowerPositive, PowerNegative, PowerReal, PowerInt, PowerPositiveInt, PowerNegativeInt, NumberPositive, NumberNegative:Boolean;
+Begin
+  PowerPositive:= false;
+  PowerNegative:= false;
+  PowerReal:= false;
+  PowerInt:= false;
+  PowerPositiveInt:= false;
+  PowerNegativeInt:= false;
+  NumberPositive:= false;    
+  NumberNegative:= false;
+
+  If Trunc(Power) = Power Then
+    PowerInt:= true
+  Else
+    PowerReal:= true;
+
+  If Power > 0 Then
+    PowerPositive:= True
+  Else
+    PowerNegative:= true; 
+
+  If Number > 0 Then
+    NumberPositive:= True
+  Else
+    NumberNegative:= true;
+
+  If PowerInt And PowerPositive Then
+    PowerPositiveInt:= true;
+
+  If PowerInt And PowerNegative Then
+    PowerNegativeInt:= true;
+
+  If (Number <> 0.0) And (Power = 0.0) Then
+    Result:= 1.0
+  Else If (Number = 0.0) And (Power = 0.0) Then
+  Begin
+    Result:= 0;
+    Error:= True;
+  End
+  Else If (Number = 0.0) And (Power <> 0.0) Then
+    Result:= 0.0
+  Else If NumberPositive And PowerNegative Then
+    Result:= 1 / Exp(Power * Ln(Number))
+  Else If NumberPositive And PowerPositive Then
+    Result:= Exp(Power * Ln(Number))
+  Else If NumberNegative And PowerNegativeInt Then
+  Begin
+    If Trunc(Power) Mod 2 = 0 Then
+      Result:= 1 / Exp(Power * Ln(Abs(Number)))
+    Else
+      Result:= -1 / Exp(Power * Ln(Abs(Number)));
+  End
+  Else If NumberNegative And PowerPositiveInt Then
+  Begin
+    If Trunc(Power) Mod 2 = 0 Then
+      Result:= Exp(Power * Ln(Abs(Number)))
+    Else
+      Result:= -Exp(Power * Ln(Abs(Number)));
+  End
+  Else If NumberNegative And PowerReal Then
+  Begin
+    Result:= 0;
+    Error:= True;
+  End;
+End;
+
+//Factorial function
+Function getFactorial(Var Input:Real):Integer;
+Var
+  Fctr, Rounded, I:Integer;
 Begin
   Fctr:= 1;
   Rounded:= Trunc(Input1);
@@ -81,8 +150,8 @@ Begin
       Output:= Sqrt(Input1);
     FLOGARITHM:
       Output:= Log10(Input1) / Log10(Input2);
-    //FPOWER:
-     // Output:= Math.pow(Input1, Input2);
+    FPOWER:
+      Output:= getPower(Input1, Input2);
     FFACTORIAL:
       Output:= getFactorial(Input1);
     FDIVIDE:
@@ -97,16 +166,16 @@ Begin
       Output:= Log10(Input1);
     FLN:
       Output:= Ln(Input1);
-    {FCH:
-      Output:= (Math.pow(2.7183, Input1) + Math.pow(2.7183, (-1) * Input1)) / 2;
+    FCH:
+      Output:= (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1)) / 2;
     FSH:
-      Output:= (Math.pow(2.7183, Input1) - Math.pow(2.7183, (-1) * Input1)) / 2;
+      Output:= (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1)) / 2;
     FTH:
-      Output:= (Math.pow(2.7183, Input1) - Math.pow(2.7183, (-1) * Input1)) / (Math.pow(2.7183, Input1) + Math.pow(2.7183, (-1) * Input1));
+      Output:= (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1)) / (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1));
     FCTH:
-      Output:= (Math.pow(2.7183, Input1) + Math.pow(2.7183, (-1) * Input1)) / (Math.pow(2.7183, Input1) - Math.pow(2.7183, (-1) * Input1));
+      Output:= (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1)) / (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1));
     FTEN:
-      Output:= Math.pow(10, Input1); }
+      Output:= getPower(10, Input1);
     FBACK:
       Output:= 1 / Input1;
     FDOUBLEFACT:
@@ -116,23 +185,31 @@ End;
 
 //Calculator
 Begin
-  Write('Enter the number: ');
-  ReadLn(Input1);
-  Write('Is there the second number? Write "No" or "Yes" ');
-  ReadLn(HasSecond);
-  If HasSecond = 'Yes' Then
-  Begin
-    Write('Enter the number: ');
-    ReadLn(Input2);
-  End;
-  Write('Type the operation name, example: "PLUS": ');
-  ReadLn(OpName);
-  Op:= FARCCOS;
   Repeat
-    Inc(Op);
-  Until OpName = OpNames[Op];
+    Error:= False;
+    Write('Enter the number: ');
+    ReadLn(Input1);
+    Write('Is there the second number? Write "No" or "Yes": ');
+    ReadLn(Str);
+    If Str = 'Yes' Then
+    Begin
+      Write('Enter the number: ');
+      ReadLn(Input2);
+    End;
+    Write('Type the operation name, example: "PLUS": ');
+    ReadLn(OpName);
+    Op:= FARCCOS;
+    Repeat
+      Inc(Op);
+    Until OpName = OpNames[Op];
 
-  Calculate();
-  Writeln(FloatToStr(Output));
-  Readln;
-End.  
+    Calculate();
+    If Not Error Then
+      Writeln(FloatToStr(Output))
+    Else
+      Writeln('Error');
+
+    Write('Continue? Write "No" or "Yes" ');
+    ReadLn(Str);
+  Until Str = 'No'
+End.

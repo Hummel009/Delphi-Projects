@@ -1,4 +1,4 @@
-Program Lab1F;
+Program Lab1P;
 {Operations with matrix exps}
 
 //Use app
@@ -23,7 +23,7 @@ Var
   //C - result matrixs
 
 //This func calculates Matrix * Number
-Function MulN(M:TMatrix; N:Real):TMatrix;
+Procedure MulN(const M:TMatrix; const N:Real; var Result:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -37,7 +37,7 @@ Begin
 End;
 
 //This func calculates Matrix + Matrix
-Function SumM(M1:TMatrix; M2:TMatrix; IsPlus: Boolean):TMatrix;
+Procedure SumM(const M1:TMatrix; const M2:TMatrix; var Result:TMatrix; const IsPlus: Boolean);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -56,7 +56,7 @@ Begin
 End;
 
 //This func calculates Matrix * Matrix
-Function MulM(M1:TMatrix; M2:TMatrix):TMatrix;
+Procedure MulM(const M1:TMatrix; const M2:TMatrix; var Result:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -70,7 +70,7 @@ Begin
 End;
 
 //This func shows formatted matrix
-Function Disp(M:TMatrix):TMatrix;
+Procedure Disp(const M:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -92,13 +92,13 @@ Begin
   Writeln;
   Disp(B);
   Writeln;
-  C1:=MulN(A, 2);
-  C2:=MulN(B, 3);
-  C3:=MulM(A, B);
-  C4:=MulN(A, 2);
-  C5:=SumM(C3, C4, False);
-  C6:=MulM(C2, C5);
-  C7:=SumM(C1, C6, True);
+  MulN(A, 2, C1);
+  MulN(B, 3, C2);
+  MulM(A, B, C3);
+  MulN(A, 2, C4);
+  SumM(C3, C4, C5, False);
+  MulM(C2, C5, C6);
+  SumM(C1, C6, C7, True);
   Disp(C7);
   Readln;
 End.

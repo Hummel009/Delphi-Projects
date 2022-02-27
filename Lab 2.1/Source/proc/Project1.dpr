@@ -1,5 +1,5 @@
 Program Lab1P;
-{Operations with matrixes}
+{Operations with matrix exps}
 
 //Use app
 {$APPTYPE CONSOLE}
@@ -11,7 +11,7 @@ Uses
 //Declare types
 Type
   TMatrix = Array[1..3, 1..3] Of Real;
-  //TMatrix - matrix for using in procs
+  //TMatrix - matrix for using in subprograms
   
 //Declare vars
 Var
@@ -23,29 +23,24 @@ Var
   //C - result matrixs
 
 //This func calculates Matrix * Number
-Procedure MatrixMultipleNumber(Matrix:TMatrix; Num:Real; var Result:TMatrix);
+Procedure MulN(M:TMatrix; N:Real; var Result:TMatrix);
 Var
   I, J:Integer;
-  Matr:TMatrix;
   //I, J - loop params
-  //Matr - result
   
 Begin
 
-  //Multiple every cell of matrix
+  //Mulle every cell of matrix
   For I:= 1 To 3 Do
     For J:= 1 To 3 Do
-      Matr[I, J]:= Matrix[I, J] * Num;
-  Result:= Matr;
+      Result[I, J]:= M[I, J] * N;
 End;
 
 //This func calculates Matrix + Matrix
-Procedure MatrixPlusMatrix(Matrix1:TMatrix; Matrix2:TMatrix; var Result:TMatrix; IsPlus: Boolean);
+Procedure SumM(M1:TMatrix; M2:TMatrix; var Result:TMatrix; IsPlus: Boolean);
 Var
   I, J:Integer;
-  Matr:TMatrix;
   //I, J - loop params
-  //Matr - result
 
 Begin
 
@@ -54,32 +49,28 @@ Begin
     For J:= 1 To 3 Do
     Begin
       if IsPlus then
-        Matr[I, J]:= Matrix1[I, J] + Matrix2[I, J]
+        Result[I, J]:= M1[I, J] + M2[I, J]
       else
-        Matr[I, J]:= Matrix1[I, J] - Matrix2[I, J];
+        Result[I, J]:= M1[I, J] - M2[I, J];
     End;
-  Result:= Matr;
 End;
 
 //This func calculates Matrix * Matrix
-Procedure MatrixMultipleMatrix(Matrix1:TMatrix; Matrix2:TMatrix; var Result:TMatrix);
+Procedure MulM(M1:TMatrix; M2:TMatrix; var Result:TMatrix);
 Var
   I, J:Integer;
-  Matr:TMatrix;
   //I, J - loop params
-  //Matr - result
 
 Begin
   
   //Sum every line with every column of matrix
   For I:= 1 To 3 Do
     For J:= 1 To 3 Do
-      Matr[I, J]:= Matrix1[I, 1] * Matrix2[1, J] + Matrix1[I, 2] * Matrix2[2, J] + Matrix1[I, 3] * Matrix2[3, J];
-  Result:= Matr;
+      Result[I, J]:= M1[I, 1] * M2[1, J] + M1[I, 2] * M2[2, J] + M1[I, 3] * M2[3, J];
 End;
 
 //This func shows formatted matrix
-Procedure DisplayMatrix(Matrix:TMatrix);
+Procedure Disp(M:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -90,24 +81,24 @@ Begin
   For I:= 1 To 3 Do
   Begin
     For J:= 1 To 3 Do
-      Write(FloatToStr(Matrix[I, J]):5, ' ');
+      Write(FloatToStr(M[I, J]):5, ' ');
     Writeln;
   End;
 End;
 
 
 Begin
-  DisplayMatrix(A);
+  Disp(A);
   Writeln;
-  DisplayMatrix(B);
+  Disp(B);
   Writeln;
-  MatrixMultipleNumber(A, 2, C1);
-  MatrixMultipleNumber(B, 3, C2);
-  MatrixMultipleMatrix(A, B, C3);
-  MatrixMultipleNumber(A, 2, C4);
-  MatrixPlusMatrix(C3, C4, C5, False);
-  MatrixMultipleMatrix(C2, C5, C6);
-  MatrixPlusMatrix(C1, C6, C7, True);
-  DisplayMatrix(C7);
+  MulN(A, 2, C1);
+  MulN(B, 3, C2);
+  MulM(A, B, C3);
+  MulN(A, 2, C4);
+  SumM(C3, C4, C5, False);
+  MulM(C2, C5, C6);
+  SumM(C1, C6, C7, True);
+  Disp(C7);
   Readln;
 End.

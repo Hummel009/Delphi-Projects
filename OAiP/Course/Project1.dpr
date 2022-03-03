@@ -14,16 +14,17 @@ Type
 
 //Declare vars
 Var
-  Op:TOp;
-  OpName, Str:String;
-  OpNames:Array[TOp] Of String = ('ARCCOS', 'ARCCTG', 'ARCSIN', 'ARCTG', 'COS', 'CTG', 'DIVIDE', 'FACTORIAL', 'LOGARITHM', 'MINUS', 'MULTIPLE', 'PERCENT', 'PLUS', 'POWER', 'SIN', 'SQRT', 'TG', 'SQARE', 'CUBE', 'LG', 'LN', 'CH', 'SH', 'TH', 'CTH', 'TEN', 'BACK', 'DOUBLEFACT');
-  Output, Input1, Input2:Real;
-  Error:Boolean;
+  Op: TOp;
+  OpName, Str: String;
+  OpNames: Array[TOp] Of String = ('ARCCOS', 'ARCCTG', 'ARCSIN', 'ARCTG', 'COS', 'CTG', 'DIVIDE', 'FACTORIAL', 'LOGARITHM', 'MINUS', 'MULTIPLE', 'PERCENT', 'PLUS', 'POWER', 'SIN', 'SQRT', 'TG', 'SQARE', 'CUBE', 'LG', 'LN', 'CH', 'SH', 'TH', 'CTH', 'TEN', 'BACK', 'DOUBLEFACT');
+  Output, Input1, Input2: Real;
+  Error: Boolean;
+  Fact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
 
 //Double factorial function
-Function getDoubleFactorial(Var Input:Real):Integer;
+Function getDoubleFactorial(Var Input: Real): Integer;
 Var
-  Fctr, Rounded:Integer;
+  Fctr, Rounded: Integer;
 Begin
   Fctr:= 1;
   rounded:= Trunc(Input1);
@@ -36,88 +37,69 @@ Begin
 End;
 
 //Normal power function like in java
-Function getPower(Const Number, Power:Real):Real;
+Function getPower(Const Number, Power: Real): Real;
 Var
-  PowerPositive, PowerNegative, PowerReal, PowerInt, PowerPositiveInt, PowerNegativeInt, NumberPositive, NumberNegative:Boolean;
+  PowerPositive, PowerNegative, PowerInt, PowerPositiveInt, PowerNegativeInt, NumberPositive, NumberNegative: Boolean;
 Begin
-  PowerPositive:= false;
-  PowerNegative:= false;
-  PowerReal:= false;
-  PowerInt:= false;
-  PowerPositiveInt:= false;
-  PowerNegativeInt:= false;
-  NumberPositive:= false;    
-  NumberNegative:= false;
+  PowerPositive:= False;
+  PowerNegative:= False;
+  PowerInt:= False;
+  PowerPositiveInt:= False;
+  PowerNegativeInt:= False;
+  NumberPositive:= False;
+  NumberNegative:= False;
 
   If Trunc(Power) = Power Then
-    PowerInt:= true
-  Else
-    PowerReal:= true;
+    PowerInt:= True;
 
   If Power > 0 Then
     PowerPositive:= True
   Else
-    PowerNegative:= true; 
+    PowerNegative:= True;
 
   If Number > 0 Then
     NumberPositive:= True
   Else
-    NumberNegative:= true;
+    NumberNegative:= True;
 
   If PowerInt And PowerPositive Then
-    PowerPositiveInt:= true;
+    PowerPositiveInt:= True;
 
   If PowerInt And PowerNegative Then
-    PowerNegativeInt:= true;
+    PowerNegativeInt:= True;
 
   If (Number <> 0.0) And (Power = 0.0) Then
     Result:= 1.0
-  Else If (Number = 0.0) And (Power = 0.0) Then
-  Begin
-    Result:= 0;
-    Error:= True;
-  End
-  Else If (Number = 0.0) And (Power <> 0.0) Then
-    Result:= 0.0
-  Else If NumberPositive And PowerNegative Then
-    Result:= 1 / Exp(Power * Ln(Number))
-  Else If NumberPositive And PowerPositive Then
-    Result:= Exp(Power * Ln(Number))
-  Else If NumberNegative And PowerNegativeInt Then
-  Begin
-    If Trunc(Power) Mod 2 = 0 Then
-      Result:= 1 / Exp(Power * Ln(Abs(Number)))
+  Else
+    If (Number = 0.0) And (Power <> 0.0) Then
+      Result:= 0.0
     Else
-      Result:= -1 / Exp(Power * Ln(Abs(Number)));
-  End
-  Else If NumberNegative And PowerPositiveInt Then
-  Begin
-    If Trunc(Power) Mod 2 = 0 Then
-      Result:= Exp(Power * Ln(Abs(Number)))
-    Else
-      Result:= -Exp(Power * Ln(Abs(Number)));
-  End
-  Else If NumberNegative And PowerReal Then
-  Begin
-    Result:= 0;
-    Error:= True;
-  End;
-End;
-
-//Factorial function
-Function getFactorial(Var Input:Real):Integer;
-Var
-  Fctr, Rounded, I:Integer;
-Begin
-  Fctr:= 1;
-  Rounded:= Trunc(Input1);
-  I:= 1;
-  While Rounded >= I Do
-  Begin
-    Fctr:= Fctr * I;
-    I:= I + 1
-  End;
-  Result:= Fctr;
+      If NumberPositive And PowerNegative Then
+        Result:= 1 / Exp(Power * Ln(Number))
+      Else
+        If NumberPositive And PowerPositive Then
+          Result:= Exp(Power * Ln(Number))
+        Else
+          If NumberNegative And PowerNegativeInt Then
+          Begin
+            If Trunc(Power) Mod 2 = 0 Then
+              Result:= 1 / Exp(Power * Ln(Abs(Number)))
+            Else
+              Result:= -1 / Exp(Power * Ln(Abs(Number)));
+          End
+          Else
+            If NumberNegative And PowerPositiveInt Then
+            Begin
+              If Trunc(Power) Mod 2 = 0 Then
+                Result:= Exp(Power * Ln(Abs(Number)))
+              Else
+                Result:= -Exp(Power * Ln(Abs(Number)));
+            End
+            Else
+            Begin
+              Result:= 0;
+              Error:= True;
+            End;
 End;
 
 //Operating part. Depending on current operation will do calculations
@@ -153,7 +135,15 @@ Begin
     FPOWER:
       Output:= getPower(Input1, Input2);
     FFACTORIAL:
-      Output:= getFactorial(Input1);
+      Begin
+        If (Trunc(Input1) <> Input1) Or (Input1 < 0) Or (Input1 > 12) Then
+        Begin
+          Output:= 0;
+          Error:= True;
+        End
+        Else
+          Output:= Fact1[Trunc(Input1)];
+      End;
     FDIVIDE:
       Output:= Input1 / Input2;
     FPERCENT:
@@ -205,11 +195,13 @@ Begin
 
     Calculate();
     If Not Error Then
-      Writeln(FloatToStr(Output))
+      WriteLn(FloatToStr(Output))
     Else
-      Writeln('Error');
+      WriteLn('Error');
 
     Write('Continue? Write "No" or "Yes" ');
     ReadLn(Str);
-  Until Str = 'No'
+  Until Str <> 'Yes'
 End.
+
+

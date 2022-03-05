@@ -7,7 +7,7 @@ Uses
   Dialogs, StdCtrls, Math;
 
 Type
-  TOp = (FARCCOS, FARCCTG, FARCSIN, FARCTG, FCOS, FCTG, FDIVIDE, FFACTORIAL, FLOGARITHM, FMINUS, FMULTIPLE, FPERCENT, FPLUS, FPOWER, FSIN, FSQRT, FTG, FSQARE, FCUBE, FLG, FLN, FCH, FSH, FTH, FCTH, FTEN, FBACK, FDOUBLEFACT);
+  TOp = (FNULL, FARCCOS, FARCCTG, FARCSIN, FARCTG, FCOS, FCTG, FDIVIDE, FFACTORIAL, FLOGARITHM, FMINUS, FMULTIPLE, FPERCENT, FPLUS, FPOWER, FSIN, FSQRT, FTG, FSQARE, FCUBE, FLG, FLN, FCH, FSH, FTH, FCTH, FTEN, FBACK, FDOUBLEFACT);
   TForm1 = Class(TForm)
     lblField: TLabel;
     btn1: TButton;
@@ -65,7 +65,9 @@ Type
     Procedure btnFactorialClick(Sender: TObject);
     Procedure btnDFactorialClick(Sender: TObject);
     Procedure btnPercentClick(Sender: TObject);
-    Function ConvertSF(inp: String): Real;
+    Procedure AddNum(Var inp: String; Var num: String);
+    Function ConvertSF(Var inp: String): Real;
+    Procedure Display();
   Private
     { Private declarations }
   Public
@@ -79,23 +81,10 @@ Var
   Output, Input1, Input2: Real;
   Error: Boolean;
   Fact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
+  Fact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
 
 Implementation
 {$R *.dfm}
-//Double factorial function
-Function getDoubleFactorial(Var Input: Real): Integer;
-Var
-  Fctr, Rounded: Integer;
-Begin
-  Fctr:= 1;
-  rounded:= Trunc(Input1);
-  While Rounded >= 1 Do
-  Begin
-    Fctr:= Fctr * Rounded;
-    Rounded:= Rounded - 2;
-  End;
-  Result:= Fctr;
-End;
 
 //Normal power function like in java
 Function getPower(Const Number, Power: Real): Real;
@@ -195,15 +184,7 @@ Begin
     FPOWER:
       Output:= getPower(Input1, Input2);
     FFACTORIAL:
-      Begin
-        If (Trunc(Input1) <> Input1) Or (Input1 < 0) Or (Input1 > 12) Then
-        Begin
-          Output:= 0;
-          Error:= True;
-        End
-        Else
-          Output:= Fact1[Trunc(Input1)];
-      End;
+      Output:= Fact1[Trunc(Input1)];
     FDIVIDE:
       Output:= Input1 / Input2;
     FPERCENT:
@@ -229,13 +210,13 @@ Begin
     FBACK:
       Output:= 1 / Input1;
     FDOUBLEFACT:
-      Output:= getDoubleFactorial(Input1);
+      Output:= Fact2[Trunc(Input1)];
   End;
 End;
 
-Function TForm1.ConvertSF(inp: String): Real;
-var
-  test: Real; 
+Function TForm1.ConvertSF(Var inp: String): Real;
+Var
+  test: Real;
   pos: Integer;
 Begin
   Error:= False;
@@ -249,242 +230,274 @@ Begin
     Result:= test;
 End;
 
-Procedure TForm1.btnEqClick(Sender: TObject);
+Procedure TForm1.AddNum(Var inp: String; Var num: String);
 Begin
-  Input2:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  If (inp = 'Error. No correct input') Or (inp = '0') And (num <> '.') Then
+    Inp:= '';
+  If (Pos('.', Inp) > 0) And (num = '.') Then
+    num:= '';
+
+  Inp:= inp + num;
+End;
+
+Procedure TForm1.Display();
+Begin
+  If Op <> FNULL Then
+    If (Not Error) Then
+    Begin
+      Calculate();
+      lblField.Caption:= FloatToStr(Output);
+    End
+    Else
+      lblField.Caption:= 'Error. No correct input';
+End;
+
+Procedure TForm1.btnEqClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Input2:= ConvertSF(str);
+  Display();
 End;
 
 Procedure TForm1.btnBackClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FBACK;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  Display();
 End;
 
 Procedure TForm1.btnFactorialClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FFACTORIAL;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  If (Trunc(Input1) <> Input1) Or (Input1 < 0) Or (Input1 > 12) Then
+    Error:= True;
+  Display();
 End;
 
 Procedure TForm1.btnDFactorialClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FDOUBLEFACT;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  If (Trunc(Input1) <> Input1) Or (Input1 < 0) Or (Input1 > 19) Then
+    Error:= True;
+  Display();
 End;
 
 Procedure TForm1.btnCubeClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FCUBE;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  Display();
 End;
 
 Procedure TForm1.btnSquareClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FSQARE;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  Display();
 End;
 
 Procedure TForm1.btnSqrtClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FSQRT;
-  Input1:= ConvertSF(lblField.Caption);
-  If Not Error Then
-  Begin
-    Calculate();
-    lblField.Caption:= FloatToStr(Output);
-  End
-  Else
-    lblField.Caption:= 'Error. No correct input';
+  Input1:= ConvertSF(str);
+  Display();
 End;
 
 Procedure TForm1.btnPowerClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FPOWER;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnPercentClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FPERCENT;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMultipleClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FMULTIPLE;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnDivideClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FDIVIDE;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnPlusClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FPLUS;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMinusClick(Sender: TObject);
+Var
+  str: String;
 Begin
+  str:= lblField.Caption;
   Op:= FMINUS;
-  Input1:= ConvertSF(lblField.Caption);
+  Input1:= ConvertSF(str);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btn0Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '0';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '0';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn1Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '1';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '1';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn2Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '2';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '2';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn3Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '3';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '3';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn4Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '4';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '4';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn5Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '5';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '5';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn6Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '6';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '6';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn7Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '7';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '7';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn8Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '8';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '8';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btn9Click(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '9';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '9';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btnCommaClick(Sender: TObject);
 Var
-  s: String;
+  inp, add: String;
 Begin
-  s:= lblField.Caption;
-  s:= s + '.';
-  lblField.Caption:= s;
+  inp:= lblField.Caption;
+  add:= '.';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btnClearClick(Sender: TObject);
 Begin
-  lblField.Caption:= '';
-  Input1:= 0;
-  Input2:= 0;
+  lblField.Caption:= '0';
 End;
 
 Procedure TForm1.btnEilerClick(Sender: TObject);
@@ -496,4 +509,10 @@ Procedure TForm1.btnPeeClick(Sender: TObject);
 Begin
   lblField.Caption:= '3.141592653589793';
 End;
+
+Initialization
+  Begin
+    Op:= FNULL;
+  End;
 End.
+

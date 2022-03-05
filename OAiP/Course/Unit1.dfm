@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 1176
-  Top = 286
+  Left = 1269
+  Top = 247
   Width = 578
   Height = 604
   AutoSize = True
-  Caption = 'Delphi Calculator Beta 1.0'
+  Caption = 'Delphi Calculator v1.0'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,6 +22,7 @@ object Form1: TForm1
     Align = alCustom
     Alignment = taRightJustify
     AutoSize = False
+    Caption = '0'
     Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -186,7 +187,7 @@ object Form1: TForm1
     Top = 368
     Width = 137
     Height = 65
-    Caption = ','
+    Caption = '.'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
@@ -263,7 +264,7 @@ object Form1: TForm1
     Height = 65
     Caption = 'C'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clRed
     Font.Height = -35
     Font.Name = 'Tahoma'
     Font.Style = []

@@ -107,8 +107,8 @@ Type
   End;
 
 Const
-   E = 2.718281828459045;
-   P = 3.141592653589793;
+  E = 2.718281828459045;
+  P = 3.141592653589793;
 Var
   Form1: TForm1;
   Op: TOp;
@@ -473,12 +473,12 @@ End;
 
 Procedure TForm1.btnEilerClick(Sender: TObject);
 Begin
-  lblField.Caption:= FloatToStr(E);
+  lblField.Caption:= '2.718281828459045';
 End;
 
 Procedure TForm1.btnPeeClick(Sender: TObject);
 Begin
-  lblField.Caption:= FloatToStr(P);
+  lblField.Caption:= '3.141592653589793';
 End;
 
 Procedure TForm1.btnTenClick(Sender: TObject);

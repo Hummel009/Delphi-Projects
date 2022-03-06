@@ -4,7 +4,7 @@ Interface
 
 Uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Math;
+  Dialogs, StdCtrls, Math, Menus;
 
 Type
   TOp = (FNULL, FARCCOS, FARCCTG, FARCSIN, FARCTG, FCOS, FCTG, FDIVIDE, FFACTORIAL, FLOGARITHM, FMINUS, FMULTIPLE, FPERCENT, FPLUS, FPOWER, FSIN, FSQRT, FTG, FSQARE, FCUBE, FLG, FLN, FCH, FSH, FTH, FCTH, FTEN, FBACK, FDOUBLEFACT);
@@ -35,9 +35,25 @@ Type
     btnSquare: TButton;
     btnBack: TButton;
     btnDFact: TButton;
-    btnCube: TButton;
-    btnMore: TButton;
+    btnPosNeg: TButton;
+    btnTen: TButton;
     btnFact: TButton;
+    btnSin: TButton;
+    btnTg: TButton;
+    btnCtg: TButton;
+    btnCos: TButton;
+    btnAsin: TButton;
+    btnAtg: TButton;
+    btnActg: TButton;
+    btnAcos: TButton;
+    btnSh: TButton;
+    btnTh: TButton;
+    btnCth: TButton;
+    btnCh: TButton;
+    btnLn: TButton;
+    btnLg: TButton;
+    btnCube: TButton;
+    btn10: TButton;
     Procedure btn0Click(Sender: TObject);
     Procedure btn1Click(Sender: TObject);
     Procedure btn2Click(Sender: TObject);
@@ -60,20 +76,39 @@ Type
     Procedure btnSqrtClick(Sender: TObject);
     Procedure btnPowerClick(Sender: TObject);
     Procedure btnSquareClick(Sender: TObject);
-    Procedure btnCubeClick(Sender: TObject);
+    Procedure btnPosNegClick(Sender: TObject);
     Procedure btnBackClick(Sender: TObject);
     Procedure btnFactorialClick(Sender: TObject);
     Procedure btnDFactorialClick(Sender: TObject);
     Procedure btnPercentClick(Sender: TObject);
     Procedure AddNum(Var inp: String; Var num: String);
-    Function ConvertSF(Var inp: String): Real;
     Procedure Display();
+    Procedure btnTenClick(Sender: TObject);
+    Procedure btnSinClick(Sender: TObject);
+    Procedure btnCosClick(Sender: TObject);
+    Procedure btnAtgClick(Sender: TObject);
+    Procedure btnTgClick(Sender: TObject);
+    Procedure btnCtgClick(Sender: TObject);
+    Procedure btnShClick(Sender: TObject);
+    Procedure btnChClick(Sender: TObject);
+    Procedure btnThClick(Sender: TObject);
+    Procedure btnCthClick(Sender: TObject);
+    Procedure btnLgClick(Sender: TObject);
+    Procedure btnLnClick(Sender: TObject);
+    Procedure btnCubeClick(Sender: TObject);
+    Procedure btnActgClick(Sender: TObject);
+    Procedure btnAsinClick(Sender: TObject);
+    Procedure btnAcosClick(Sender: TObject);
+    Function ConvertSF(Var inp: String): Real;
   Private
     { Private declarations }
   Public
     { Public declarations }
   End;
 
+Const
+   E = 2.718281828459045;
+   P = 3.141592653589793;
 Var
   Form1: TForm1;
   Op: TOp;
@@ -85,72 +120,6 @@ Var
 
 Implementation
 {$R *.dfm}
-
-//Normal power function like in java
-Function getPower(Const Number, Power: Real): Real;
-Var
-  PowerPositive, PowerNegative, PowerInt, PowerPositiveInt, PowerNegativeInt, NumberPositive, NumberNegative: Boolean;
-Begin
-  PowerPositive:= False;
-  PowerNegative:= False;
-  PowerInt:= False;
-  PowerPositiveInt:= False;
-  PowerNegativeInt:= False;
-  NumberPositive:= False;
-  NumberNegative:= False;
-
-  If Trunc(Power) = Power Then
-    PowerInt:= True;
-
-  If Power > 0 Then
-    PowerPositive:= True
-  Else
-    PowerNegative:= True;
-
-  If Number > 0 Then
-    NumberPositive:= True
-  Else
-    NumberNegative:= True;
-
-  If PowerInt And PowerPositive Then
-    PowerPositiveInt:= True;
-
-  If PowerInt And PowerNegative Then
-    PowerNegativeInt:= True;
-
-  If (Number <> 0.0) And (Power = 0.0) Then
-    Result:= 1.0
-  Else
-    If (Number = 0.0) And (Power <> 0.0) Then
-      Result:= 0.0
-    Else
-      If NumberPositive And PowerNegative Then
-        Result:= 1 / Exp(Power * Ln(Number))
-      Else
-        If NumberPositive And PowerPositive Then
-          Result:= Exp(Power * Ln(Number))
-        Else
-          If NumberNegative And PowerNegativeInt Then
-          Begin
-            If Trunc(Power) Mod 2 = 0 Then
-              Result:= 1 / Exp(Power * Ln(Abs(Number)))
-            Else
-              Result:= -1 / Exp(Power * Ln(Abs(Number)));
-          End
-          Else
-            If NumberNegative And PowerPositiveInt Then
-            Begin
-              If Trunc(Power) Mod 2 = 0 Then
-                Result:= Exp(Power * Ln(Abs(Number)))
-              Else
-                Result:= -Exp(Power * Ln(Abs(Number)));
-            End
-            Else
-            Begin
-              Result:= 0;
-              Error:= True;
-            End;
-End;
 
 Procedure Calculate();
 Begin
@@ -179,10 +148,8 @@ Begin
       Output:= Cotan(Input1);
     FSQRT:
       Output:= Sqrt(Input1);
-    FLOGARITHM:
-      Output:= Log10(Input1) / Log10(Input2);
     FPOWER:
-      Output:= getPower(Input1, Input2);
+      Output:= Power(Input1, Input2);
     FFACTORIAL:
       Output:= Fact1[Trunc(Input1)];
     FDIVIDE:
@@ -198,15 +165,15 @@ Begin
     FLN:
       Output:= Ln(Input1);
     FCH:
-      Output:= (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1)) / 2;
+      Output:= (Power(E, input1) + Power(E, (-1) * input1)) / 2;
     FSH:
-      Output:= (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1)) / 2;
+      Output:= (Power(E, input1) - Power(E, (-1) * input1)) / 2;
     FTH:
-      Output:= (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1)) / (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1));
+      Output:= (Power(E, input1) - Power(E, (-1) * input1)) / (Power(E, input1) + Power(E, (-1) * input1));
     FCTH:
-      Output:= (getPower(2.7183, Input1) + getPower(2.7183, (-1) * Input1)) / (getPower(2.7183, Input1) - getPower(2.7183, (-1) * Input1));
+      Output:= (Power(E, input1) + Power(E, (-1) * input1)) / (Power(E, input1) - Power(E, (-1) * input1));
     FTEN:
-      Output:= getPower(10, Input1);
+      Output:= Power(10, Input1);
     FBACK:
       Output:= 1 / Input1;
     FDOUBLEFACT:
@@ -234,7 +201,9 @@ Procedure TForm1.AddNum(Var inp: String; Var num: String);
 Begin
   If (inp = 'Error. No correct input') Or (inp = '0') And (num <> '.') Then
     Inp:= '';
-  If (Pos('.', Inp) > 0) And (num = '.') Then
+  If (Pos('.', Inp) > 1) And (num = '.') Then
+    num:= '';
+  If (Pos('-', Inp) > 0) And (num = '-') Then
     num:= '';
 
   Inp:= inp + num;
@@ -295,14 +264,14 @@ Begin
   Display();
 End;
 
-Procedure TForm1.btnCubeClick(Sender: TObject);
+Procedure TForm1.btnPosNegClick(Sender: TObject);
 Var
-  str: String;
+  inp, add: String;
 Begin
-  str:= lblField.Caption;
-  Op:= FCUBE;
-  Input1:= ConvertSF(str);
-  Display();
+  inp:= lblField.Caption;
+  add:= '-';
+  AddNum(inp, add);
+  lblField.Caption:= inp;
 End;
 
 Procedure TForm1.btnSquareClick(Sender: TObject);
@@ -322,6 +291,8 @@ Begin
   str:= lblField.Caption;
   Op:= FSQRT;
   Input1:= ConvertSF(str);
+  If Input1 < 0 Then
+    Error:= True;
   Display();
 End;
 
@@ -502,12 +473,184 @@ End;
 
 Procedure TForm1.btnEilerClick(Sender: TObject);
 Begin
-  lblField.Caption:= '2.718281828459045';
+  lblField.Caption:= FloatToStr(E);
 End;
 
 Procedure TForm1.btnPeeClick(Sender: TObject);
 Begin
-  lblField.Caption:= '3.141592653589793';
+  lblField.Caption:= FloatToStr(P);
+End;
+
+Procedure TForm1.btnTenClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FTEN;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnSinClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FSIN;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnCosClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FCOS;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnAtgClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FARCTG;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnTgClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FTG;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnCtgClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FCTG;
+  Input1:= ConvertSF(str);
+  If Input1 = 0 Then
+    Error:= True;
+  Display();
+End;
+
+Procedure TForm1.btnShClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FSH;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnChClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FCH;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnThClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FTH;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnCthClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FCTH;
+  Input1:= ConvertSF(str);
+  If Input1 = 0 Then
+    Error:= True;
+  Display();
+End;
+
+Procedure TForm1.btnLgClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FLG;
+  Input1:= ConvertSF(str);
+  If Input1 <= 0 Then
+    Error:= True;
+  Display();
+End;
+
+Procedure TForm1.btnLnClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FLN;
+  Input1:= ConvertSF(str);
+  If Input1 <= 0 Then
+    Error:= True;
+  Display();
+End;
+
+Procedure TForm1.btnCubeClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FCUBE;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnActgClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FARCCTG;
+  Input1:= ConvertSF(str);
+  Display();
+End;
+
+Procedure TForm1.btnAsinClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FARCSIN;
+  Input1:= ConvertSF(str);
+  If (Input1 > 1) Or (Input1 < -1) Then
+    Error:= True;
+  Display();
+End;
+
+Procedure TForm1.btnAcosClick(Sender: TObject);
+Var
+  str: String;
+Begin
+  str:= lblField.Caption;
+  Op:= FARCCOS;
+  Input1:= ConvertSF(str);
+  If (Input1 > 1) Or (Input1 < -1) Then
+    Error:= True;
+  Display();
 End;
 
 Initialization

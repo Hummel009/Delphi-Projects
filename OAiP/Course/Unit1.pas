@@ -83,6 +83,7 @@ Type
     Procedure btnPercentClick(Sender: TObject);
     Procedure AddNum(Var inp: String; Var num: String);
     Procedure Display();
+    Procedure Save();
     Procedure btnTenClick(Sender: TObject);
     Procedure btnSinClick(Sender: TObject);
     Procedure btnCosClick(Sender: TObject);
@@ -100,6 +101,7 @@ Type
     Procedure btnAsinClick(Sender: TObject);
     Procedure btnAcosClick(Sender: TObject);
     Function ConvertSF(Var inp: String): Real;
+    Procedure btn10Click(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -112,13 +114,17 @@ Const
 Var
   Form1: TForm1;
   Op: TOp;
-  OpName, Str: String;
+  SavedOp, Saved1, Saved2, SavedOut, Str: String;
   Output, Input1, Input2: Real;
-  Error: Boolean;
+  Error, ShouldClear: Boolean;
+  I: Integer;
+  OpNames: Array[TOp] Of String = ('FNULL', 'FARCCOS', 'FARCCTG', 'FARCSIN', 'FARCTG', 'FCOS', 'FCTG', 'FDIVIDE', 'FFACTORIAL', 'FLOGARITHM', 'FMINUS', 'FMULTIPLE', 'FPERCENT', 'FPLUS', 'FPOWER', 'FSIN', 'FSQRT', 'FTG', 'FSQARE', 'FCUBE', 'FLG', 'FLN', 'FCH', 'FSH', 'FTH', 'FCTH', 'FTEN', 'FBACK', 'FDOUBLEFACT');
   Fact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
   Fact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
 
 Implementation
+
+Uses Unit2;
 {$R *.dfm}
 
 Procedure Calculate();
@@ -205,7 +211,11 @@ Begin
     num:= '';
   If (Pos('-', Inp) > 0) And (num = '-') Then
     num:= '';
-
+  If ShouldClear Then
+  Begin
+    Inp:= '';
+    ShouldClear:= False;
+  End;
   Inp:= inp + num;
 End;
 
@@ -221,6 +231,20 @@ Begin
       lblField.Caption:= 'Error. No correct input';
 End;
 
+Procedure TForm1.Save();
+Begin
+  If Op <> FNULL Then
+  Begin
+    SavedOp:= OpNames[Op];
+    Saved1:= FloatToStr(Input1);
+    Saved2:= FloatToStr(Input2);
+    SavedOut:= FloatToStr(Output);
+    Form2.mmoHistory.Lines.Insert(i, Saved1 + ' ' + SavedOp + ' ' + Saved2 + ' = ' + SavedOut);
+    Inc(I);
+  End;
+  ShouldClear:= True;
+End;
+
 Procedure TForm1.btnEqClick(Sender: TObject);
 Var
   str: String;
@@ -228,6 +252,7 @@ Begin
   str:= lblField.Caption;
   Input2:= ConvertSF(str);
   Display();
+  Save();
 End;
 
 Procedure TForm1.btnBackClick(Sender: TObject);
@@ -651,6 +676,13 @@ Begin
   If (Input1 > 1) Or (Input1 < -1) Then
     Error:= True;
   Display();
+End;
+
+Procedure TForm1.btn10Click(Sender: TObject);
+Begin
+  Form2.show;
+  If AnsiPos('mmoHistory', Form2.mmoHistory.Lines[Form2.mmoHistory.Lines.Count - 1]) <> 0 Then
+    Form2.mmoHistory.Lines.Delete(Form2.mmoHistory.Lines.Count - 1)
 End;
 
 Initialization

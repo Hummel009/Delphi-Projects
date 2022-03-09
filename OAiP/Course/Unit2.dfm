@@ -1,8 +1,8 @@
 object Form2: TForm2
-  Left = 801
-  Top = 260
-  Width = 585
-  Height = 628
+  Left = 1299
+  Top = 238
+  Width = 497
+  Height = 636
   AutoSize = True
   Caption = 'History'
   Color = clBtnFace
@@ -17,12 +17,12 @@ object Form2: TForm2
   object mmoHistory: TMemo
     Left = 0
     Top = 0
-    Width = 577
-    Height = 601
+    Width = 489
+    Height = 609
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -29
-    Font.Name = 'Courier New'
+    Font.Name = 'Tahoma'
     Font.Style = []
     Lines.Strings = (
       'mmoHistory')

@@ -10,16 +10,18 @@ Uses
 
 //Declare types
 Type
-  TArr = Array[0..3000] Of Integer;
+  TArr = Array[1..3000] Of Integer;
   //TArr - our array
-  
+
 //Declare Vars
 Var
   I, J: Integer;
   Nums: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);
   //I,J - loop params
   //Nums - array sizes
-  
+
+//Swaps 2 elements
+//A, B - elements
 Procedure Swap(Var A, B: Integer);
 Var
   T: Integer;
@@ -30,13 +32,15 @@ Begin
   B:= T;
 End;
 
+//Fills array with elements
+//Arr - array, N - array size, Opt - filler type
 Procedure Fill(Var Arr: TArr; Const N, Opt: Integer);
 Var
   I: Integer;
   //I - select type of filling
 Begin
   Randomize;
-  For I:= 1 To N Do
+  For I:= Low(Arr) To N Do
   Begin
     Case Opt Of
       1:
@@ -49,6 +53,8 @@ Begin
   End;
 End;
 
+//Sorts an array and calculates the number of comparisons
+//Arr - array, N - array size, Comp - comparisons
 Procedure BubbleSort(Var Arr: TArr; Const N: Integer; Var Comp: Integer);
 Var
   I, J: Integer;
@@ -74,7 +80,9 @@ Begin
   End;
 End;
 
-Procedure SiftDown(Var Arr: TArr; Node, NodeLast: Integer; Var Comp: Integer);
+//Sorts an array and calculates the number of comparisons
+//Arr - array, Node - current index, N - array size, Comp - comparisons
+Procedure SiftDown(Var Arr: TArr; Node: Integer; Const N: Integer; Var Comp: Integer);
 Var
   Root, Child: Integer;
   Sifted: Boolean;
@@ -83,11 +91,11 @@ Var
 Begin
   Root:= Node;
   Sifted:= False;
-  While (Not Sifted) And (Root * 2 - Node + 1 <= NodeLast) Do
+  While (Not Sifted) And (Root * 2 - Node + 1 <= N) Do
   Begin
     Comp:= Comp + 2;
     Child:= Root * 2 - Node + 1;
-    If (Child + 1 <= NodeLast) And (Arr[Child] < Arr[Child + 1]) Then
+    If (Child + 1 <= N) And (Arr[Child] < Arr[Child + 1]) Then
       Inc(Child);
     If Arr[Root] < Arr[Child] Then
     Begin
@@ -99,32 +107,32 @@ Begin
   End;
 End;
 
-Procedure HeapSort(Var Arr: TArr; Const Count: Integer; Var Comp: Integer);
+//Sorts an array and calculates the number of comparisons
+//Arr - array, N - array size, Comp - comparisons
+Procedure HeapSort(Var Arr: TArr; Const N: Integer; Var Comp: Integer);
 Var
-  NodeLast, NodeCurr, Comps: Integer;
+  NodeLast, NodeCurr: Integer;
   //NodeLast, NodeCurr - indexes
   //Comps - counter
 Begin
-  NodeCurr:= Count Div 2 - 1;
-  While NodeCurr >= 0 Do
+  NodeCurr:= N Div 2 - 1;
+  While NodeCurr >= Low(Arr) Do
   Begin
-    Comps:= 0;
-    SiftDown(Arr, NodeCurr, Count, Comps);
-    Comp:= Comp + Comps;
+    SiftDown(Arr, NodeCurr, N, Comp);
     Dec(NodeCurr);
   End;
-  NodeLast:= Count;
-  While NodeLast > 0 Do
+  NodeLast:= N;
+  While NodeLast > Low(Arr) Do
   Begin
-    Swap(Arr[0], Arr[NodeLast]);
-    Comps:= 0;
+    Swap(Arr[Low(Arr)], Arr[NodeLast]);
     Dec(NodeLast);
-    SiftDown(Arr, 0, NodeLast, Comps);
-    Comp:= Comp + Comps;
+    SiftDown(Arr, Low(Arr), NodeLast, Comp);
   End;
 End;
 
-Procedure Generate(Const N, Sort: Integer);
+//Generates log info
+//N - array size, I - filler type
+Procedure Generate(Const N, Opt: Integer);
 Var
   Compare: Integer;
   Arr1, Arr2: TArr;
@@ -134,37 +142,30 @@ Var
   //Str - displaying
 Begin
 
-  //options for all cases
-  Case Sort Of
+  //Options for all cases
+  Case Opt Of
     1:
-      Begin
-        Str:= 'Random';
-        Fill(Arr1, N, Sort);
-      End;
+      Str:= 'Random';
     2:
-      Begin
-        Str:= 'Sorted';
-        Fill(Arr1, N, Sort);
-      End;
+      Str:= 'Sorted';
     3:
-      Begin
-        Str:= 'Revers';
-        Fill(Arr1, N, Sort);
-      End;
+      Str:= 'Revers';
   End;
 
-  //show arr size
+  Fill(Arr1, N, Opt);
+
+  //Show arr size
   Write(Str, ' Arr1[', N, ']; ');
 
-  //copy array
+  //Copy array
   Arr2:= Arr1;
 
-  //enzero to show true value
+  //Enzero to show true value
   Compare:= 0;
   BubbleSort(Arr1, N, Compare);
   Write('BubbleSort: ', Compare: 7, '; ');
-       
-  //enzero to show true value
+
+  //Enzero to show true value
   Compare:= 0;
   HeapSort(Arr2, N, Compare);
   Write('HeapSort: ', Compare: 5);
@@ -179,5 +180,7 @@ Begin
       Generate(Nums[I], J);
     WriteLn;
   End;
-  Readln;
+  ReadLn;
 End.
+
+

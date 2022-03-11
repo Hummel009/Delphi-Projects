@@ -1,5 +1,5 @@
 Program Lab2;
-{Compare sorts}
+{Comp sorts}
 
 //Use app
 {$APPTYPE CONSOLE}
@@ -16,13 +16,13 @@ Type
 //Declare Vars
 Var
   I, J: Integer;
-  Compare: Integer;
+  Comp: Integer;
   Arr1, Arr2: TArr;
   N: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);
   S: Array[1..3] Of String = ('Random', 'Sorted', 'Revers');
   //I,J - loop params
   //N - array sizes
-  //Compare - quantity of comparisons
+  //Comp - quantity of comparisons
   //Arr1, Arr2 - our arrays
   //N - num of elements
   //S - name of array
@@ -151,14 +151,14 @@ Begin
       Arr2:= Arr1;
 
       //Enzero to show true value
-      Compare:= 0;
-      BubbleSort(Arr1, N[I], Compare);
-      Write('BubbleSort: ', Compare: 7, '; ');
+      Comp:= 0;
+      BubbleSort(Arr1, N[I], Comp);
+      Write('BubbleSort: ', Comp: 7, '; ');
 
       //Enzero to show true value
-      Compare:= 0;
-      HeapSort(Arr2, N[I], Compare);
-      Write('HeapSort: ', Compare: 5);
+      Comp:= 0;
+      HeapSort(Arr2, N[I], Comp);
+      Write('HeapSort: ', Comp: 5);
 
       WriteLn;
     End;

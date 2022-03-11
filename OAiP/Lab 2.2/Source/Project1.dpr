@@ -16,10 +16,16 @@ Type
 //Declare Vars
 Var
   I, J: Integer;
-  Nums: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);  
-  Str: Array[1..3] of String = ('Random', 'Sorted', 'Revers');
+  Compare: Integer;
+  Arr1, Arr2: TArr;
+  N: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);
+  S: Array[1..3] Of String = ('Random', 'Sorted', 'Revers');
   //I,J - loop params
-  //Nums - array sizes
+  //N - array sizes
+  //Compare - quantity of comparisons
+  //Arr1, Arr2 - our arrays
+  //N - num of elements
+  //S - name of array
 
 //Swaps 2 elements
 //A, B - elements
@@ -131,42 +137,31 @@ Begin
   End;
 End;
 
-//Generates log info
-//N - array size, I - filler type
-Procedure Generate(Const N, Opt: Integer);
-Var
-  Compare: Integer;
-  Arr1, Arr2: TArr;
-  //Compare - counter
-  //Arr1, Arr2 - similar arrays for the test
-  //Str - displaying
-Begin
-  Fill(Arr1, N, Opt);
-
-  //Show arr size
-  Write(Str[Opt], ' Arr[', N, ']; ');
-
-  //Copy array
-  Arr2:= Arr1;
-
-  //Enzero to show true value
-  Compare:= 0;
-  BubbleSort(Arr1, N, Compare);
-  Write('BubbleSort: ', Compare: 7, '; ');
-
-  //Enzero to show true value
-  Compare:= 0;
-  HeapSort(Arr2, N, Compare);
-  Write('HeapSort: ', Compare: 5);
-
-  WriteLn;
-End;
-
 Begin
   For I:= 1 To 6 Do
   Begin
     For J:= 1 To 3 Do
-      Generate(Nums[I], J);
+    Begin
+      Fill(Arr1, N[I], J);
+
+      //Show arr size
+      Write(S[J], ' Arr[', N[I], ']; ');
+
+      //Copy array
+      Arr2:= Arr1;
+
+      //Enzero to show true value
+      Compare:= 0;
+      BubbleSort(Arr1, N[I], Compare);
+      Write('BubbleSort: ', Compare: 7, '; ');
+
+      //Enzero to show true value
+      Compare:= 0;
+      HeapSort(Arr2, N[I], Compare);
+      Write('HeapSort: ', Compare: 5);
+
+      WriteLn;
+    End;
     WriteLn;
   End;
   ReadLn;

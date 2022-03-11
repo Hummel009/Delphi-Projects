@@ -20,10 +20,10 @@ Var
   C1, C2, C3, C4, C5, C6, C7:TMatrix;
   //I, J - loop params
   //A, B - start matrixs
-  //C - result matrixs
+  //C - Res matrixs
 
 //This func calculates Matrix * Number
-Procedure MulN(const M:TMatrix; const N:Real; var Result:TMatrix);
+Procedure MulN(const M:TMatrix; const N:Real; var Res:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -33,11 +33,11 @@ Begin
   //Mulle every cell of matrix
   For I:= 1 To 3 Do
     For J:= 1 To 3 Do
-      Result[I, J]:= M[I, J] * N;
+      Res[I, J]:= M[I, J] * N;
 End;
 
 //This func calculates Matrix + Matrix
-Procedure SumM(const M1:TMatrix; const M2:TMatrix; var Result:TMatrix; const IsPlus: Boolean);
+Procedure SumM(const M1:TMatrix; const M2:TMatrix; var Res:TMatrix; const IsPlus: Boolean);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -49,14 +49,14 @@ Begin
     For J:= 1 To 3 Do
     Begin
       if IsPlus then
-        Result[I, J]:= M1[I, J] + M2[I, J]
+        Res[I, J]:= M1[I, J] + M2[I, J]
       else
-        Result[I, J]:= M1[I, J] - M2[I, J];
+        Res[I, J]:= M1[I, J] - M2[I, J];
     End;
 End;
 
 //This func calculates Matrix * Matrix
-Procedure MulM(const M1:TMatrix; const M2:TMatrix; var Result:TMatrix);
+Procedure MulM(const M1:TMatrix; const M2:TMatrix; var Res:TMatrix);
 Var
   I, J:Integer;
   //I, J - loop params
@@ -66,7 +66,7 @@ Begin
   //Sum every line with every column of matrix
   For I:= 1 To 3 Do
     For J:= 1 To 3 Do
-      Result[I, J]:= M1[I, 1] * M2[1, J] + M1[I, 2] * M2[2, J] + M1[I, 3] * M2[3, J];
+      Res[I, J]:= M1[I, 1] * M2[1, J] + M1[I, 2] * M2[2, J] + M1[I, 3] * M2[3, J];
 End;
 
 //This func shows formatted matrix

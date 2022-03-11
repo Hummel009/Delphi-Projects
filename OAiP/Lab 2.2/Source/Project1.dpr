@@ -16,7 +16,8 @@ Type
 //Declare Vars
 Var
   I, J: Integer;
-  Nums: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);
+  Nums: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);  
+  Str: Array[1..3] of String = ('Random', 'Sorted', 'Revers');
   //I,J - loop params
   //Nums - array sizes
 
@@ -40,16 +41,16 @@ Var
   //I - select type of filling
 Begin
   Randomize;
-  For I:= Low(Arr) To N Do
-  Begin
-    Case Opt Of
-      1:
+  Case Opt Of
+    1:
+      For I:= Low(Arr) To N Do
         Arr[I]:= Random(N);
-      2:
+    2:
+      For I:= Low(Arr) To N Do
         Arr[I]:= I;
-      3:
+    3:
+      For I:= Low(Arr) To N Do
         Arr[I]:= N - I;
-    End;
   End;
 End;
 
@@ -136,26 +137,14 @@ Procedure Generate(Const N, Opt: Integer);
 Var
   Compare: Integer;
   Arr1, Arr2: TArr;
-  Str: String;
   //Compare - counter
   //Arr1, Arr2 - similar arrays for the test
   //Str - displaying
 Begin
-
-  //Options for all cases
-  Case Opt Of
-    1:
-      Str:= 'Random';
-    2:
-      Str:= 'Sorted';
-    3:
-      Str:= 'Revers';
-  End;
-
   Fill(Arr1, N, Opt);
 
   //Show arr size
-  Write(Str, ' Arr1[', N, ']; ');
+  Write(Str[Opt], ' Arr[', N, ']; ');
 
   //Copy array
   Arr2:= Arr1;
@@ -182,5 +171,3 @@ Begin
   End;
   ReadLn;
 End.
-
-

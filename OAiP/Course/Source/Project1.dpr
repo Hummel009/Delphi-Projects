@@ -1,15 +1,16 @@
-program Project1;
+Program Project1;
 
-uses
+Uses
   Forms,
-  Unit1 in 'Unit1.pas' {Form1},
-  Unit2 in 'Unit2.pas' {Form2};
+  Unit1 In 'Unit1.pas' {Form1},
+  Unit2 In 'Unit2.pas' {Form2};
 
 {$R *.res}
 
-begin
+Begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
   Application.Run;
-end.
+End.
+

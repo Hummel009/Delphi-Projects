@@ -13,6 +13,12 @@ Uses
 //E - Enum Member Name
 //F - Formal Parameter Name
 Type
+  TMem = Record
+    Inp1, Inp2, Res: Real;
+  End;
+  TDisp = Record
+    Inp1, Inp2, Res, Op: String;
+  End;
   TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL);
   TForm1 = Class(TForm)
     lblField: TLabel;
@@ -104,8 +110,8 @@ Type
     Procedure btnAsinClick(Sender: TObject);
     Procedure btnAcosClick(Sender: TObject);
     Procedure btn10Click(Sender: TObject);
-    Function ConvertSF(Var FInput: String): Real;
-    Procedure AddNum(Var FInput: String; Var FAdd: String);
+    Function ConvertSF(Var FInp: String): Real;
+    Procedure AddNum(Var FInp: String; Var FAdd: String);
     Procedure Display();
     Procedure Save();
   Private
@@ -117,19 +123,21 @@ Type
 Const
   E = 2.718281828459045;
   P = 3.141592653589793;
-Var
-  Form1: TForm1;
-  GOp: TOp;
-  GOpS, GInput1S, GInput2S, GOutputS: String;
-  GInput1, GInput2, GOutput: Real;
-  GError, GClear: Boolean;
-  GLine: Integer;
   GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '^', 'sin', 'sqrt', 'tg', '^ 2', '^ 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ^', '1 /', '!!');
   GFact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
   GFact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
   GHist1: Set Of TOp = [EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, ESIN, ESQRT, ETG, ELG, ELN, ECH, ESH, ETH, ECTH];
   GHist2: Set Of TOp = [EFACTORIAL, EDFACTORIAL, ESQUARE, ECUBE];
   GHist3: Set Of TOp = [EBACK, ETEN];
+
+Var
+  Form1: TForm1;
+  GDisp: TDisp;
+  GOp: TOp;
+  GMem: TMem;
+  GLine: Integer;
+  GError, GClear: Boolean;
+
 Implementation
 
 Uses Unit2;
@@ -139,92 +147,92 @@ Procedure Calculate();
 Begin
   Case GOp Of
     EPLUS:
-      GOutput:= GInput1 + GInput2;
+      GMem.Res:= GMem.Inp1 + GMem.Inp2;
     EMINUS:
-      GOutput:= GInput1 - GInput2;
+      GMem.Res:= GMem.Inp1 - GMem.Inp2;
     EMULTIPLE:
-      GOutput:= GInput1 * GInput2;
+      GMem.Res:= GMem.Inp1 * GMem.Inp2;
     EARCSIN:
-      GOutput:= Arcsin(GInput1);
+      GMem.Res:= Arcsin(GMem.Inp1);
     EARCCOS:
-      GOutput:= Arccos(GInput1);
+      GMem.Res:= Arccos(GMem.Inp1);
     EARCTG:
-      GOutput:= Arctan(GInput1);
+      GMem.Res:= Arctan(GMem.Inp1);
     EARCCTG:
-      GOutput:= Arccot(GInput1);
+      GMem.Res:= Arccot(GMem.Inp1);
     ESIN:
-      GOutput:= Sin(GInput1);
+      GMem.Res:= Sin(GMem.Inp1);
     ECOS:
-      GOutput:= Cos(GInput1);
+      GMem.Res:= Cos(GMem.Inp1);
     ETG:
-      GOutput:= Tan(GInput1);
+      GMem.Res:= Tan(GMem.Inp1);
     ECTG:
-      GOutput:= Cotan(GInput1);
+      GMem.Res:= Cotan(GMem.Inp1);
     ESQRT:
-      GOutput:= Sqrt(GInput1);
+      GMem.Res:= Sqrt(GMem.Inp1);
     EPOWER:
-      GOutput:= Power(GInput1, GInput2);
+      GMem.Res:= Power(GMem.Inp1, GMem.Inp2);
     EFACTORIAL:
-      GOutput:= GFact1[Trunc(GInput1)];
+      GMem.Res:= GFact1[Trunc(GMem.Inp1)];
     EDIVIDE:
-      GOutput:= GInput1 / GInput2;
+      GMem.Res:= GMem.Inp1 / GMem.Inp2;
     EPERCENT:
-      GOutput:= GInput2 * GInput1 / 100;
+      GMem.Res:= GMem.Inp2 * GMem.Inp1 / 100;
     ESQUARE:
-      GOutput:= GInput1 * GInput1;
+      GMem.Res:= GMem.Inp1 * GMem.Inp1;
     ECUBE:
-      GOutput:= GInput1 * GInput1 * GInput1;
+      GMem.Res:= GMem.Inp1 * GMem.Inp1 * GMem.Inp1;
     ELG:
-      GOutput:= Log10(GInput1);
+      GMem.Res:= Log10(GMem.Inp1);
     ELN:
-      GOutput:= Ln(GInput1);
+      GMem.Res:= Ln(GMem.Inp1);
     ECH:
-      GOutput:= (Power(E, GInput1) + Power(E, (-1) * GInput1)) / 2;
+      GMem.Res:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2;
     ESH:
-      GOutput:= (Power(E, GInput1) - Power(E, (-1) * GInput1)) / 2;
+      GMem.Res:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2;
     ETH:
-      GOutput:= (Power(E, GInput1) - Power(E, (-1) * GInput1)) / (Power(E, GInput1) + Power(E, (-1) * GInput1));
+      GMem.Res:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1));
     ECTH:
-      GOutput:= (Power(E, GInput1) + Power(E, (-1) * GInput1)) / (Power(E, GInput1) - Power(E, (-1) * GInput1));
+      GMem.Res:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1));
     ETEN:
-      GOutput:= Power(10, GInput1);
+      GMem.Res:= Power(10, GMem.Inp1);
     EBACK:
-      GOutput:= 1 / GInput1;
+      GMem.Res:= 1 / GMem.Inp1;
     EDFACTORIAL:
-      GOutput:= GFact2[Trunc(GInput1)];
+      GMem.Res:= GFact2[Trunc(GMem.Inp1)];
   End;
 End;
 
-Function TForm1.ConvertSF(Var FInput: String): Real;
+Function TForm1.ConvertSF(Var FInp: String): Real;
 Var
-  LInput: Real;
+  LInp: Real;
   LPos: Integer;
 Begin
   GError:= False;
-  Val(FInput, LInput, LPos);
+  Val(FInp, LInp, LPos);
   If LPos <> 0 Then
   Begin
     GError:= True;
     Result:= 0;
   End
   Else
-    Result:= LInput;
+    Result:= LInp;
 End;
 
-Procedure TForm1.AddNum(Var FInput: String; Var FAdd: String);
+Procedure TForm1.AddNum(Var FInp: String; Var FAdd: String);
 Begin
-  If (FInput = 'Error. No correct input') Or (FInput = '0') And (FAdd <> '.') Then
-    FInput:= '';
-  If (Pos('.', FInput) > 1) And (FAdd = '.') Then
+  If (FInp = 'Error. No correct input') Or (FInp = '0') And (FAdd <> '.') Then
+    FInp:= '';
+  If (Pos('.', FInp) > 1) And (FAdd = '.') Then
     FAdd:= '';
-  If (Pos('-', FInput) > 0) And (FAdd = '-') Then
+  If (Pos('-', FInp) > 0) And (FAdd = '-') Then
     FAdd:= '';
   If GClear Then
   Begin
-    FInput:= '';
+    FInp:= '';
     GClear:= False;
   End;
-  FInput:= FInput + FAdd;
+  FInp:= FInp + FAdd;
 End;
 
 Procedure TForm1.Display();
@@ -233,33 +241,43 @@ Begin
     If (Not GError) Then
     Begin
       Calculate();
-      lblField.Caption:= FloatToStr(GOutput);
+      lblField.Caption:= FloatToStr(GMem.Res);
       Save();
     End
     Else
       lblField.Caption:= 'Error. No correct input';
+  GOp:= ENULL;
+  With GMem Do
+  Begin
+    Inp1:= 0;
+    Inp2:= 0;
+    Res:= 0;
+  End;
 End;
 
 Procedure TForm1.Save();
+Var
+  LStr: String;
 Begin
   If GOp <> ENULL Then
   Begin
-    GOpS:= GOpView[GOp];
-    GInput1S:= FloatToStr(GInput1);
-    GInput2S:= FloatToStr(GInput2);
-    GOutputS:= FloatToStr(GOutput);
+    GDisp.Op:= GOpView[GOp];
+    GDisp.Inp1:= FloatToStr(GMem.Inp1);
+    GDisp.Inp2:= FloatToStr(GMem.Inp2);
+    GDisp.Res:= FloatToStr(GMem.Res);
 
     If GOp In GHist1 Then
-      Form2.mmoHistory.Lines.Insert(GLine, GOpS + '(' + GInput1S + ') = ' + GOutputS)
+      LStr:= GDisp.Op + '(' + GDisp.Inp1 + ') = ' + GDisp.Res
     Else
       If GOp In GHist2 Then
-        Form2.mmoHistory.Lines.Insert(GLine, GInput1S + ' ' + GOpS + ' = ' + GOutputS)
+        LStr:= GDisp.Inp1 + ' ' + GDisp.Op + ' = ' + GDisp.Res
       Else
         If GOp In GHist3 Then
-          Form2.mmoHistory.Lines.Insert(GLine, GOpS + ' ' + GInput1S + ' = ' + GOutputS)
+          LStr:= GDisp.Op + ' ' + GDisp.Inp1 + ' = ' + GDisp.Res
         Else
-          Form2.mmoHistory.Lines.Insert(GLine, GInput1S + ' ' + GOpS + ' ' + GInput2S + ' = ' + GOutputS);
+          LStr:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
 
+    Form2.mmoHistory.Lines.Insert(GLine, LStr);
     Inc(GLine);
   End;
 
@@ -268,247 +286,247 @@ End;
 
 Procedure TForm1.btnEqClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
-  GInput2:= ConvertSF(LInput);
+  LInp:= lblField.Caption;
+  GMem.Inp2:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnBackClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EBACK;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnFactorialClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EFACTORIAL;
-  GInput1:= ConvertSF(LInput);
-  If (Trunc(GInput1) <> GInput1) Or (GInput1 < 0) Or (GInput1 > 12) Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If (Trunc(GMem.Inp1) <> GMem.Inp1) Or (GMem.Inp1 < 0) Or (GMem.Inp1 > 12) Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnDFactorialClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EDFACTORIAL;
-  GInput1:= ConvertSF(LInput);
-  If (Trunc(GInput1) <> GInput1) Or (GInput1 < 0) Or (GInput1 > 19) Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If (Trunc(GMem.Inp1) <> GMem.Inp1) Or (GMem.Inp1 < 0) Or (GMem.Inp1 > 19) Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnPosNegClick(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '-';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btnSquareClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ESQUARE;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnSqrtClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ESQRT;
-  GInput1:= ConvertSF(LInput);
-  If GInput1 < 0 Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If GMem.Inp1 < 0 Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnPowerClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EPOWER;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnPercentClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EPERCENT;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMultipleClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EMULTIPLE;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnDivideClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EDIVIDE;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnPlusClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EPLUS;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMinusClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EMINUS;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
 
 Procedure TForm1.btn0Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '0';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn1Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '1';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn2Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '2';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn3Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '3';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn4Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '4';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn5Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '5';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn6Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '6';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn7Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '7';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn8Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '8';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btn9Click(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '9';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btnCommaClick(Sender: TObject);
 Var
-  LInput, LAdd: String;
+  LInp, LAdd: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   LAdd:= '.';
-  AddNum(LInput, LAdd);
-  lblField.Caption:= LInput;
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
 End;
 
 Procedure TForm1.btnClearClick(Sender: TObject);
@@ -528,172 +546,172 @@ End;
 
 Procedure TForm1.btnTenClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ETEN;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnSinClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ESIN;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnCosClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ECOS;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnAtgClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EARCTG;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnTgClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ETG;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnCtgClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ECTG;
-  GInput1:= ConvertSF(LInput);
-  If GInput1 = 0 Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If GMem.Inp1 = 0 Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnShClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ESH;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnChClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ECH;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnThClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ETH;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnCthClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ECTH;
-  GInput1:= ConvertSF(LInput);
-  If GInput1 = 0 Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If GMem.Inp1 = 0 Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnLgClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ELG;
-  GInput1:= ConvertSF(LInput);
-  If GInput1 <= 0 Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If GMem.Inp1 <= 0 Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnLnClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ELN;
-  GInput1:= ConvertSF(LInput);
-  If GInput1 <= 0 Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If GMem.Inp1 <= 0 Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnCubeClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= ECUBE;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnActgClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EARCCTG;
-  GInput1:= ConvertSF(LInput);
+  GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
 
 Procedure TForm1.btnAsinClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EARCSIN;
-  GInput1:= ConvertSF(LInput);
-  If (GInput1 > 1) Or (GInput1 < -1) Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Display();
 End;
 
 Procedure TForm1.btnAcosClick(Sender: TObject);
 Var
-  LInput: String;
+  LInp: String;
 Begin
-  LInput:= lblField.Caption;
+  LInp:= lblField.Caption;
   GOp:= EARCCOS;
-  GInput1:= ConvertSF(LInput);
-  If (GInput1 > 1) Or (GInput1 < -1) Then
+  GMem.Inp1:= ConvertSF(LInp);
+  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Display();
 End;

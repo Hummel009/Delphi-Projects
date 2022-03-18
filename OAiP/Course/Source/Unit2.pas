@@ -1,27 +1,26 @@
-unit Unit2;
+Unit Unit2;
 
-interface
+Interface
 
-uses
+Uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls;
 
-type
-  TForm2 = class(TForm)
+Type
+  TForm2 = Class(TForm)
     mmoHistory: TMemo;
-  private
+  Private
     { Private declarations }
-  public
+  Public
     { Public declarations }
-  end;
+  End;
 
-var
+Var
   Form2: TForm2;
 
 Implementation
 
 {$R *.dfm}
-
 
 Initialization
 End.

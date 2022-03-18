@@ -690,6 +690,6 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 43
-    OnClick = btn10Click
+    OnClick = btnHClick
   end
 end

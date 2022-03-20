@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 656
-  Top = 197
+  Left = 655
+  Top = 199
   Width = 721
   Height = 612
   AutoSize = True
@@ -168,8 +168,8 @@ object Form1: TForm1
     OnClick = btn9Click
   end
   object btnPercent: TButton
-    Left = 0
-    Top = 80
+    Left = 432
+    Top = 208
     Width = 137
     Height = 57
     Caption = '%'
@@ -585,5 +585,20 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 36
     OnClick = btnClearClick
+  end
+  object btnFloat: TButton
+    Left = 0
+    Top = 80
+    Width = 137
+    Height = 57
+    Caption = 'float'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 37
+    OnClick = btnFloatClick
   end
 end

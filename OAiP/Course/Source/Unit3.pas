@@ -119,7 +119,7 @@ Begin
     GError:= True;
   Form1.Display();
   Dispose(LInp);
-End;        
+End;
 
 Procedure TForm3.btnScClick(Sender: TObject);
 Var
@@ -197,7 +197,7 @@ Begin
   GMem.Inp1:= Form1.ConvertSF(LInp^);
   Form1.Display();
   Dispose(LInp);
-End;     
+End;
 
 Procedure TForm3.btnAscClick(Sender: TObject);
 Var

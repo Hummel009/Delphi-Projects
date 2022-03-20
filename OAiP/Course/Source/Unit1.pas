@@ -59,6 +59,8 @@ Type
     btn13: TButton;
     btnExp: TButton;
     btn14: TButton;
+    btnFloat: TButton;
+    Procedure btnFloatClick(Sender: TObject);
     Procedure btn0Click(Sender: TObject);
     Procedure btn1Click(Sender: TObject);
     Procedure btn2Click(Sender: TObject);
@@ -213,37 +215,64 @@ Begin
       GMem.Res:= (1 / Cos(GMem.Inp1)) - 1;
     EEXCSC:
       GMem.Res:= (1 / Sin(GMem.Inp1)) - 1;
+    ENULL:
   End;
 End;
 
 Function TForm1.ConvertSF(Var FInp: String): Real;
 Var
   LInp: ^Real;
-  LPos: ^Integer;
+  LPos, LLim: ^Integer;
+  LPower: ^String;
 Begin
-  New(LInp);
   New(LPos);
-  GError:= False;
-  Val(FInp, LInp^, LPos^);
-  If LPos^ <> 0 Then
+  If (Pos('E', FInp) > 0) Then
   Begin
-    GError:= True;
-    Result:= 0;
-  End
-  Else
-    Result:= LInp^;
-  Dispose(LInp);
+    New(LPower);
+    New(LLim);
+    LPower^:= FInp;
+    Delete(LPower^, 1, pos('E', LPower^));
+    Val(LPower^, LLim^, LPos^);
+    If LLim^ >= 308 Then
+    Begin
+      GError:= True;
+      Result:= 0;
+    End;
+    Dispose(LPower);
+    Dispose(LLim);
+  End;
+
+  If Not GError Then
+  Begin
+    New(LInp);
+    Val(FInp, LInp^, LPos^);
+    If LPos^ <> 0 Then
+    Begin
+      GError:= True;
+      Result:= 0;
+    End
+    Else
+      Result:= LInp^;
+    Dispose(LInp);
+  End;
   Dispose(LPos);
 End;
 
 Procedure TForm1.AddNum(Var FInp: String; Var FAdd: String);
 Begin
-  If (FInp = 'Error. No correct input') Or (FInp = '0') And (FAdd <> '.') Then
+  If (Length(FInp) >= 32) And (FAdd <> '.') Then
+    FAdd:= '';
+  If (FInp = 'Error. No correct input') Or (FInp = '0') And (FAdd <> '.') And (FAdd <> 'E') Then
     FInp:= '';
   If (Pos('.', FInp) > 1) And (FAdd = '.') Then
     FAdd:= '';
-  If (Pos('-', FInp) > 0) And (FAdd = '-') Then
+  If (Pos('E', FInp) > 1) And (FAdd = 'E') Then
     FAdd:= '';
+  If (FInp = '') And (FAdd = 'E') Then
+    FAdd:= '';
+  If (FInp <> '') And (FAdd = '-') Then
+    FAdd:= '';
+
   If GClear Then
   Begin
     FInp:= '';
@@ -254,6 +283,9 @@ End;
 
 Procedure TForm1.Display();
 Begin
+  If (GOp = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
+    GError:= True;
+
   If GOp <> ENULL Then
     If (Not GError) Then
     Begin
@@ -264,6 +296,7 @@ Begin
     Else
       lblField.Caption:= 'Error. No correct input';
   GOp:= ENULL;
+  GError:= False;
   With GMem Do
   Begin
     Inp1:= 0;
@@ -376,6 +409,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= ESQUARE;
   GMem.Inp1:= ConvertSF(LInp^);
+  If GMem.Inp1 >= 1E154 Then
+    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -402,6 +437,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= EPOWER;
   GMem.Inp1:= ConvertSF(LInp^);
+  If GMem.Inp1 >= 1E154 Then
+    GError:= True;
   lblField.Caption:= '';
   Dispose(LInp);
 End;
@@ -530,6 +567,20 @@ Begin
   New(LAdd);
   LInp^:= lblField.Caption;
   LAdd^:= '4';
+  AddNum(LInp^, LAdd^);
+  lblField.Caption:= LInp^;
+  Dispose(LInp);
+  Dispose(LAdd);
+End;
+
+Procedure TForm1.btnFloatClick(Sender: TObject);
+Var
+  LInp, LAdd: ^String;
+Begin
+  New(LInp);
+  New(LAdd);
+  LInp^:= lblField.Caption;
+  LAdd^:= 'E';
   AddNum(LInp^, LAdd^);
   lblField.Caption:= LInp^;
   Dispose(LInp);
@@ -665,6 +716,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= EEXP;
   GMem.Inp1:= ConvertSF(LInp^);
+  If (GMem.Inp1 >= 710) Then
+    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -677,6 +730,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= ETWO;
   GMem.Inp1:= ConvertSF(LInp^);
+  If (GMem.Inp1 >= 1024) Then
+    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -689,6 +744,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= ETEN;
   GMem.Inp1:= ConvertSF(LInp^);
+  If (GMem.Inp1 >= 308) Then
+    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -729,6 +786,8 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= ECUBE;
   GMem.Inp1:= ConvertSF(LInp^);
+  If GMem.Inp1 >= 1E154 Then
+    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -753,6 +812,7 @@ End;
 Initialization
   Begin
     GOp:= ENULL;
+    GError:= False;
   End;
 End.
 

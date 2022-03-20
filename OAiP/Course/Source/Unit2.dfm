@@ -1,8 +1,8 @@
 object Form2: TForm2
-  Left = 1299
-  Top = 238
+  Left = 1385
+  Top = 198
   Width = 497
-  Height = 636
+  Height = 612
   AutoSize = True
   Caption = 'History'
   Color = clBtnFace
@@ -18,7 +18,7 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 489
-    Height = 609
+    Height = 585
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -29

@@ -19,7 +19,7 @@ Type
   TDisp = Record
     Inp1, Inp2, Res, Op: String;
   End;
-  TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL);
+  TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL, EEXP, ETWO, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC);
   TForm1 = Class(TForm)
     lblField: TLabel;
     btn1: TButton;
@@ -50,22 +50,15 @@ Type
     btnPosNeg: TButton;
     btnTen: TButton;
     btnFact: TButton;
-    btnSin: TButton;
-    btnTg: TButton;
-    btnCtg: TButton;
-    btnCos: TButton;
-    btnAsin: TButton;
-    btnAtg: TButton;
-    btnActg: TButton;
-    btnAcos: TButton;
-    btnSh: TButton;
-    btnTh: TButton;
-    btnCth: TButton;
-    btnCh: TButton;
     btnLn: TButton;
     btnLg: TButton;
     btnCube: TButton;
     btn10: TButton;
+    btn11: TButton;
+    btn12: TButton;
+    btn13: TButton;
+    btnExp: TButton;
+    btn14: TButton;
     Procedure btn0Click(Sender: TObject);
     Procedure btn1Click(Sender: TObject);
     Procedure btn2Click(Sender: TObject);
@@ -77,6 +70,7 @@ Type
     Procedure btn8Click(Sender: TObject);
     Procedure btn9Click(Sender: TObject);
     Procedure btnCommaClick(Sender: TObject);
+    Procedure btnClearAllClick(Sender: TObject);
     Procedure btnClearClick(Sender: TObject);
     Procedure btnEilerClick(Sender: TObject);
     Procedure btnPeeClick(Sender: TObject);
@@ -94,22 +88,13 @@ Type
     Procedure btnDFactorialClick(Sender: TObject);
     Procedure btnPercentClick(Sender: TObject);
     Procedure btnTenClick(Sender: TObject);
-    Procedure btnSinClick(Sender: TObject);
-    Procedure btnCosClick(Sender: TObject);
-    Procedure btnAtgClick(Sender: TObject);
-    Procedure btnTgClick(Sender: TObject);
-    Procedure btnCtgClick(Sender: TObject);
-    Procedure btnShClick(Sender: TObject);
-    Procedure btnChClick(Sender: TObject);
-    Procedure btnThClick(Sender: TObject);
-    Procedure btnCthClick(Sender: TObject);
     Procedure btnLgClick(Sender: TObject);
     Procedure btnLnClick(Sender: TObject);
     Procedure btnCubeClick(Sender: TObject);
-    Procedure btnActgClick(Sender: TObject);
-    Procedure btnAsinClick(Sender: TObject);
-    Procedure btnAcosClick(Sender: TObject);
-    Procedure btnHClick(Sender: TObject);
+    Procedure btnTwoClick(Sender: TObject);
+    Procedure btnExpClick(Sender: TObject);
+    Procedure btnHistClick(Sender: TObject);
+    Procedure btnTrigClick(Sender: TObject);
     Function ConvertSF(Var FInp: String): Real;
     Procedure AddNum(Var FInp: String; Var FAdd: String);
     Procedure Display();
@@ -123,12 +108,12 @@ Type
 Const
   E = 2.718281828459045;
   P = 3.141592653589793;
-  GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '^', 'sin', 'sqrt', 'tg', '^ 2', '^ 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ^', '1 /', '!!');
+  GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '^', 'sin', 'sqrt', 'tg', '^ 2', '^ 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ^', '1 /', '!!', 'exp', '2 ^', 'sec', 'cosec', 'arcsec', 'arccosec', 'sch', 'csch', 'versin', 'vercos', 'haversin', 'havercos', 'exsec', 'excosec');
   GFact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
   GFact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
-  GHist1: Set Of TOp = [EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, ESIN, ESQRT, ETG, ELG, ELN, ECH, ESH, ETH, ECTH];
+  GHist1: Set Of TOp = [EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, ESIN, ESQRT, ETG, ELG, ELN, ECH, ESH, ETH, ECTH, EEXP, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC];
   GHist2: Set Of TOp = [EFACTORIAL, EDFACTORIAL, ESQUARE, ECUBE];
-  GHist3: Set Of TOp = [EBACK, ETEN];
+  GHist3: Set Of TOp = [EBACK, ETEN, ETWO];
 
 Var
   Form1: TForm1;
@@ -140,7 +125,7 @@ Var
 
 Implementation
 
-Uses Unit2;
+Uses Unit2, Unit3;
 {$R *.dfm}
 
 Procedure Calculate();
@@ -179,9 +164,9 @@ Begin
     EPERCENT:
       GMem.Res:= GMem.Inp2 * GMem.Inp1 / 100;
     ESQUARE:
-      GMem.Res:= GMem.Inp1 * GMem.Inp1;
+      GMem.Res:= Power(GMem.Inp1, 2);
     ECUBE:
-      GMem.Res:= GMem.Inp1 * GMem.Inp1 * GMem.Inp1;
+      GMem.Res:= Power(GMem.Inp1, 3);
     ELG:
       GMem.Res:= Log10(GMem.Inp1);
     ELN:
@@ -200,6 +185,34 @@ Begin
       GMem.Res:= 1 / GMem.Inp1;
     EDFACTORIAL:
       GMem.Res:= GFact2[Trunc(GMem.Inp1)];
+    ETWO:
+      GMem.Res:= Power(2, GMem.Inp1);
+    EEXP:
+      GMem.Res:= Power(E, GMem.Inp1);
+    ESC:
+      GMem.Res:= 1 / Cos(GMem.Inp1);
+    ECSC:
+      GMem.Res:= 1 / Sin(GMem.Inp1);
+    EARCSC:
+      GMem.Res:= 1 / Arccos(1 / GMem.Inp1);
+    EARCCSC:
+      GMem.Res:= 1 / Arcsin(1 / GMem.Inp1);
+    ESCH:
+      GMem.Res:= 1 / ((Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2);
+    ECSCH:
+      GMem.Res:= 1 / ((Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2);
+    EVERSIN:
+      GMem.Res:= 1 - Cos(GMem.Inp1);
+    EVERCOS:
+      GMem.Res:= 1 - Sin(GMem.Inp1);
+    EHAVERSIN:
+      GMem.Res:= (1 - Cos(GMem.Inp1)) / 2;
+    EHAVERCOS:
+      GMem.Res:= (1 - Sin(GMem.Inp1)) / 2;
+    EEXSC:
+      GMem.Res:= (1 / Cos(GMem.Inp1)) - 1;
+    EEXCSC:
+      GMem.Res:= (1 / Sin(GMem.Inp1)) - 1;
   End;
 End;
 
@@ -603,12 +616,35 @@ Begin
   LAdd^:= '.';
   AddNum(LInp^, LAdd^);
   lblField.Caption:= LInp^;
+  Dispose(LInp);
   Dispose(LAdd);
 End;
 
-Procedure TForm1.btnClearClick(Sender: TObject);
+Procedure TForm1.btnClearAllClick(Sender: TObject);
 Begin
   lblField.Caption:= '0';
+End;
+
+Procedure TForm1.btnClearClick(Sender: TObject);
+Var
+  LInp: ^String;
+  LLen: ^Integer;
+Begin
+  If (lblField.Caption = 'Error. No correct input') Then
+    lblField.Caption:= '0'
+  Else
+  Begin
+    New(LInp);
+    New(LLen);
+    LInp^:= lblField.Caption;
+    LLen^:= Length(LInp^);
+    Delete(LInp^, LLen^, 1);
+    lblField.Caption:= LInp^;
+    If (LLen^ = 1) Then
+      lblField.Caption:= '0';
+    Dispose(LInp);
+    Dispose(LLen);
+  End;
 End;
 
 Procedure TForm1.btnEilerClick(Sender: TObject);
@@ -621,6 +657,30 @@ Begin
   lblField.Caption:= '3.141592653589793';
 End;
 
+Procedure TForm1.btnExpClick(Sender: TObject);
+Var
+  LInp: ^String;
+Begin
+  New(LInp);
+  LInp^:= lblField.Caption;
+  GOp:= EEXP;
+  GMem.Inp1:= ConvertSF(LInp^);
+  Display();
+  Dispose(LInp);
+End;
+
+Procedure TForm1.btnTwoClick(Sender: TObject);
+Var
+  LInp: ^String;
+Begin
+  New(LInp);
+  LInp^:= lblField.Caption;
+  GOp:= ETWO;
+  GMem.Inp1:= ConvertSF(LInp^);
+  Display();
+  Dispose(LInp);
+End;
+
 Procedure TForm1.btnTenClick(Sender: TObject);
 Var
   LInp: ^String;
@@ -629,118 +689,6 @@ Begin
   LInp^:= lblField.Caption;
   GOp:= ETEN;
   GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnSinClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ESIN;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnCosClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ECOS;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnAtgClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= EARCTG;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnTgClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ETG;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnCtgClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ECTG;
-  GMem.Inp1:= ConvertSF(LInp^);
-  If GMem.Inp1 = 0 Then
-    GError:= True;
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnShClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ESH;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnChClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ECH;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnThClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ETH;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnCthClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= ECTH;
-  GMem.Inp1:= ConvertSF(LInp^);
-  If GMem.Inp1 = 0 Then
-    GError:= True;
   Display();
   Dispose(LInp);
 End;
@@ -785,47 +733,7 @@ Begin
   Dispose(LInp);
 End;
 
-Procedure TForm1.btnActgClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= EARCCTG;
-  GMem.Inp1:= ConvertSF(LInp^);
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnAsinClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= EARCSIN;
-  GMem.Inp1:= ConvertSF(LInp^);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnAcosClick(Sender: TObject);
-Var
-  LInp: ^String;
-Begin
-  New(LInp);
-  LInp^:= lblField.Caption;
-  GOp:= EARCCOS;
-  GMem.Inp1:= ConvertSF(LInp^);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Display();
-  Dispose(LInp);
-End;
-
-Procedure TForm1.btnHClick(Sender: TObject);
+Procedure TForm1.btnHistClick(Sender: TObject);
 Var
   LLine: ^Integer;
 Begin
@@ -835,6 +743,11 @@ Begin
   If AnsiPos('mmoHistory', Form2.mmoHistory.Lines[LLine^]) <> 0 Then
     Form2.mmoHistory.Lines.Delete(LLine^);
   Dispose(LLine);
+End;
+
+Procedure TForm1.btnTrigClick(Sender: TObject);
+Begin
+  Form3.show;
 End;
 
 Initialization

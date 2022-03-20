@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 654
-  Top = 156
-  Width = 578
-  Height = 804
+  Left = 656
+  Top = 197
+  Width = 721
+  Height = 612
   AutoSize = True
-  Caption = 'Delphi Calculator v1.2'
+  Caption = 'Delphi Calculator v2.0'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object Form1: TForm1
   object lblField: TLabel
     Left = 0
     Top = 0
-    Width = 570
+    Width = 713
     Height = 73
     Align = alCustom
     Alignment = taRightJustify
@@ -33,8 +33,8 @@ object Form1: TForm1
     ParentFont = False
   end
   object btn1: TButton
-    Left = 0
-    Top = 144
+    Left = 144
+    Top = 400
     Width = 137
     Height = 57
     Caption = '1'
@@ -48,8 +48,8 @@ object Form1: TForm1
     OnClick = btn1Click
   end
   object btn2: TButton
-    Left = 144
-    Top = 144
+    Left = 288
+    Top = 400
     Width = 137
     Height = 57
     Caption = '2'
@@ -63,8 +63,8 @@ object Form1: TForm1
     OnClick = btn2Click
   end
   object btn3: TButton
-    Left = 288
-    Top = 144
+    Left = 432
+    Top = 400
     Width = 137
     Height = 57
     Caption = '3'
@@ -78,8 +78,8 @@ object Form1: TForm1
     OnClick = btn3Click
   end
   object btn4: TButton
-    Left = 0
-    Top = 208
+    Left = 144
+    Top = 336
     Width = 137
     Height = 57
     Caption = '4'
@@ -93,8 +93,8 @@ object Form1: TForm1
     OnClick = btn4Click
   end
   object btn5: TButton
-    Left = 144
-    Top = 208
+    Left = 288
+    Top = 336
     Width = 137
     Height = 57
     Caption = '5'
@@ -108,8 +108,8 @@ object Form1: TForm1
     OnClick = btn5Click
   end
   object btn6: TButton
-    Left = 288
-    Top = 208
+    Left = 432
+    Top = 336
     Width = 137
     Height = 57
     Caption = '6'
@@ -123,7 +123,7 @@ object Form1: TForm1
     OnClick = btn6Click
   end
   object btn7: TButton
-    Left = 0
+    Left = 144
     Top = 272
     Width = 137
     Height = 57
@@ -138,7 +138,7 @@ object Form1: TForm1
     OnClick = btn7Click
   end
   object btn8: TButton
-    Left = 144
+    Left = 288
     Top = 272
     Width = 137
     Height = 57
@@ -153,7 +153,7 @@ object Form1: TForm1
     OnClick = btn8Click
   end
   object btn9: TButton
-    Left = 288
+    Left = 432
     Top = 272
     Width = 137
     Height = 57
@@ -168,8 +168,8 @@ object Form1: TForm1
     OnClick = btn9Click
   end
   object btnPercent: TButton
-    Left = 288
-    Top = 720
+    Left = 0
+    Top = 80
     Width = 137
     Height = 57
     Caption = '%'
@@ -183,8 +183,8 @@ object Form1: TForm1
     OnClick = btnPercentClick
   end
   object btnComma: TButton
-    Left = 288
-    Top = 336
+    Left = 432
+    Top = 464
     Width = 137
     Height = 57
     Caption = '.'
@@ -198,8 +198,8 @@ object Form1: TForm1
     OnClick = btnCommaClick
   end
   object btnDivide: TButton
-    Left = 432
-    Top = 80
+    Left = 576
+    Top = 208
     Width = 137
     Height = 57
     Caption = ':'
@@ -213,8 +213,8 @@ object Form1: TForm1
     OnClick = btnDivideClick
   end
   object btnMultiple: TButton
-    Left = 432
-    Top = 144
+    Left = 576
+    Top = 272
     Width = 137
     Height = 57
     Caption = '*'
@@ -228,8 +228,8 @@ object Form1: TForm1
     OnClick = btnMultipleClick
   end
   object btnMunus: TButton
-    Left = 432
-    Top = 208
+    Left = 576
+    Top = 336
     Width = 137
     Height = 57
     Caption = '-'
@@ -243,8 +243,8 @@ object Form1: TForm1
     OnClick = btnMinusClick
   end
   object btnPlus: TButton
-    Left = 432
-    Top = 272
+    Left = 576
+    Top = 400
     Width = 137
     Height = 57
     Caption = '+'
@@ -258,11 +258,11 @@ object Form1: TForm1
     OnClick = btnPlusClick
   end
   object btnClr: TButton
-    Left = 1
+    Left = 576
     Top = 80
     Width = 137
     Height = 57
-    Caption = 'C'
+    Caption = 'CE'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -35
@@ -270,10 +270,10 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 15
-    OnClick = btnClearClick
+    OnClick = btnClearAllClick
   end
   object btnE: TButton
-    Left = 145
+    Left = 288
     Top = 80
     Width = 137
     Height = 57
@@ -288,7 +288,7 @@ object Form1: TForm1
     OnClick = btnEilerClick
   end
   object btnP: TButton
-    Left = 289
+    Left = 144
     Top = 80
     Width = 137
     Height = 57
@@ -303,8 +303,8 @@ object Form1: TForm1
     OnClick = btnPeeClick
   end
   object btnEq: TButton
-    Left = 433
-    Top = 336
+    Left = 576
+    Top = 464
     Width = 137
     Height = 57
     Caption = '='
@@ -318,8 +318,8 @@ object Form1: TForm1
     OnClick = btnEqClick
   end
   object btn0: TButton
-    Left = 144
-    Top = 336
+    Left = 288
+    Top = 464
     Width = 137
     Height = 57
     Caption = '0'
@@ -334,7 +334,7 @@ object Form1: TForm1
   end
   object btnSqrt: TButton
     Left = 0
-    Top = 400
+    Top = 208
     Width = 137
     Height = 57
     Caption = 'sqrt'
@@ -348,11 +348,11 @@ object Form1: TForm1
     OnClick = btnSqrtClick
   end
   object btnPower: TButton
-    Left = 144
-    Top = 400
+    Left = 288
+    Top = 144
     Width = 137
     Height = 57
-    Caption = '^'
+    Caption = 'x^y'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
@@ -363,11 +363,11 @@ object Form1: TForm1
     OnClick = btnPowerClick
   end
   object btnSquare: TButton
-    Left = 288
-    Top = 400
+    Left = 0
+    Top = 144
     Width = 137
     Height = 57
-    Caption = '^2'
+    Caption = 'x^2'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
@@ -379,7 +379,7 @@ object Form1: TForm1
   end
   object btnBack: TButton
     Left = 0
-    Top = 464
+    Top = 336
     Width = 137
     Height = 57
     Caption = '1/x'
@@ -394,7 +394,7 @@ object Form1: TForm1
   end
   object btnDFact: TButton
     Left = 288
-    Top = 464
+    Top = 208
     Width = 137
     Height = 57
     Caption = '!!'
@@ -408,8 +408,8 @@ object Form1: TForm1
     OnClick = btnDFactorialClick
   end
   object btnPosNeg: TButton
-    Left = 1
-    Top = 336
+    Left = 144
+    Top = 464
     Width = 137
     Height = 57
     Caption = '+/-'
@@ -423,11 +423,11 @@ object Form1: TForm1
     OnClick = btnPosNegClick
   end
   object btnTen: TButton
-    Left = 433
-    Top = 464
+    Left = 576
+    Top = 144
     Width = 137
     Height = 57
-    Caption = '10^'
+    Caption = '10^x'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
@@ -439,7 +439,7 @@ object Form1: TForm1
   end
   object btnFact: TButton
     Left = 144
-    Top = 464
+    Top = 208
     Width = 137
     Height = 57
     Caption = '!'
@@ -452,189 +452,9 @@ object Form1: TForm1
     TabOrder = 27
     OnClick = btnFactorialClick
   end
-  object btnSin: TButton
-    Left = 0
-    Top = 528
-    Width = 137
-    Height = 57
-    Caption = 'sin'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 28
-    OnClick = btnSinClick
-  end
-  object btnTg: TButton
-    Left = 288
-    Top = 528
-    Width = 137
-    Height = 57
-    Caption = 'tg'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 29
-    OnClick = btnTgClick
-  end
-  object btnCtg: TButton
-    Left = 433
-    Top = 528
-    Width = 137
-    Height = 57
-    Caption = 'ctg'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 30
-    OnClick = btnCtgClick
-  end
-  object btnCos: TButton
-    Left = 144
-    Top = 528
-    Width = 137
-    Height = 57
-    Caption = 'cos'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 31
-    OnClick = btnCosClick
-  end
-  object btnAsin: TButton
-    Left = 0
-    Top = 592
-    Width = 137
-    Height = 57
-    Caption = 'arcsin'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 32
-    OnClick = btnAsinClick
-  end
-  object btnAtg: TButton
-    Left = 288
-    Top = 592
-    Width = 137
-    Height = 57
-    Caption = 'arctg'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 33
-    OnClick = btnAtgClick
-  end
-  object btnActg: TButton
-    Left = 433
-    Top = 592
-    Width = 137
-    Height = 57
-    Caption = 'arcctg'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 34
-    OnClick = btnActgClick
-  end
-  object btnAcos: TButton
-    Left = 144
-    Top = 592
-    Width = 137
-    Height = 57
-    Caption = 'arccos'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 35
-    OnClick = btnAcosClick
-  end
-  object btnSh: TButton
-    Left = 0
-    Top = 656
-    Width = 137
-    Height = 57
-    Caption = 'sh'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 36
-    OnClick = btnShClick
-  end
-  object btnTh: TButton
-    Left = 288
-    Top = 656
-    Width = 137
-    Height = 57
-    Caption = 'th'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 37
-    OnClick = btnThClick
-  end
-  object btnCth: TButton
-    Left = 433
-    Top = 656
-    Width = 137
-    Height = 57
-    Caption = 'cth'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 38
-    OnClick = btnCthClick
-  end
-  object btnCh: TButton
-    Left = 144
-    Top = 656
-    Width = 137
-    Height = 57
-    Caption = 'ch'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 39
-    OnClick = btnChClick
-  end
   object btnLn: TButton
-    Left = 144
-    Top = 720
+    Left = 0
+    Top = 464
     Width = 137
     Height = 57
     Caption = 'ln'
@@ -644,12 +464,12 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 40
+    TabOrder = 28
     OnClick = btnLnClick
   end
   object btnLg: TButton
     Left = 0
-    Top = 720
+    Top = 400
     Width = 137
     Height = 57
     Caption = 'lg'
@@ -659,37 +479,111 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 41
+    TabOrder = 29
     OnClick = btnLgClick
   end
   object btnCube: TButton
-    Left = 432
-    Top = 400
+    Left = 144
+    Top = 144
     Width = 137
     Height = 57
-    Caption = '^3'
+    Caption = 'x^3'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 42
+    TabOrder = 30
     OnClick = btnCubeClick
   end
   object btn10: TButton
-    Left = 432
-    Top = 720
+    Left = 576
+    Top = 528
     Width = 137
     Height = 57
-    Caption = 'H'
+    Caption = 'history'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 43
-    OnClick = btnHClick
+    TabOrder = 31
+    OnClick = btnHistClick
+  end
+  object btn11: TButton
+    Left = 0
+    Top = 528
+    Width = 281
+    Height = 57
+    Caption = 'graphics'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 32
+  end
+  object btn12: TButton
+    Left = 288
+    Top = 528
+    Width = 281
+    Height = 57
+    Caption = 'trigonometry'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 33
+    OnClick = btnTrigClick
+  end
+  object btn13: TButton
+    Left = 432
+    Top = 144
+    Width = 137
+    Height = 57
+    Caption = '2^x'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 34
+    OnClick = btnTwoClick
+  end
+  object btnExp: TButton
+    Left = 0
+    Top = 272
+    Width = 137
+    Height = 57
+    Caption = 'exp'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 35
+    OnClick = btnExpClick
+  end
+  object btn14: TButton
+    Left = 432
+    Top = 80
+    Width = 137
+    Height = 57
+    Caption = 'C'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 36
+    OnClick = btnClearClick
   end
 end

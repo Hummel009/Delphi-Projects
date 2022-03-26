@@ -819,7 +819,7 @@ End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
 Var
-  LArr: Array[1..1000000] Of Real;
+  LArr: Array[1..100000] Of Real;
   I, LLen: Integer;
   LFile: TextFile;
   LData: String;

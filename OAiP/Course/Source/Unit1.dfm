@@ -1,6 +1,6 @@
 object Form1: TForm1
   Left = 655
-  Top = 199
+  Top = 200
   Width = 721
   Height = 612
   AutoSize = True
@@ -257,7 +257,7 @@ object Form1: TForm1
     TabOrder = 14
     OnClick = btnPlusClick
   end
-  object btnClr: TButton
+  object btnClrAll: TButton
     Left = 576
     Top = 80
     Width = 137
@@ -347,7 +347,7 @@ object Form1: TForm1
     TabOrder = 20
     OnClick = btnSqrtClick
   end
-  object btnPower: TButton
+  object btnPowerY: TButton
     Left = 288
     Top = 144
     Width = 137
@@ -360,9 +360,9 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 21
-    OnClick = btnPowerClick
+    OnClick = btnPowerYClick
   end
-  object btnSquare: TButton
+  object btnPower2: TButton
     Left = 0
     Top = 144
     Width = 137
@@ -375,7 +375,7 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 22
-    OnClick = btnSquareClick
+    OnClick = btnPower2Click
   end
   object btnBack: TButton
     Left = 0
@@ -422,7 +422,7 @@ object Form1: TForm1
     TabOrder = 25
     OnClick = btnPosNegClick
   end
-  object btnTen: TButton
+  object btn10Power: TButton
     Left = 576
     Top = 144
     Width = 137
@@ -435,7 +435,7 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 26
-    OnClick = btnTenClick
+    OnClick = btn10PowerClick
   end
   object btnFact: TButton
     Left = 144
@@ -482,7 +482,7 @@ object Form1: TForm1
     TabOrder = 29
     OnClick = btnLgClick
   end
-  object btnCube: TButton
+  object btnPower3: TButton
     Left = 144
     Top = 144
     Width = 137
@@ -495,9 +495,9 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 30
-    OnClick = btnCubeClick
+    OnClick = btnPower3Click
   end
-  object btn10: TButton
+  object btnHist: TButton
     Left = 576
     Top = 528
     Width = 137
@@ -512,12 +512,12 @@ object Form1: TForm1
     TabOrder = 31
     OnClick = btnHistClick
   end
-  object btn11: TButton
+  object btnBulk: TButton
     Left = 0
     Top = 528
     Width = 281
     Height = 57
-    Caption = 'graphics'
+    Caption = 'bulk operation'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
@@ -525,8 +525,9 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 32
+    OnClick = btnBulkClick
   end
-  object btn12: TButton
+  object btnTrig: TButton
     Left = 288
     Top = 528
     Width = 281
@@ -541,7 +542,7 @@ object Form1: TForm1
     TabOrder = 33
     OnClick = btnTrigClick
   end
-  object btn13: TButton
+  object btn2Power: TButton
     Left = 432
     Top = 144
     Width = 137
@@ -554,7 +555,7 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 34
-    OnClick = btnTwoClick
+    OnClick = btn2PowerClick
   end
   object btnExp: TButton
     Left = 0
@@ -571,7 +572,7 @@ object Form1: TForm1
     TabOrder = 35
     OnClick = btnExpClick
   end
-  object btn14: TButton
+  object btnClr: TButton
     Left = 432
     Top = 80
     Width = 137
@@ -600,5 +601,23 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 37
     OnClick = btnFloatClick
+  end
+  object mmoTemp: TMemo
+    Left = 16
+    Top = 0
+    Width = 1
+    Height = 1
+    Lines.Strings = (
+      'm'
+      'm'
+      'o'
+      'T'
+      'e'
+      'm'
+      'p')
+    TabOrder = 38
+  end
+  object dlgOpen1: TOpenDialog
+    Top = 528
   end
 end

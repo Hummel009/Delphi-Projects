@@ -21,7 +21,6 @@ Type
   End;
   TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL, EEXP, ETWO, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC);
   TForm1 = Class(TForm)
-    lblField: TLabel;
     btn1: TButton;
     btn2: TButton;
     btn3: TButton;
@@ -37,29 +36,32 @@ Type
     btnMultiple: TButton;
     btnMunus: TButton;
     btnPlus: TButton;
-    btnClr: TButton;
+    btnClrAll: TButton;
     btnE: TButton;
     btnP: TButton;
     btnEq: TButton;
     btn0: TButton;
     btnSqrt: TButton;
-    btnPower: TButton;
-    btnSquare: TButton;
+    btnPowerY: TButton;
+    btnPower2: TButton;
     btnBack: TButton;
     btnDFact: TButton;
     btnPosNeg: TButton;
-    btnTen: TButton;
+    btn10Power: TButton;
     btnFact: TButton;
     btnLn: TButton;
     btnLg: TButton;
-    btnCube: TButton;
-    btn10: TButton;
-    btn11: TButton;
-    btn12: TButton;
-    btn13: TButton;
+    btnPower3: TButton;
+    btnHist: TButton;
+    btnBulk: TButton;
+    btnTrig: TButton;
+    btn2Power: TButton;
     btnExp: TButton;
-    btn14: TButton;
+    btnClr: TButton;
     btnFloat: TButton;
+    dlgOpen1: TOpenDialog;
+    lblField: TLabel;
+    mmoTemp: TMemo;
     Procedure btnFloatClick(Sender: TObject);
     Procedure btn0Click(Sender: TObject);
     Procedure btn1Click(Sender: TObject);
@@ -82,18 +84,18 @@ Type
     Procedure btnDivideClick(Sender: TObject);
     Procedure btnMinusClick(Sender: TObject);
     Procedure btnSqrtClick(Sender: TObject);
-    Procedure btnPowerClick(Sender: TObject);
-    Procedure btnSquareClick(Sender: TObject);
+    Procedure btnPowerYClick(Sender: TObject);
+    Procedure btnPower2Click(Sender: TObject);
     Procedure btnPosNegClick(Sender: TObject);
     Procedure btnBackClick(Sender: TObject);
     Procedure btnFactorialClick(Sender: TObject);
     Procedure btnDFactorialClick(Sender: TObject);
     Procedure btnPercentClick(Sender: TObject);
-    Procedure btnTenClick(Sender: TObject);
+    Procedure btn10PowerClick(Sender: TObject);
     Procedure btnLgClick(Sender: TObject);
     Procedure btnLnClick(Sender: TObject);
-    Procedure btnCubeClick(Sender: TObject);
-    Procedure btnTwoClick(Sender: TObject);
+    Procedure btnPower3Click(Sender: TObject);
+    Procedure btn2PowerClick(Sender: TObject);
     Procedure btnExpClick(Sender: TObject);
     Procedure btnHistClick(Sender: TObject);
     Procedure btnTrigClick(Sender: TObject);
@@ -101,6 +103,7 @@ Type
     Procedure AddNum(Var FInp: String; Var FAdd: String);
     Procedure Display();
     Procedure Save();
+    Procedure btnBulkClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -219,6 +222,18 @@ Begin
   End;
 End;
 
+Procedure ResetData();
+Begin
+  GOp:= ENULL;
+  GError:= False;
+  With GMem Do
+  Begin
+    Inp1:= 0;
+    Inp2:= 0;
+    Res:= 0;
+  End;
+End;
+
 Function TForm1.ConvertSF(Var FInp: String): Real;
 Var
   LInp: ^Real;
@@ -241,7 +256,6 @@ Begin
     Dispose(LPower);
     Dispose(LLim);
   End;
-
   If Not GError Then
   Begin
     New(LInp);
@@ -295,14 +309,7 @@ Begin
     End
     Else
       lblField.Caption:= 'Error. No correct input';
-  GOp:= ENULL;
-  GError:= False;
-  With GMem Do
-  Begin
-    Inp1:= 0;
-    Inp2:= 0;
-    Res:= 0;
-  End;
+  ResetData();
 End;
 
 Procedure TForm1.Save();
@@ -401,7 +408,7 @@ Begin
   Dispose(LAdd);
 End;
 
-Procedure TForm1.btnSquareClick(Sender: TObject);
+Procedure TForm1.btnPower2Click(Sender: TObject);
 Var
   LInp: ^String;
 Begin
@@ -429,7 +436,7 @@ Begin
   Dispose(LInp);
 End;
 
-Procedure TForm1.btnPowerClick(Sender: TObject);
+Procedure TForm1.btnPowerYClick(Sender: TObject);
 Var
   LInp: ^String;
 Begin
@@ -674,6 +681,7 @@ End;
 Procedure TForm1.btnClearAllClick(Sender: TObject);
 Begin
   lblField.Caption:= '0';
+  ResetData();
 End;
 
 Procedure TForm1.btnClearClick(Sender: TObject);
@@ -722,7 +730,7 @@ Begin
   Dispose(LInp);
 End;
 
-Procedure TForm1.btnTwoClick(Sender: TObject);
+Procedure TForm1.btn2PowerClick(Sender: TObject);
 Var
   LInp: ^String;
 Begin
@@ -736,7 +744,7 @@ Begin
   Dispose(LInp);
 End;
 
-Procedure TForm1.btnTenClick(Sender: TObject);
+Procedure TForm1.btn10PowerClick(Sender: TObject);
 Var
   LInp: ^String;
 Begin
@@ -778,7 +786,7 @@ Begin
   Dispose(LInp);
 End;
 
-Procedure TForm1.btnCubeClick(Sender: TObject);
+Procedure TForm1.btnPower3Click(Sender: TObject);
 Var
   LInp: ^String;
 Begin
@@ -807,6 +815,70 @@ End;
 Procedure TForm1.btnTrigClick(Sender: TObject);
 Begin
   Form3.show;
+End;
+
+Procedure TForm1.btnBulkClick(Sender: TObject);
+Var
+  LArr: Array[1..1000] Of Real;
+  I, LLen: Integer;
+  LFile: TextFile;
+  LData: String;
+Begin
+  GError:= False;
+  With GMem Do
+  Begin
+    Inp1:= 0;
+    Inp2:= 0;
+    Res:= 0;
+  End;
+
+  lblField.Caption:= '';
+
+  If dlgOpen1.Execute Then
+  Begin
+    AssignFile(LFile, dlgOpen1.FileName);
+    Reset(LFile);
+    I:= 1;
+
+    While Not EoF(LFile) Do
+    Begin
+      ReadLn(LFile, LData);
+      LArr[I]:= ConvertSF(LData);
+      Inc(I);
+    End;
+
+    CloseFile(LFile);
+  End;
+
+  LLen:= I - 1;
+  For I:= 2 To LLen Do
+  Begin
+    Case GOp Of
+      EPLUS:
+        LArr[I]:= LArr[I - 1] + LArr[I];
+      EMINUS:
+        LArr[I]:= LArr[I - 1] - LArr[I];
+      EMULTIPLE:
+        LArr[I]:= LArr[I - 1] * LArr[I];
+      EDIVIDE:
+        LArr[I]:= LArr[I - 1] / LArr[I];
+      EPERCENT:
+        LArr[I]:= LArr[I] * LArr[I - 1] / 100
+    Else
+      GError:= True;
+    End;
+  End;
+  If Not GError Then
+  Begin
+    lblField.Caption:= FloatToStr(LArr[LLen]);
+    Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LArr[LLen]));
+  End
+  Else
+    lblField.Caption:= 'Error. No correct input';
+
+  For I:= 1 To LLen Do
+    LArr[I]:= 0;
+  ResetData();
 End;
 
 Initialization

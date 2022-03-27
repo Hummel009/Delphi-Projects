@@ -30,7 +30,7 @@ Var
   
 Begin
 
-  //Mulle every cell of matrix
+  //Multiple every cell of matrix
   For I:= 1 To 3 Do
     For J:= 1 To 3 Do
       Result[I, J]:= M[I, J] * N;

@@ -818,11 +818,18 @@ Begin
 End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
+Type
+  TLine = ^ELine;
+  ELine = Record
+    Data: Real;
+    Next, Prev: TLine;
+  End;
+
 Var
-  LArr: Array[1..100000] Of Real;
-  I, LLen: Integer;
   LFile: TextFile;
   LData: String;
+  LLine1, LLine2: TLine;
+  LRes: Real;
 Begin
   GError:= False;
   With GMem Do
@@ -838,46 +845,59 @@ Begin
   Begin
     AssignFile(LFile, dlgOpen1.FileName);
     Reset(LFile);
-    I:= 1;
 
+    New(LLine1);
+    LLine1^.Prev:= Nil;
     While Not EoF(LFile) Do
     Begin
+      LLine2:= LLine1;
       ReadLn(LFile, LData);
-      LArr[I]:= ConvertSF(LData);
-      Inc(I);
+      LLine1^.Data:= ConvertSF(LData);
+      New(LLine1);
+      LLine2^.Next:= LLine1;
+      LLine1^.Prev:= LLine2;
     End;
+    LLine2^.Next:= Nil;
+
+    //One step back
+    LLine1:= LLine1^.Prev;
+    LLine1^.Next:= Nil;
 
     CloseFile(LFile);
   End;
 
-  LLen:= I - 1;
-  For I:= 2 To LLen Do
-  Begin
-    Case GOp Of
-      EPLUS:
-        LArr[I]:= LArr[I - 1] + LArr[I];
-      EMINUS:
-        LArr[I]:= LArr[I - 1] - LArr[I];
-      EMULTIPLE:
-        LArr[I]:= LArr[I - 1] * LArr[I];
-      EDIVIDE:
-        LArr[I]:= LArr[I - 1] / LArr[I];
-      EPERCENT:
-        LArr[I]:= LArr[I] * LArr[I - 1] / 100
-    Else
-      GError:= True;
-    End;
+  Case GOp Of
+    EPLUS:
+      Begin
+        LRes:= 0;
+        While LLine1 <> Nil Do
+        Begin
+          LRes:= LRes + LLine1^.Data;
+          LLine1:= LLine1^.Prev;
+        End;
+      End;
+    EMULTIPLE:
+      Begin
+        LRes:= 1;
+        While LLine1 <> Nil Do
+        Begin
+          LRes:= LRes * LLine1^.Data;
+          LLine1:= LLine1^.Prev;
+        End;
+      End;
+  Else
+    GError:= True;
+    LRes:=0;
   End;
+
   If Not GError Then
   Begin
-    lblField.Caption:= FloatToStr(LArr[LLen]);
-    Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LArr[LLen]));
+    lblField.Caption:= FloatToStr(LRes);
+    Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LRes));
   End
   Else
     lblField.Caption:= 'Error. No correct input';
-
-  For I:= 1 To LLen Do
-    LArr[I]:= 0;
+  Dispose(LLine1);
   ResetData();
 End;
 
@@ -887,5 +907,4 @@ Initialization
     GError:= False;
   End;
 End.
-
 

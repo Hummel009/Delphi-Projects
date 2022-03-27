@@ -1,4 +1,4 @@
-Unit Unit1;
+п»їUnit Unit1;
 
 Interface
 
@@ -137,7 +137,7 @@ Implementation
 Uses Unit2, Unit3;
 {$R *.dfm}
 
-(* Получение приоритета *)
+(* РџРѕР»СѓС‡РµРЅРёРµ РїСЂРёРѕСЂРёС‚РµС‚Р° *)
 Function GetPriority(c: char): byte;
 Begin
   Result:= 0;
@@ -149,11 +149,11 @@ Begin
   End;
 End;
 
-(* Переводим строку с формулой в обратную польскую запись *)
+(* РџРµСЂРµРІРѕРґРёРј СЃС‚СЂРѕРєСѓ СЃ С„РѕСЂРјСѓР»РѕР№ РІ РѕР±СЂР°С‚РЅСѓСЋ РїРѕР»СЊСЃРєСѓСЋ Р·Р°РїРёСЃСЊ *)
 Procedure ParseString(s: AnsiString; Var _Stack: TStringList);
 Var
   Ms: TMemoryStream;
-  Temp: TStringList; // Временный стек для знаков и геометрических функций
+  Temp: TStringList; // Р’СЂРµРјРµРЅРЅС‹Р№ СЃС‚РµРє РґР»СЏ Р·РЅР°РєРѕРІ Рё РіРµРѕРјРµС‚СЂРёС‡РµСЃРєРёС… С„СѓРЅРєС†РёР№
   flag: boolean;
 Begin
   Temp:= TStringList.Create;
@@ -164,7 +164,7 @@ Begin
   Begin
     While Token <> toEof Do
     Begin
-         // Если это число, помещаем его в выходной стек
+         // Р•СЃР»Рё СЌС‚Рѕ С‡РёСЃР»Рѕ, РїРѕРјРµС‰Р°РµРј РµРіРѕ РІ РІС‹С…РѕРґРЅРѕР№ СЃС‚РµРє
       If (TokenString[1] In ['0'..'9']) Then
         If flag Then
         Begin
@@ -173,28 +173,28 @@ Begin
         End
         Else
           _Stack.Add(TokenString);
-         // Если это разделитель дробной части
+         // Р•СЃР»Рё СЌС‚Рѕ СЂР°Р·РґРµР»РёС‚РµР»СЊ РґСЂРѕР±РЅРѕР№ С‡Р°СЃС‚Рё
       If (TokenString[1] In [DecimalSeparator]) Then
       Begin
         _Stack[_Stack.Count - 1]:= _Stack[_Stack.Count - 1] + TokenString;
         flag:= true;
       End;
-         // Если это знак (или геометрическая функция), то...
+         // Р•СЃР»Рё СЌС‚Рѕ Р·РЅР°Рє (РёР»Рё РіРµРѕРјРµС‚СЂРёС‡РµСЃРєР°СЏ С„СѓРЅРєС†РёСЏ), С‚Рѕ...
       If (TokenString[1] In ['+', '-', '/', '*', '%', '^']) Then
       Begin
-            // ...если стек пустой, помещаем знак в стек ...
+            // ...РµСЃР»Рё СЃС‚РµРє РїСѓСЃС‚РѕР№, РїРѕРјРµС‰Р°РµРј Р·РЅР°Рє РІ СЃС‚РµРє ...
         If Temp.Count = 0 Then
           Temp.Add(TokenString)
         Else
         Begin
-               // ... если приоритер текущей операции выше, чем приоритет
-               // последней операции в стеке, помещаем знак в стек ...
+               // ... РµСЃР»Рё РїСЂРёРѕСЂРёС‚РµСЂ С‚РµРєСѓС‰РµР№ РѕРїРµСЂР°С†РёРё РІС‹С€Рµ, С‡РµРј РїСЂРёРѕСЂРёС‚РµС‚
+               // РїРѕСЃР»РµРґРЅРµР№ РѕРїРµСЂР°С†РёРё РІ СЃС‚РµРєРµ, РїРѕРјРµС‰Р°РµРј Р·РЅР°Рє РІ СЃС‚РµРє ...
           If GetPriority(TokenString[1]) > GetPriority(Temp.Strings[Temp.Count - 1][1]) Then
             Temp.Add(TokenString)
           Else
           Begin
-                  // ... иначе извлекаем из стека все операции, пока
-                  // не встретим операцию с более высшим приоритетом
+                  // ... РёРЅР°С‡Рµ РёР·РІР»РµРєР°РµРј РёР· СЃС‚РµРєР° РІСЃРµ РѕРїРµСЂР°С†РёРё, РїРѕРєР°
+                  // РЅРµ РІСЃС‚СЂРµС‚РёРј РѕРїРµСЂР°С†РёСЋ СЃ Р±РѕР»РµРµ РІС‹СЃС€РёРј РїСЂРёРѕСЂРёС‚РµС‚РѕРј
             While true Do
             Begin
               _Stack.Add(Temp.Strings[Temp.Count - 1]);
@@ -203,17 +203,17 @@ Begin
               If GetPriority(TokenString[1]) > GetPriority(Temp.Strings[Temp.Count - 1][1]) Then
                 Break;
             End;
-                  // Не забываем добавить в стек текущую операцию
+                  // РќРµ Р·Р°Р±С‹РІР°РµРј РґРѕР±Р°РІРёС‚СЊ РІ СЃС‚РµРє С‚РµРєСѓС‰СѓСЋ РѕРїРµСЂР°С†РёСЋ
             Temp.Add(TokenString);
           End;
         End;
       End;
-         // Если это открывающая скобка, помещаем ее в стек операций
+         // Р•СЃР»Рё СЌС‚Рѕ РѕС‚РєСЂС‹РІР°СЋС‰Р°СЏ СЃРєРѕР±РєР°, РїРѕРјРµС‰Р°РµРј РµРµ РІ СЃС‚РµРє РѕРїРµСЂР°С†РёР№
       If (TokenString[1] In ['(']) Then
         Temp.Add(TokenString);
-         // Если это закрывающая скобка, извлекаем из стека операций в
-         // выходной стек все операции, пока не встретим открывающую скобку.
-         // Сами скобки при зтом уничтожаются.
+         // Р•СЃР»Рё СЌС‚Рѕ Р·Р°РєСЂС‹РІР°СЋС‰Р°СЏ СЃРєРѕР±РєР°, РёР·РІР»РµРєР°РµРј РёР· СЃС‚РµРєР° РѕРїРµСЂР°С†РёР№ РІ
+         // РІС‹С…РѕРґРЅРѕР№ СЃС‚РµРє РІСЃРµ РѕРїРµСЂР°С†РёРё, РїРѕРєР° РЅРµ РІСЃС‚СЂРµС‚РёРј РѕС‚РєСЂС‹РІР°СЋС‰СѓСЋ СЃРєРѕР±РєСѓ.
+         // РЎР°РјРё СЃРєРѕР±РєРё РїСЂРё Р·С‚РѕРј СѓРЅРёС‡С‚РѕР¶Р°СЋС‚СЃСЏ.
       If (TokenString[1] In [')']) Then
         While true Do
         Begin
@@ -230,8 +230,8 @@ Begin
     End;
   End;
   Ms.Free;
-   // Если по окончании разбора строки с формулой, в стеке операций
-   // еще чтото осталось, извлекаем все в выходной стек
+   // Р•СЃР»Рё РїРѕ РѕРєРѕРЅС‡Р°РЅРёРё СЂР°Р·Р±РѕСЂР° СЃС‚СЂРѕРєРё СЃ С„РѕСЂРјСѓР»РѕР№, РІ СЃС‚РµРєРµ РѕРїРµСЂР°С†РёР№
+   // РµС‰Рµ С‡С‚РѕС‚Рѕ РѕСЃС‚Р°Р»РѕСЃСЊ, РёР·РІР»РµРєР°РµРј РІСЃРµ РІ РІС‹С…РѕРґРЅРѕР№ СЃС‚РµРє
   If Temp.Count <> 0 Then
     While Temp.Count <> 0 Do
     Begin
@@ -241,32 +241,32 @@ Begin
   Temp.Free;
 End;
 
-(* Рассчитываем выражение в постфиксной форме *)
+(* Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј РІС‹СЂР°Р¶РµРЅРёРµ РІ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјРµ *)
 Function PolishCount(Var _Stack: TStringList): real;
 Var
   i: integer;
   a1, a2: real;
-  Temp: TStringList; // Временный стек для рассчетов
+  Temp: TStringList; // Р’СЂРµРјРµРЅРЅС‹Р№ СЃС‚РµРє РґР»СЏ СЂР°СЃСЃС‡РµС‚РѕРІ
 Begin
   Result:= 0;
   Temp:= TStringList.Create;
   For i:= 0 To _Stack.Count - 1 Do
-      // Если зто число, помещаем его в стек для рассчета, иначе ...
+      // Р•СЃР»Рё Р·С‚Рѕ С‡РёСЃР»Рѕ, РїРѕРјРµС‰Р°РµРј РµРіРѕ РІ СЃС‚РµРє РґР»СЏ СЂР°СЃСЃС‡РµС‚Р°, РёРЅР°С‡Рµ ...
     If _Stack.Strings[i][1] In ['0'..'9'] Then
       Temp.Add(_Stack.Strings[i])
     Else
     Begin
-         // ... Вынимаем из стека рассчета последнее число
+         // ... Р’С‹РЅРёРјР°РµРј РёР· СЃС‚РµРєР° СЂР°СЃСЃС‡РµС‚Р° РїРѕСЃР»РµРґРЅРµРµ С‡РёСЃР»Рѕ
       a2:= StrToFloat(Temp.Strings[Temp.Count - 1]);
       Temp.Delete(Temp.Count - 1);
-         // если для выполнения операции требуется 2 аргумента,
-         // вынимаем из стека рассчета еще одно число
+         // РµСЃР»Рё РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё С‚СЂРµР±СѓРµС‚СЃСЏ 2 Р°СЂРіСѓРјРµРЅС‚Р°,
+         // РІС‹РЅРёРјР°РµРј РёР· СЃС‚РµРєР° СЂР°СЃСЃС‡РµС‚Р° РµС‰Рµ РѕРґРЅРѕ С‡РёСЃР»Рѕ
       If _Stack.Strings[i][1] In ['+', '-', '/', '*', '%', '^'] Then
       Begin
         a1:= StrToFloat(Temp.Strings[Temp.Count - 1]);
         Temp.Delete(Temp.Count - 1);
       End;
-         // Производим рассчет
+         // РџСЂРѕРёР·РІРѕРґРёРј СЂР°СЃСЃС‡РµС‚
       Case _Stack.Strings[i][1] Of
         '+': Temp.Add(FloatToStr(a1 + a2));
         '-': Temp.Add(FloatToStr(a1 - a2));
@@ -1005,11 +1005,18 @@ Begin
 End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
+Type
+  TLine = ^ELine;
+  ELine = Record
+    Data: Real;
+    Next, Prev: TLine;
+  End;
+
 Var
-  LArr: Array[1..100000] Of Real;
-  I, LLen: Integer;
   LFile: TextFile;
   LData: String;
+  LLine1, LLine2: TLine;
+  LRes: Real;
 Begin
   GError:= False;
   With GMem Do
@@ -1025,59 +1032,71 @@ Begin
   Begin
     AssignFile(LFile, dlgOpen1.FileName);
     Reset(LFile);
-    I:= 1;
 
+    New(LLine1);
+    LLine1^.Prev:= Nil;
     While Not EoF(LFile) Do
     Begin
+      LLine2:= LLine1;
       ReadLn(LFile, LData);
-      LArr[I]:= ConvertSF(LData);
-      Inc(I);
+      LLine1^.Data:= ConvertSF(LData);
+      New(LLine1);
+      LLine2^.Next:= LLine1;
+      LLine1^.Prev:= LLine2;
     End;
+    LLine2^.Next:= Nil;
+
+    //One step back
+    LLine1:= LLine1^.Prev;
+    LLine1^.Next:= Nil;
 
     CloseFile(LFile);
   End;
 
-  LLen:= I - 1;
-  For I:= 2 To LLen Do
-  Begin
-    Case GOp Of
-      EPLUS:
-        LArr[I]:= LArr[I - 1] + LArr[I];
-      EMINUS:
-        LArr[I]:= LArr[I - 1] - LArr[I];
-      EMULTIPLE:
-        LArr[I]:= LArr[I - 1] * LArr[I];
-      EDIVIDE:
-        LArr[I]:= LArr[I - 1] / LArr[I];
-      EPERCENT:
-        LArr[I]:= LArr[I] * LArr[I - 1] / 100
-    Else
-      GError:= True;
-    End;
+  Case GOp Of
+    EPLUS:
+      Begin
+        LRes:= 0;
+        While LLine1 <> Nil Do
+        Begin
+          LRes:= LRes + LLine1^.Data;
+          LLine1:= LLine1^.Prev;
+        End;
+      End;
+    EMULTIPLE:
+      Begin
+        LRes:= 1;
+        While LLine1 <> Nil Do
+        Begin
+          LRes:= LRes * LLine1^.Data;
+          LLine1:= LLine1^.Prev;
+        End;
+      End;
+  Else
+    GError:= True;
+    LRes:=0;
   End;
+
   If Not GError Then
   Begin
-    lblField.Caption:= FloatToStr(LArr[LLen]);
-    Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LArr[LLen]));
+    lblField.Caption:= FloatToStr(LRes);
+    Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LRes));
   End
   Else
     lblField.Caption:= 'Error. No correct input';
-
-  For I:= 1 To LLen Do
-    LArr[I]:= 0;
+  Dispose(LLine1);
   ResetData();
 End;
 
 Initialization
   Begin
-    PolishMode:= False;
     GOp:= ENULL;
     GError:= False;
+    PolishMode:= False;
     Razbor:= TStringList.Create;
   End;
 
 Finalization
   Razbor.Free;
-
 End.
 

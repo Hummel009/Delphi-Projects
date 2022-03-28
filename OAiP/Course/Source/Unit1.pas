@@ -783,7 +783,7 @@ Begin
       End;
   Else
     GError:= True;
-    LRes:=0;
+    LRes:=0;                                                                                    
   End;
 
   If Not GError Then
@@ -800,5 +800,6 @@ End;
 Initialization
   GOp:= ENULL;
   GError:= False;
+  DecimalSeparator:='.';
 End.
 

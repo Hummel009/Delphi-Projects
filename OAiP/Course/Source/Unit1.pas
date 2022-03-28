@@ -1,4 +1,4 @@
-Unit Unit1;
+ Unit Unit1;
 
 Interface
 
@@ -13,6 +13,7 @@ Uses
 //E - Enum Member Name
 //F - Formal Parameter Name
 Type
+  Real = double;
   TMem = Record
     Inp1, Inp2, Res: Real;
   End;
@@ -46,7 +47,6 @@ Type
     btnPower2: TButton;
     btnBack: TButton;
     btnDFact: TButton;
-    btnPosNeg: TButton;
     btn10Power: TButton;
     btnFact: TButton;
     btnLn: TButton;
@@ -58,11 +58,11 @@ Type
     btn2Power: TButton;
     btnExp: TButton;
     btnClr: TButton;
-    btnFloat: TButton;
     dlgOpen1: TOpenDialog;
     lblField: TLabel;
     mmoTemp: TMemo;
-    Procedure btnFloatClick(Sender: TObject);
+    btnRight: TButton;
+    btnLeft: TButton;
     Procedure btn0Click(Sender: TObject);
     Procedure btn1Click(Sender: TObject);
     Procedure btn2Click(Sender: TObject);
@@ -86,7 +86,6 @@ Type
     Procedure btnSqrtClick(Sender: TObject);
     Procedure btnPowerYClick(Sender: TObject);
     Procedure btnPower2Click(Sender: TObject);
-    Procedure btnPosNegClick(Sender: TObject);
     Procedure btnBackClick(Sender: TObject);
     Procedure btnFactorialClick(Sender: TObject);
     Procedure btnDFactorialClick(Sender: TObject);
@@ -99,6 +98,8 @@ Type
     Procedure btnExpClick(Sender: TObject);
     Procedure btnHistClick(Sender: TObject);
     Procedure btnTrigClick(Sender: TObject);
+    Procedure btnLeftClick(Sender: TObject);
+    Procedure btnRightClick(Sender: TObject);
     Function ConvertSF(Var FInp: String): Real;
     Procedure AddNum(Var FInp: String; Var FAdd: String);
     Procedure Display();
@@ -113,7 +114,7 @@ Type
 Const
   E = 2.718281828459045;
   P = 3.141592653589793;
-  GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '', 'sin', 'sqrt', 'tg', ' 2', ' 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ', '1 /', '!!', 'exp', '2 ', 'sec', 'cosec', 'arcsec', 'arccosec', 'sch', 'csch', 'versin', 'vercos', 'haversin', 'havercos', 'exsec', 'excosec');
+  GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '^', 'sin', 'sqrt', 'tg', '^ 2', '^ 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ^', '1 /', '!!', 'exp', '2 ^', 'sec', 'cosec', 'arcsec', 'arccosec', 'sch', 'csch', 'versin', 'vercos', 'haversin', 'havercos', 'exsec', 'excosec');
   GFact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
   GFact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
   GHist1: Set Of TOp = [EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, ESIN, ESQRT, ETG, ELG, ELN, ECH, ESH, ETH, ECTH, EEXP, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC];
@@ -127,11 +128,134 @@ Var
   GMem: TMem;
   GLine: Integer;
   GError, GClear: Boolean;
+  PolishMode: Boolean;
+  Expression: String;
+  Razbor: TStringList;
 
 Implementation
 
 Uses Unit2, Unit3;
 {$R *.dfm}
+
+Function GetPriority(c: char): byte;
+Begin
+  Result:= 0;
+  Case c Of
+    '(': Result:= 1;
+    '+', '-': Result:= 2;
+    '*', '/', '%': Result:= 3;
+    '^': Result:= 4;
+  End;
+End;
+
+Procedure ParseString(s: AnsiString; Var _Stack: TStringList);
+Var
+  Ms: TMemoryStream;
+  Temp: TStringList;
+  flag: boolean;
+Begin
+  Flag:= False;
+  Temp:= TStringList.Create;
+  Ms:= TMemoryStream.Create;
+  Ms.WriteBuffer(s[1], Length(s));
+  Ms.Position:= 0;
+  With TParser.Create(Ms) Do
+  Begin
+    While Token <> toEof Do
+    Begin
+      If (TokenString[1] In ['0'..'9']) Then
+        If flag Then
+        Begin
+          _Stack[_Stack.Count - 1]:= _Stack[_Stack.Count - 1] + TokenString;
+          flag:= false;
+        End
+        Else
+          _Stack.Add(TokenString);
+      If (TokenString[1] = '.') Then
+      Begin
+        _Stack[_Stack.Count - 1]:= _Stack[_Stack.Count - 1] + TokenString;
+        flag:= true;
+      End;
+      If (TokenString[1] In ['+', '-', '/', '*', '%', '^']) Then
+      Begin
+        If Temp.Count = 0 Then
+          Temp.Add(TokenString)
+        Else
+        Begin
+          If GetPriority(TokenString[1]) > GetPriority(Temp.Strings[Temp.Count - 1][1]) Then
+            Temp.Add(TokenString)
+          Else
+          Begin
+            While true Do
+            Begin
+              _Stack.Add(Temp.Strings[Temp.Count - 1]);
+              Temp.Delete(Temp.Count - 1);
+              If Temp.Count = 0 Then Break;
+              If GetPriority(TokenString[1]) > GetPriority(Temp.Strings[Temp.Count - 1][1]) Then
+                Break;
+            End;
+            Temp.Add(TokenString);
+          End;
+        End;
+      End;
+      If (TokenString[1] In ['(']) Then
+        Temp.Add(TokenString);
+      If (TokenString[1] In [')']) Then
+        While true Do
+        Begin
+          If Temp.Count = 0 Then Break;
+          If Temp.Strings[Temp.Count - 1] = '(' Then
+          Begin
+            Temp.Delete(Temp.Count - 1);
+            Break;
+          End;
+          _Stack.Add(Temp.Strings[Temp.Count - 1]);
+          Temp.Delete(Temp.Count - 1);
+        End;
+      NextToken;
+    End;
+  End;
+  Ms.Free;
+  If Temp.Count <> 0 Then
+    While Temp.Count <> 0 Do
+    Begin
+      _Stack.Add(Temp.Strings[Temp.Count - 1]);
+      Temp.Delete(Temp.Count - 1);
+    End;
+  Temp.Free;
+End;
+
+Function PolishCount(Var _Stack: TStringList): real;
+Var
+  i: integer;
+  a1, a2: real;
+  Temp: TStringList;
+Begin
+  Temp:= TStringList.Create;
+  For i:= 0 To _Stack.Count - 1 Do
+    If _Stack.Strings[i][1] In ['0'..'9'] Then
+      Temp.Add(_Stack.Strings[i])
+    Else
+    Begin
+      a2:=StrToFloat(Temp.Strings[Temp.Count - 1]);
+      Temp.Delete(Temp.Count - 1);
+      If _Stack.Strings[i][1] In ['+', '-', '/', '*', '%', '^'] Then
+      Begin
+        a1:=StrToFloat(Temp.Strings[Temp.Count - 1]);
+        Temp.Delete(Temp.Count - 1);
+      End;
+      Case _Stack.Strings[i][1] Of
+        '+': Temp.Add(FloatToStr(a1 + a2));
+        '-': Temp.Add(FloatToStr(a1 - a2));
+        '/': Temp.Add(FloatToStr(a1 / a2));
+        '*': Temp.Add(FloatToStr(a1 * a2));
+        '%': Temp.Add(FloatToStr(a1 * a2 / 100));
+        '^': Temp.Add(FloatToStr(Power(a1, a2)));
+      End;
+    End;              
+  Result:=StrToFloat(Temp.Strings[0]);
+  Temp.Free;
+End;
 
 Procedure Calculate();
 Begin
@@ -226,6 +350,7 @@ Procedure ResetData();
 Begin
   GOp:= ENULL;
   GError:= False;
+  PolishMode:= False;
   With GMem Do
   Begin
     Inp1:= 0;
@@ -270,13 +395,16 @@ Begin
     FAdd:= '';
   If (FInp = 'Error. No correct input') Or (FInp = '0') And (FAdd <> '.') And (FAdd <> 'E') Then
     FInp:= '';
-  If (Pos('.', FInp) > 1) And (FAdd = '.') Then
+  If (Pos('.', FInp) > 1) And (FAdd = '.') And (Not PolishMode) Then
     FAdd:= '';
   If (Pos('E', FInp) > 1) And (FAdd = 'E') Then
     FAdd:= '';
+  If (Pos('-', FInp) > 1) And (FAdd = '-') Then
+  Begin
+    FAdd:= '-';
+    PolishMode:= True;
+  End;
   If (FInp = '') And (FAdd = 'E') Then
-    FAdd:= '';
-  If (FInp <> '') And (FAdd = '-') Then
     FAdd:= '';
 
   If GClear Then
@@ -337,9 +465,22 @@ Procedure TForm1.btnEqClick(Sender: TObject);
 Var
   LInp: String;
 Begin
-  LInp:= lblField.Caption;
-  GMem.Inp2:= ConvertSF(LInp);
-  Display();
+  If PolishMode Then
+  Begin
+    Razbor.Clear;
+    Expression:= AnsiLowerCase(lblField.Caption);
+    Expression:= StringReplace(Expression, '+', ' + ', [rfReplaceAll, rfIgnoreCase]);
+    Expression:= StringReplace(Expression, '-', ' - ', [rfReplaceAll, rfIgnoreCase]);
+    ParseString(Expression, Razbor);
+    lblField.Caption:= FloatToStr(PolishCount(Razbor));
+    PolishMode:= False;
+  End
+  Else
+  Begin
+    LInp:= lblField.Caption;
+    GMem.Inp2:= ConvertSF(LInp);
+    Display();
+  End;
 End;
 
 Procedure TForm1.btnBackClick(Sender: TObject);
@@ -376,16 +517,6 @@ Begin
   Display();
 End;
 
-Procedure TForm1.btnPosNegClick(Sender: TObject);
-Var
-  LInp, LAdd: String;
-Begin
-  LInp:= lblField.Caption;
-  LAdd:= '-';
-  AddNum(LInp, LAdd);
-  lblField.Caption:= LInp;
-End;
-
 Procedure TForm1.btnPower2Click(Sender: TObject);
 Var
   LInp: String;
@@ -412,64 +543,95 @@ End;
 
 Procedure TForm1.btnPowerYClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= EPOWER;
-  GMem.Inp1:= ConvertSF(LInp);
-  If GMem.Inp1 >= 1E154 Then
-    GError:= True;
-  lblField.Caption:= '';
+  LAdd:= '^';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
 End;
 
 Procedure TForm1.btnPercentClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
+  LAdd:= '%';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
   GOp:= EPERCENT;
-  GMem.Inp1:= ConvertSF(LInp);
-  lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMultipleClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
+  LAdd:= '*';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
   GOp:= EMULTIPLE;
-  GMem.Inp1:= ConvertSF(LInp);
-  lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnDivideClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
+  LAdd:= '/';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
   GOp:= EDIVIDE;
-  GMem.Inp1:= ConvertSF(LInp);
-  lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnPlusClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
+  LAdd:= '+';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
   GOp:= EPLUS;
-  GMem.Inp1:= ConvertSF(LInp);
-  lblField.Caption:= '';
 End;
 
 Procedure TForm1.btnMinusClick(Sender: TObject);
 Var
-  LInp: String;
+  LInp, LAdd: String;
 Begin
   LInp:= lblField.Caption;
+  LAdd:= '-';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
   GOp:= EMINUS;
-  GMem.Inp1:= ConvertSF(LInp);
-  lblField.Caption:= '';
+End;
+
+Procedure TForm1.btnLeftClick(Sender: TObject);
+Var
+  LInp, LAdd: String;
+Begin
+  LInp:= lblField.Caption;
+  LAdd:= '(';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
+End;
+
+Procedure TForm1.btnRightClick(Sender: TObject);
+Var
+  LInp, LAdd: String;
+Begin
+  LInp:= lblField.Caption;
+  LAdd:= ')';
+  AddNum(LInp, LAdd);
+  lblField.Caption:= LInp;
+  PolishMode:= True;
 End;
 
 Procedure TForm1.btn0Click(Sender: TObject);
@@ -518,16 +680,6 @@ Var
 Begin
   LInp:= lblField.Caption;
   LAdd:= '4';
-  AddNum(LInp, LAdd);
-  lblField.Caption:= LInp;
-End;
-
-Procedure TForm1.btnFloatClick(Sender: TObject);
-Var
-  LInp, LAdd: String;
-Begin
-  LInp:= lblField.Caption;
-  LAdd:= 'E';
   AddNum(LInp, LAdd);
   lblField.Caption:= LInp;
 End;
@@ -783,7 +935,7 @@ Begin
       End;
   Else
     GError:= True;
-    LRes:=0;
+    LRes:= 0;
   End;
 
   If Not GError Then
@@ -798,8 +950,14 @@ Begin
 End;
 
 Initialization
-  GOp:= ENULL;
-  GError:= False;
-  DecimalSeparator := '.';
-End.
+  Begin
+    DecimalSeparator := '.';
+    GOp:= ENULL;
+    GError:= False;
+    PolishMode:= False;
+    Razbor:= TStringList.Create;
+  End;
 
+Finalization
+  Razbor.Free;
+End.

@@ -379,7 +379,7 @@ object Form1: TForm1
   end
   object btnBack: TButton
     Left = 0
-    Top = 336
+    Top = 80
     Width = 137
     Height = 57
     Caption = '1/x'
@@ -407,21 +407,6 @@ object Form1: TForm1
     TabOrder = 24
     OnClick = btnDFactorialClick
   end
-  object btnPosNeg: TButton
-    Left = 144
-    Top = 464
-    Width = 137
-    Height = 57
-    Caption = '+/-'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 25
-    OnClick = btnPosNegClick
-  end
   object btn10Power: TButton
     Left = 576
     Top = 144
@@ -434,7 +419,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 26
+    TabOrder = 25
     OnClick = btn10PowerClick
   end
   object btnFact: TButton
@@ -449,12 +434,12 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 27
+    TabOrder = 26
     OnClick = btnFactorialClick
   end
   object btnLn: TButton
     Left = 0
-    Top = 464
+    Top = 400
     Width = 137
     Height = 57
     Caption = 'ln'
@@ -464,12 +449,12 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 28
+    TabOrder = 27
     OnClick = btnLnClick
   end
   object btnLg: TButton
     Left = 0
-    Top = 400
+    Top = 336
     Width = 137
     Height = 57
     Caption = 'lg'
@@ -479,7 +464,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 29
+    TabOrder = 28
     OnClick = btnLgClick
   end
   object btnPower3: TButton
@@ -494,7 +479,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 30
+    TabOrder = 29
     OnClick = btnPower3Click
   end
   object btnHist: TButton
@@ -509,7 +494,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 31
+    TabOrder = 30
     OnClick = btnHistClick
   end
   object btnBulk: TButton
@@ -524,7 +509,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 32
+    TabOrder = 31
     OnClick = btnBulkClick
   end
   object btnTrig: TButton
@@ -539,7 +524,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 33
+    TabOrder = 32
     OnClick = btnTrigClick
   end
   object btn2Power: TButton
@@ -554,7 +539,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 34
+    TabOrder = 33
     OnClick = btn2PowerClick
   end
   object btnExp: TButton
@@ -569,7 +554,7 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 35
+    TabOrder = 34
     OnClick = btnExpClick
   end
   object btnClr: TButton
@@ -584,23 +569,8 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 36
+    TabOrder = 35
     OnClick = btnClearClick
-  end
-  object btnFloat: TButton
-    Left = 0
-    Top = 80
-    Width = 137
-    Height = 57
-    Caption = 'float'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 37
-    OnClick = btnFloatClick
   end
   object mmoTemp: TMemo
     Left = 16
@@ -615,7 +585,37 @@ object Form1: TForm1
       'e'
       'm'
       'p')
+    TabOrder = 36
+  end
+  object btnRight: TButton
+    Left = 144
+    Top = 464
+    Width = 137
+    Height = 57
+    Caption = ')'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 37
+    OnClick = btnRightClick
+  end
+  object btnLeft: TButton
+    Left = 0
+    Top = 464
+    Width = 137
+    Height = 57
+    Caption = '('
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 38
+    OnClick = btnLeftClick
   end
   object dlgOpen1: TOpenDialog
     Top = 528

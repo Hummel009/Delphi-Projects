@@ -8,11 +8,12 @@ Uses
 
 Type
   TForm2 = Class(TForm)
-    mmoHistory: TMemo;
     btn11: TButton;
     btn1: TButton;
     dlgOpen1: TOpenDialog;
     dlgSave1: TSaveDialog;
+    scrlbx1: TScrollBox;
+    mmoHistory: TMemo;
     Procedure btn1Click(Sender: TObject);
     Procedure btn11Click(Sender: TObject);
   Private

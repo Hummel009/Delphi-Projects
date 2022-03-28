@@ -73,304 +73,255 @@ Uses Unit1;
 
 Procedure TForm3.btnSinClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ESIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnCosClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnTgClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ETG;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnCtgClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 = 0) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnScClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ESC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnCscClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 = 0) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnAsinClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnAcosClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnAtgClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnActgClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCCTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnAscClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnAcscClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EARCCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnShClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ESH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnChClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnThClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ETH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnCthClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECTH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   If GMem.Inp1 = 0 Then
     GError:= True;
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnSchClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ESCH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnCschClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= ECSCH;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnVersinClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EVERSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnVercosClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EVERCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnHaversinClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EHAVERSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnHavercosClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EHAVERCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnExscClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EEXSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 
 Procedure TForm3.btnExcscClick(Sender: TObject);
 Var
-  LInp: ^String;
+  LInp: String;
 Begin
-  New(LInp);
-  LInp^:= Form1.lblField.Caption;
+  LInp:= Form1.lblField.Caption;
   GOp:= EEXCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp^);
+  GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
-  Dispose(LInp);
 End;
 End.
-

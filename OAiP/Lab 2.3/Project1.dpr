@@ -79,5 +79,3 @@ Begin
 
   ReadLn;
 End.
-
-

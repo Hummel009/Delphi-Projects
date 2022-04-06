@@ -1,4 +1,4 @@
-Program Lab1F;
+Program Lab4;
 {Operations with matrix exps}
 
 //Use app

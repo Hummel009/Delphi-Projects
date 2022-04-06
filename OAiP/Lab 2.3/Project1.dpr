@@ -1,10 +1,7 @@
-Program Lab2;
-{Comp sorts}
+Program Lab3;
 
-//Use app
 {$APPTYPE CONSOLE}
 
-//Declare modules
 Uses
   SysUtils;
 

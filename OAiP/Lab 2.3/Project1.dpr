@@ -9,11 +9,11 @@ Uses
   SysUtils;
 
 Type
-  TArr = Array[1..5] Of Integer;
+  TArr = Array[1..15] Of Integer;
 
 Var
-  I: Integer;  
-  Arr: TArr = (5, 4, 3, 2, 1);
+  I: Integer;
+  Arr: TArr = (5, 4, 3, 2, 1, 15, 14, 13, 12, 11, 6, 7, 8, 9, 10);
 
 Procedure QuickSort(Var a: TArr);
 Const
@@ -64,7 +64,7 @@ Begin
 End;
 
 Begin
-  For i:= 1 To 5 Do
+  For i:= 1 To 15 Do
     Write(Arr[i], ' ');
   Writeln;
 
@@ -74,7 +74,7 @@ Begin
 
   Writeln;
 
-  For i:= 1 To 5 Do
+  For i:= 1 To 15 Do
     Write(Arr[i], ' ');
 
   ReadLn;

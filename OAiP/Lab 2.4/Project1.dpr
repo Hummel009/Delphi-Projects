@@ -1,35 +1,177 @@
-Program Lab4;
-{Operations with matrix exps}
+Program Lab2;
+{Comp sorts}
 
 //Use app
 {$APPTYPE CONSOLE}
 
 //Declare modules
 Uses
-  SysUtils,
-  Unit1 In 'Unit1.pas';
+  SysUtils;
 
-//Declare vars
+//Declare types
+Type
+  TArr = Array[1..3000] Of Integer;
+  //TArr - our array
+
+//Declare Vars
 Var
-  A: TMatrix = ((1, -1, 0), (2, 0, -1), (1, 1, 1));
-  B: TMatrix = ((5, 3, 1), (-1, 2, 0), (-3, 0, 0));
-  C1, C2, C3, C4, C5: TMatrix;
+  I, J: Integer;
+  Comp: Integer;
+  Arr1, Arr2: TArr;
+  N: Array[1..6] Of Integer = (100, 250, 500, 1000, 2000, 3000);
+  S: Array[1..3] Of String = ('Random', 'Sorted', 'Revers');
+  //I,J - loop params
+  //N - array sizes
+  //Comp - quantity of comparisons
+  //Arr1, Arr2 - our arrays
+  //N - num of elements
+  //S - name of array
+
+//Swaps 2 elements
+//A, B - elements
+Procedure Swap(Var A1, B1);
+Var
+  T: Integer;
+  A: Integer absolute A1; 
+  B: Integer absolute B1;
+  //T - temp
+Begin
+  T:= A;
+  A:= B;
+  B:= T;
+End;
+
+//Fills array with elements
+//Arr - array, N - array size, Opt - filler type
+Procedure Fill(Var Arr1; Const N, Opt: Integer);
+Var
+  I: Integer;
+  Arr: TArr absolute Arr1;
+  //I - select type of filling
+Begin
+  Randomize;
+  Case Opt Of
+    1:
+      For I:= Low(Arr) To N Do
+        Arr[I]:= Random(N);
+    2:
+      For I:= Low(Arr) To N Do
+        Arr[I]:= I;
+    3:
+      For I:= Low(Arr) To N Do
+        Arr[I]:= N - I;
+  End;
+End;
+
+//Sorts an array and calculates the number of comparisons
+//Arr - array, N - array size, Comp - comparisons
+Procedure BubbleSort(Var Arr1; Const N: Integer; Var Comp1);
+Var
+  I, J: Integer;
+  Sorted: Boolean;
+  Arr: TArr absolute Arr1;     
+  Comp: Integer absolute Comp1;
   //I, J - loop params
-  //A, B - start matrixs
-  //C - result matrixs
+  //Sorted - condition to exit
+Begin
+  Sorted:= False;
+  I:= 1;
+  While (I <= N - 1) And Not Sorted Do
+  Begin
+    Sorted:= True;
+    For J:= 1 To N - I Do
+    Begin
+      If Arr[J] > Arr[J + 1] Then
+      Begin
+        Sorted:= False;
+        Swap(Arr[J], Arr[J + 1]);
+      End;
+      Inc(Comp);
+    End;
+    Inc(I);
+  End;
+End;
+
+//Sorts an array and calculates the number of comparisons
+//Arr - array, Node - current index, N - array size, Comp - comparisons
+Procedure SiftDown(Var Arr1; Node: Integer; Const N: Integer; Var Comp1);
+Var
+  Root, Child: Integer;
+  Sifted: Boolean;
+  Arr: TArr absolute Arr1;
+  Comp: Integer absolute Comp1;
+  //Root, Child - indexes
+  //Sifted - condition to exit
+Begin
+  Root:= Node;
+  Sifted:= False;
+  While (Not Sifted) And (Root * 2 - Node + 1 <= N) Do
+  Begin
+    Comp:= Comp + 2;
+    Child:= Root * 2 - Node + 1;
+    If (Child + 1 <= N) And (Arr[Child] < Arr[Child + 1]) Then
+      Inc(Child);
+    If Arr[Root] < Arr[Child] Then
+    Begin
+      Swap(Arr[Root], Arr[Child]);
+      Root:= Child;
+    End
+    Else
+      Sifted:= True;
+  End;
+End;
+
+//Sorts an array and calculates the number of comparisons
+//Arr - array, N - array size, Comp - comparisons
+Procedure HeapSort(Var Arr1; Const N: Integer; Var Comp1);
+Var
+  NodeLast, NodeCurr: Integer;   
+  Arr: TArr absolute Arr1;
+  Comp: Integer absolute Comp1;
+  //NodeLast, NodeCurr - indexes
+  //Comps - counter
+Begin
+  NodeCurr:= N Div 2 - 1;
+  While NodeCurr >= Low(Arr) Do
+  Begin
+    SiftDown(Arr, NodeCurr, N, Comp);
+    Dec(NodeCurr);
+  End;
+  NodeLast:= N;
+  While NodeLast > Low(Arr) Do
+  Begin
+    Swap(Arr[Low(Arr)], Arr[NodeLast]);
+    Dec(NodeLast);
+    SiftDown(Arr, Low(Arr), NodeLast, Comp);
+  End;
+End;
 
 Begin
-  Disp(A);
-  Writeln;
-  Disp(B);
-  Writeln;
-  C1:= MulN(A, 2);
-  C2:= MulN(B, 3);
-  C3:= MulM(A, B);
-  C4:= MulN(A, 2);
-  C5:= SumM(C3, C4, False);
-  C3:= MulM(C2, C5);
-  C2:= SumM(C1, C3, True);
-  Disp(C2);
-  Readln;
+  For I:= 1 To 6 Do
+  Begin
+    For J:= 1 To 3 Do
+    Begin
+      Fill(Arr1, N[I], J);
+
+      //Show arr size
+      Write(S[J], ' Arr[', N[I], ']; ');
+
+      //Copy array
+      Arr2:= Arr1;
+
+      //Enzero to show true value
+      Comp:= 0;
+      BubbleSort(Arr1, N[I], Comp);
+      Write('BubbleSort: ', Comp: 7, '; ');
+
+      //Enzero to show true value
+      Comp:= 0;
+      HeapSort(Arr2, N[I], Comp);
+      Write('HeapSort: ', Comp: 5);
+
+      WriteLn;
+    End;
+    WriteLn;
+  End;
+  ReadLn;
 End.

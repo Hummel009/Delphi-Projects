@@ -6,16 +6,16 @@ Uses
   SysUtils;
 
 Type
-  Muldick = ^EMuldick;
+  Polynom = ^EPolynom;
 
-  EMuldick = Record
+  EPolynom = Record
     Number: Integer;
     Power: Integer;
-    Next: Muldick;
+    Next: Polynom;
   End;
 
 Var
-  First, Second, Third: Muldick;
+  First, Second, Third: Polynom;
   N, X: Integer;
 
 Procedure SystemIn(var Res: Integer);
@@ -31,9 +31,9 @@ Begin
   Until Error = 0;
 End;
 
-Procedure Make(X: Muldick; N: Integer);
+Procedure Make(X: Polynom; N: Integer);
 Var
-  Y: Muldick;
+  Y: Polynom;
   Number: Integer;
 Begin
   While (N >= 0) Do
@@ -57,7 +57,7 @@ Begin
 
 End;
 
-Procedure SystemOut(P: Muldick);
+Procedure SystemOut(P: Polynom);
 Begin
   If P^.Power <> 0 Then
   Begin
@@ -122,7 +122,7 @@ Begin
   End;
 End;
 
-Function Equality(P: Muldick; Q: Muldick): Boolean;
+Function Equality(P: Polynom; Q: Polynom): Boolean;
 Var
   Flag: Boolean;
 Begin
@@ -149,7 +149,7 @@ Begin
 
 End;
 
-Function Calculate(P: Muldick; X: Integer): Integer;
+Function Calculate(P: Polynom; X: Integer): Integer;
 Var
   I, Mult: Integer;
 Begin
@@ -165,9 +165,9 @@ Begin
   End;
 End;
 
-Procedure Sum(P: Muldick; Q: Muldick; R: Muldick);
+Procedure Sum(P: Polynom; Q: Polynom; R: Polynom);
 Var
-  Y: Muldick;
+  Y: Polynom;
 Begin
 
   While (Q <> Nil) And (P <> Nil) Do
@@ -209,13 +209,13 @@ Begin
   New(Second);
   New(Third);
 
-  Write('Enter the power of the 1st muldick: ');
+  Write('Enter the power of the 1st polynom: ');
   SystemIn(N);
   Make(First, N);
   SystemOut(First);
   WriteLn;
 
-  Write('Enter the power of the 2nd muldick: ');
+  Write('Enter the power of the 2nd polynom: ');
   SystemIn(N);
   Make(Second, N);
   SystemOut(Second);
@@ -223,7 +223,7 @@ Begin
 
   Equality(First, Second);
 
-  Write('The sum of muldicks: ');
+  Write('The sum of polynoms: ');
   Sum(First, Second, Third);
   SystemOut(Third);
   WriteLn;

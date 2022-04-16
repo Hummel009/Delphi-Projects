@@ -4,7 +4,7 @@ object Form1: TForm1
   Width = 721
   Height = 612
   AutoSize = True
-  Caption = 'Delphi Calculator v2.0'
+  Caption = 'Hummel009'#39's Calculator'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

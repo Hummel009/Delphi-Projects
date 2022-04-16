@@ -14,7 +14,7 @@ object Form2: TForm2
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object btn11: TButton
+  object btnSave: TButton
     Left = 0
     Top = 416
     Width = 241
@@ -27,9 +27,9 @@ object Form2: TForm2
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    OnClick = btn11Click
+    OnClick = btnSaveClick
   end
-  object btn1: TButton
+  object btnLoad: TButton
     Left = 248
     Top = 416
     Width = 241
@@ -42,7 +42,7 @@ object Form2: TForm2
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    OnClick = btn1Click
+    OnClick = btnLoadClick
   end
   object scrlbx1: TScrollBox
     Left = 0

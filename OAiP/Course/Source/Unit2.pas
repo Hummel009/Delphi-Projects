@@ -8,14 +8,14 @@ Uses
 
 Type
   TForm2 = Class(TForm)
-    btn11: TButton;
-    btn1: TButton;
+    btnSave: TButton;
+    btnLoad: TButton;
     dlgOpen1: TOpenDialog;
     dlgSave1: TSaveDialog;
     scrlbx1: TScrollBox;
     mmoHistory: TMemo;
-    Procedure btn1Click(Sender: TObject);
-    Procedure btn11Click(Sender: TObject);
+    Procedure btnLoadClick(Sender: TObject);
+    Procedure btnSaveClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -29,13 +29,13 @@ Implementation
 
 {$R *.dfm}
 
-Procedure TForm2.btn1Click(Sender: TObject);
+Procedure TForm2.btnLoadClick(Sender: TObject);
 Begin
   If dlgOpen1.Execute Then
     Form2.mmoHistory.Lines.LoadFromFile(dlgOpen1.FileName);
 End;
 
-Procedure TForm2.btn11Click(Sender: TObject);
+Procedure TForm2.btnSaveClick(Sender: TObject);
 Begin
   If dlgSave1.Execute Then
     Form2.mmoHistory.Lines.SaveToFile(dlgSave1.FileName);

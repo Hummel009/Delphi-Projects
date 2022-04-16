@@ -23,6 +23,11 @@ Uses
 //E - Enum Member Name
 //F - Formal Parameter Name
 Type
+  TLine = ^ELine;
+  ELine = Record
+    Data: Real;
+    Next, Prev: TLine;
+  End;
   TMem = Record
     Inp1, Inp2, Res: Real;
   End;
@@ -620,13 +625,6 @@ Begin
 End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
-Type
-  TLine = ^ELine;
-  ELine = Record
-    Data: Real;
-    Next, Prev: TLine;
-  End;
-
 Var
   LFile: TextFile;
   LData: String;

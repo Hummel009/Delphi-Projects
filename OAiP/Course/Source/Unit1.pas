@@ -115,9 +115,9 @@ Type
     Procedure btnHistClick(Sender: TObject);
     Procedure btnTrigClick(Sender: TObject);
     Procedure btnBulkClick(Sender: TObject);
-    Procedure BrokenHeight(Const FOp: TOp; Const FInt: Extended);
-    Procedure BrokenBorder(Const FOp: TOp; Const FInt: Integer);
-    Procedure BrokenZero(Const FOp: TOp);
+    Procedure LimException(Const FOp: TOp; Const FInt: Extended);
+    Procedure FactException(Const FOp: TOp; Const FInt: Integer);
+    Procedure NegException(Const FOp: TOp);
     Procedure PlaceSymbol(Const FSym: String);
     Procedure TwoNumbers(Const FOp: TOp);
     Procedure Display();
@@ -343,7 +343,7 @@ Begin
   Display();
 End;
 
-Procedure TForm1.BrokenBorder(Const FOp: TOp; Const FInt: Integer);
+Procedure TForm1.FactException(Const FOp: TOp; Const FInt: Integer);
 Var
   LInp: String;
 Begin
@@ -357,15 +357,15 @@ End;
 
 Procedure TForm1.btnFactorialClick(Sender: TObject);
 Begin
-  BrokenBorder(EFACTORIAL, 12);
+  FactException(EFACTORIAL, 12);
 End;
 
 Procedure TForm1.btnDFactorialClick(Sender: TObject);
 Begin
-  BrokenBorder(EDFACTORIAL, 19);
+  FactException(EDFACTORIAL, 19);
 End;
 
-Procedure TForm1.BrokenHeight(Const FOp: TOp; Const FInt: Extended);
+Procedure TForm1.LimException(Const FOp: TOp; Const FInt: Extended);
 Var
   LInp: String;
 Begin
@@ -379,30 +379,30 @@ End;
 
 Procedure TForm1.btnPower2Click(Sender: TObject);
 Begin
-  BrokenHeight(ESQUARE, 1E154);
+  LimException(ESQUARE, 1E154);
 End;
 
 Procedure TForm1.btnExpClick(Sender: TObject);
 Begin
-  BrokenHeight(EEXP, 710);
+  LimException(EEXP, 710);
 End;
 
 Procedure TForm1.btn2PowerClick(Sender: TObject);
 Begin
-  BrokenHeight(ETWO, 1024);
+  LimException(ETWO, 1024);
 End;
 
 Procedure TForm1.btn10PowerClick(Sender: TObject);
 Begin
-  BrokenHeight(ETEN, 308);
+  LimException(ETEN, 308);
 End;
 
 Procedure TForm1.btnPower3Click(Sender: TObject);
 Begin
-  BrokenHeight(ECUBE, 1E100);
+  LimException(ECUBE, 1E100);
 End;
 
-Procedure TForm1.BrokenZero(Const FOp: TOp);
+Procedure TForm1.NegException(Const FOp: TOp);
 Var
   LInp: String;
 Begin
@@ -416,17 +416,17 @@ End;
 
 Procedure TForm1.btnSqrtClick(Sender: TObject);
 Begin
-  BrokenZero(ESQRT);
+  NegException(ESQRT);
 End;
 
 Procedure TForm1.btnLgClick(Sender: TObject);
 Begin
-  BrokenZero(ELG);
+  NegException(ELG);
 End;
 
 Procedure TForm1.btnLnClick(Sender: TObject);
 Begin
-  BrokenZero(ELN);
+  NegException(ELN);
 End;
 
 Procedure TForm1.TwoNumbers(Const FOp: TOp);

@@ -71,7 +71,7 @@ Uses Unit1;
 
 {$R *.dfm}
 
-Procedure BrokenZero(const FOp: TOp);
+Procedure ZeroException(const FOp: TOp);
 Var
   LInp: String;
 Begin
@@ -83,7 +83,7 @@ Begin
   Form1.Display();
 End;
 
-Procedure BrokenAbsOne(const FOp: TOp);
+Procedure OneException(const FOp: TOp);
 Var
   LInp: String;
 Begin
@@ -107,37 +107,37 @@ End;
 
 Procedure TForm3.btnCtgClick(Sender: TObject);
 Begin
-  BrokenZero(ECTG);
+  ZeroException(ECTG);
 End;
 
 Procedure TForm3.btnCscClick(Sender: TObject);
 Begin
-  BrokenZero(ECSC);
+  ZeroException(ECSC);
 End; 
 
 Procedure TForm3.btnCthClick(Sender: TObject);
 Begin
-  BrokenZero(ECTH);
+  ZeroException(ECTH);
 End;
 
 Procedure TForm3.btnAsinClick(Sender: TObject);
 Begin
-  BrokenAbsOne(EARCSIN);
+  OneException(EARCSIN);
 End;
 
 Procedure TForm3.btnAcosClick(Sender: TObject);
 Begin
-  BrokenAbsOne(EARCCOS);
+  OneException(EARCCOS);
 End;
 
 Procedure TForm3.btnAscClick(Sender: TObject);
 Begin
-  BrokenAbsOne(EARCSC);
+  OneException(EARCSC);
 End;
 
 Procedure TForm3.btnAcscClick(Sender: TObject);
 Begin           
-  BrokenAbsOne(EARCCSC);
+  OneException(EARCCSC);
 End;
 
 Procedure TForm3.btnSinClick(Sender: TObject);

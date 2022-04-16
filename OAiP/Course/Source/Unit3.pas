@@ -71,257 +71,157 @@ Uses Unit1;
 
 {$R *.dfm}
 
-Procedure TForm3.btnSinClick(Sender: TObject);
+Procedure BrokenZero(const FOp: TOp);
 Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= ESIN;
+  GOp:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
+  If (GMem.Inp1 = 0) Then
+    GError:= True;
   Form1.Display();
 End;
 
-Procedure TForm3.btnCosClick(Sender: TObject);
+Procedure BrokenAbsOne(const FOp: TOp);
 Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= ECOS;
+  GOp:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
+  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
+    GError:= True;
   Form1.Display();
-End;
+End;  
 
-Procedure TForm3.btnTgClick(Sender: TObject);
+Procedure NoException(const FOp: TOp);
 Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= ETG;
+  GOp:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
 End;
 
 Procedure TForm3.btnCtgClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ECTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 = 0) Then
-    GError:= True;
-  Form1.Display();
-End;
-
-Procedure TForm3.btnScClick(Sender: TObject);
-Var
-  LInp: String;
-Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ESC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  BrokenZero(ECTG);
 End;
 
 Procedure TForm3.btnCscClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ECSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 = 0) Then
-    GError:= True;
-  Form1.Display();
+  BrokenZero(ECSC);
+End; 
+
+Procedure TForm3.btnCthClick(Sender: TObject);
+Begin
+  BrokenZero(ECTH);
 End;
 
 Procedure TForm3.btnAsinClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Form1.Display();
+  BrokenAbsOne(EARCSIN);
 End;
 
 Procedure TForm3.btnAcosClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Form1.Display();
-End;
-
-Procedure TForm3.btnAtgClick(Sender: TObject);
-Var
-  LInp: String;
-Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
-End;
-
-Procedure TForm3.btnActgClick(Sender: TObject);
-Var
-  LInp: String;
-Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCCTG;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  BrokenAbsOne(EARCCOS);
 End;
 
 Procedure TForm3.btnAscClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Form1.Display();
+  BrokenAbsOne(EARCSC);
 End;
 
 Procedure TForm3.btnAcscClick(Sender: TObject);
-Var
-  LInp: String;
+Begin           
+  BrokenAbsOne(EARCCSC);
+End;
+
+Procedure TForm3.btnSinClick(Sender: TObject);
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EARCCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
-    GError:= True;
-  Form1.Display();
+  NoException(ESIN);
+End;
+
+Procedure TForm3.btnCosClick(Sender: TObject);
+Begin
+  NoException(ECOS);
+End;
+
+Procedure TForm3.btnTgClick(Sender: TObject);
+Begin
+  NoException(ETG);
+End;
+
+Procedure TForm3.btnScClick(Sender: TObject);
+Begin
+  NoException(ESC);
+End;
+
+Procedure TForm3.btnAtgClick(Sender: TObject);
+Begin
+  NoException(EARCTG);
+End;
+
+Procedure TForm3.btnActgClick(Sender: TObject);
+Begin
+  NoException(EARCCTG);
 End;
 
 Procedure TForm3.btnShClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ESH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(ESH);
 End;
 
 Procedure TForm3.btnChClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ECH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(ECH);
 End;
 
 Procedure TForm3.btnThClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ETH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
-End;
-
-Procedure TForm3.btnCthClick(Sender: TObject);
-Var
-  LInp: String;
-Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ECTH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  If GMem.Inp1 = 0 Then
-    GError:= True;
-  Form1.Display();
+  NoException(ETH);
 End;
 
 Procedure TForm3.btnSchClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ESCH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(ESCH);
 End;
 
 Procedure TForm3.btnCschClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= ECSCH;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(ECSCH);
 End;
 
 Procedure TForm3.btnVersinClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EVERSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EVERSIN);
 End;
 
 Procedure TForm3.btnVercosClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EVERCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EVERCOS);
 End;
 
 Procedure TForm3.btnHaversinClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EHAVERSIN;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EHAVERSIN);
 End;
 
 Procedure TForm3.btnHavercosClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EHAVERCOS;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EHAVERCOS);
 End;
 
 Procedure TForm3.btnExscClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EEXSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EEXSC);
 End;
 
 Procedure TForm3.btnExcscClick(Sender: TObject);
-Var
-  LInp: String;
 Begin
-  LInp:= Form1.lblField.Caption;
-  GOp:= EEXCSC;
-  GMem.Inp1:= Form1.ConvertSF(LInp);
-  Form1.Display();
+  NoException(EEXCSC);
 End;
 End.

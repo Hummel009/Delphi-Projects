@@ -3,8 +3,16 @@ Unit Unit2;
 Interface
 
 Uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls;
 
 Type
   TForm2 = Class(TForm)
@@ -29,11 +37,15 @@ Implementation
 
 {$R *.dfm}
 
+//If pressed, load history from text file
+
 Procedure TForm2.btnLoadClick(Sender: TObject);
 Begin
   If dlgOpen1.Execute Then
     Form2.mmoHistory.Lines.LoadFromFile(dlgOpen1.FileName);
 End;
+
+//If pressed, load history to text file
 
 Procedure TForm2.btnSaveClick(Sender: TObject);
 Begin

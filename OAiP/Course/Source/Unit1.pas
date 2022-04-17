@@ -22,7 +22,7 @@ Uses
 //L - Local Variable Name
 //E - Enum Member Name
 //F - Formal Parameter Name
-Type 
+Type
   TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL, EEXP, ETWO, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC);
   TLine = ^ELine;
   ELine = Record
@@ -116,13 +116,15 @@ Type
     Procedure btnHistClick(Sender: TObject);
     Procedure btnTrigClick(Sender: TObject);
     Procedure btnBulkClick(Sender: TObject);
+    Procedure NoException(Const FOp: TOp);
+    Procedure OneException(Const FOp: TOp);
+    Procedure ZeroException(Const FOp: TOp);
     Procedure LimException(Const FOp: TOp; Const FInt: Extended);
     Procedure FactException(Const FOp: TOp; Const FInt: Integer);
     Procedure NegException(Const FOp: TOp);
     Procedure PlaceSymbol(Const FSym: String);
     Procedure TwoNumbers(Const FOp: TOp);
     Procedure Display();
-    Function ConvertSF(Var FInp: String): Real;
   Private
     { Private declarations }
   Public
@@ -280,7 +282,24 @@ Begin
   GClear:= True;
 End;
 
-Function TForm1.ConvertSF(Var FInp: String): Real;
+Procedure TForm1.Display();
+Begin
+  If (GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
+    GError:= True;
+
+  If GMem.Op <> ENULL Then
+    If (Not GError) Then
+    Begin
+      Calculate();
+      lblField.Caption:= FloatToStr(GMem.Res);
+      SaveData();
+    End
+    Else
+      lblField.Caption:= 'Error. No correct input';
+  ResetData();
+End;
+
+Function ConvertSF(Var FInp: String): Real;
 Var
   LInp: Real;
   LPos, LLim: Integer;
@@ -305,23 +324,6 @@ Begin
   End;
 End;
 
-Procedure TForm1.Display();
-Begin
-  If (GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
-    GError:= True;
-
-  If GMem.Op <> ENULL Then
-    If (Not GError) Then
-    Begin
-      Calculate();
-      lblField.Caption:= FloatToStr(GMem.Res);
-      SaveData();
-    End
-    Else
-      lblField.Caption:= 'Error. No correct input';
-  ResetData();
-End;
-
 Procedure TForm1.btnEqClick(Sender: TObject);
 Var
   LInp: String;
@@ -331,12 +333,36 @@ Begin
   Display();
 End;
 
-Procedure TForm1.btnBackClick(Sender: TObject);
+Procedure TForm1.ZeroException(Const FOp: TOp);
 Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GMem.Op:= EBACK;
+  GMem.Op:= FOp;
+  GMem.Inp1:= ConvertSF(LInp);
+  If (GMem.Inp1 = 0) Then
+    GError:= True;
+  Display();
+End;
+
+Procedure TForm1.OneException(Const FOp: TOp);
+Var
+  LInp: String;
+Begin
+  LInp:= lblField.Caption;
+  GMem.Op:= FOp;
+  GMem.Inp1:= ConvertSF(LInp);
+  If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
+    GError:= True;
+  Display();
+End;
+
+Procedure TForm1.NoException(Const FOp: TOp);
+Var
+  LInp: String;
+Begin
+  LInp:= lblField.Caption;
+  GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
@@ -353,16 +379,6 @@ Begin
   Display();
 End;
 
-Procedure TForm1.btnFactorialClick(Sender: TObject);
-Begin
-  FactException(EFACTORIAL, 12);
-End;
-
-Procedure TForm1.btnDFactorialClick(Sender: TObject);
-Begin
-  FactException(EDFACTORIAL, 19);
-End;
-
 Procedure TForm1.LimException(Const FOp: TOp; Const FInt: Extended);
 Var
   LInp: String;
@@ -373,31 +389,6 @@ Begin
   If GMem.Inp1 >= FInt Then
     GError:= True;
   Display();
-End;
-
-Procedure TForm1.btnPower2Click(Sender: TObject);
-Begin
-  LimException(ESQUARE, 1E154);
-End;
-
-Procedure TForm1.btnExpClick(Sender: TObject);
-Begin
-  LimException(EEXP, 710);
-End;
-
-Procedure TForm1.btn2PowerClick(Sender: TObject);
-Begin
-  LimException(ETWO, 1024);
-End;
-
-Procedure TForm1.btn10PowerClick(Sender: TObject);
-Begin
-  LimException(ETEN, 308);
-End;
-
-Procedure TForm1.btnPower3Click(Sender: TObject);
-Begin
-  LimException(ECUBE, 1E100);
 End;
 
 Procedure TForm1.NegException(Const FOp: TOp);
@@ -412,21 +403,6 @@ Begin
   Display();
 End;
 
-Procedure TForm1.btnSqrtClick(Sender: TObject);
-Begin
-  NegException(ESQRT);
-End;
-
-Procedure TForm1.btnLgClick(Sender: TObject);
-Begin
-  NegException(ELG);
-End;
-
-Procedure TForm1.btnLnClick(Sender: TObject);
-Begin
-  NegException(ELN);
-End;
-
 Procedure TForm1.TwoNumbers(Const FOp: TOp);
 Var
   LInp: String;
@@ -435,36 +411,6 @@ Begin
   GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
-End;
-
-Procedure TForm1.btnPercentClick(Sender: TObject);
-Begin
-  TwoNumbers(EPERCENT);
-End;
-
-Procedure TForm1.btnPowerYClick(Sender: TObject);
-Begin
-  TwoNumbers(EPOWER);
-End;
-
-Procedure TForm1.btnMultipleClick(Sender: TObject);
-Begin
-  TwoNumbers(EMULTIPLE);
-End;
-
-Procedure TForm1.btnDivideClick(Sender: TObject);
-Begin
-  TwoNumbers(EDIVIDE);
-End;
-
-Procedure TForm1.btnPlusClick(Sender: TObject);
-Begin
-  TwoNumbers(EPLUS);
-End;
-
-Procedure TForm1.btnMinusClick(Sender: TObject);
-Begin
-  TwoNumbers(EMINUS);
 End;
 
 Procedure TForm1.PlaceSymbol(Const FSym: String);
@@ -508,77 +454,6 @@ Begin
   lblField.Caption:= LInp + LAdd;
 End;
 
-Procedure TForm1.btnPosNegClick(Sender: TObject);
-Begin
-  PlaceSymbol('-');
-End;
-
-Procedure TForm1.btnFloatClick(Sender: TObject);
-Begin
-  PlaceSymbol('E');
-End;
-
-Procedure TForm1.btn0Click(Sender: TObject);
-Begin
-  PlaceSymbol('0');
-End;
-
-Procedure TForm1.btn1Click(Sender: TObject);
-Begin
-  PlaceSymbol('1');
-End;
-
-Procedure TForm1.btn2Click(Sender: TObject);
-Begin
-  PlaceSymbol('2');
-End;
-
-Procedure TForm1.btn3Click(Sender: TObject);
-Begin
-  PlaceSymbol('3');
-End;
-
-Procedure TForm1.btn4Click(Sender: TObject);
-Begin
-  PlaceSymbol('4');
-End;
-
-Procedure TForm1.btn5Click(Sender: TObject);
-Begin
-  PlaceSymbol('5');
-End;
-
-Procedure TForm1.btn6Click(Sender: TObject);
-Begin
-  PlaceSymbol('6');
-End;
-
-Procedure TForm1.btn7Click(Sender: TObject);
-Begin
-  PlaceSymbol('7');
-End;
-
-Procedure TForm1.btn8Click(Sender: TObject);
-Begin
-  PlaceSymbol('8');
-End;
-
-Procedure TForm1.btn9Click(Sender: TObject);
-Begin
-  PlaceSymbol('9');
-End;
-
-Procedure TForm1.btnCommaClick(Sender: TObject);
-Begin
-  PlaceSymbol('.');
-End;
-
-Procedure TForm1.btnClearAllClick(Sender: TObject);
-Begin
-  lblField.Caption:= '0';
-  ResetData();
-End;
-
 Procedure TForm1.btnClearClick(Sender: TObject);
 Var
   LInp: String;
@@ -597,16 +472,6 @@ Begin
   End;
 End;
 
-Procedure TForm1.btnEilerClick(Sender: TObject);
-Begin
-  lblField.Caption:= '2.718281828459045';
-End;
-
-Procedure TForm1.btnPeeClick(Sender: TObject);
-Begin
-  lblField.Caption:= '3.141592653589793';
-End;
-
 Procedure TForm1.btnHistClick(Sender: TObject);
 Var
   LLine: Integer;
@@ -615,11 +480,6 @@ Begin
   LLine:= Form2.mmoHistory.Lines.Count - 1;
   If AnsiPos('mmoHistory', Form2.mmoHistory.Lines[LLine]) <> 0 Then
     Form2.mmoHistory.Lines.Delete(LLine);
-End;
-
-Procedure TForm1.btnTrigClick(Sender: TObject);
-Begin
-  Form3.show;
 End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
@@ -695,6 +555,177 @@ Begin
     Dispose(LLine1);
     ResetData();
   End;
+End;
+
+Procedure TForm1.btnBackClick(Sender: TObject);
+Begin
+  NoException(EBACK);
+End;
+
+Procedure TForm1.btnFactorialClick(Sender: TObject);
+Begin
+  FactException(EFACTORIAL, 12);
+End;
+
+Procedure TForm1.btnDFactorialClick(Sender: TObject);
+Begin
+  FactException(EDFACTORIAL, 19);
+End;
+
+Procedure TForm1.btnPower2Click(Sender: TObject);
+Begin
+  LimException(ESQUARE, 1E154);
+End;
+
+Procedure TForm1.btnExpClick(Sender: TObject);
+Begin
+  LimException(EEXP, 710);
+End;
+
+Procedure TForm1.btn2PowerClick(Sender: TObject);
+Begin
+  LimException(ETWO, 1024);
+End;
+
+Procedure TForm1.btn10PowerClick(Sender: TObject);
+Begin
+  LimException(ETEN, 308);
+End;
+
+Procedure TForm1.btnPower3Click(Sender: TObject);
+Begin
+  LimException(ECUBE, 1E100);
+End;
+
+Procedure TForm1.btnSqrtClick(Sender: TObject);
+Begin
+  NegException(ESQRT);
+End;
+
+Procedure TForm1.btnLgClick(Sender: TObject);
+Begin
+  NegException(ELG);
+End;
+
+Procedure TForm1.btnLnClick(Sender: TObject);
+Begin
+  NegException(ELN);
+End;
+
+Procedure TForm1.btnPercentClick(Sender: TObject);
+Begin
+  TwoNumbers(EPERCENT);
+End;
+
+Procedure TForm1.btnPowerYClick(Sender: TObject);
+Begin
+  TwoNumbers(EPOWER);
+End;
+
+Procedure TForm1.btnMultipleClick(Sender: TObject);
+Begin
+  TwoNumbers(EMULTIPLE);
+End;
+
+Procedure TForm1.btnDivideClick(Sender: TObject);
+Begin
+  TwoNumbers(EDIVIDE);
+End;
+
+Procedure TForm1.btnPlusClick(Sender: TObject);
+Begin
+  TwoNumbers(EPLUS);
+End;
+
+Procedure TForm1.btnMinusClick(Sender: TObject);
+Begin
+  TwoNumbers(EMINUS);
+End;
+
+Procedure TForm1.btnPosNegClick(Sender: TObject);
+Begin
+  PlaceSymbol('-');
+End;
+
+Procedure TForm1.btnFloatClick(Sender: TObject);
+Begin
+  PlaceSymbol('E');
+End;
+
+Procedure TForm1.btn0Click(Sender: TObject);
+Begin
+  PlaceSymbol('0');
+End;
+
+Procedure TForm1.btn1Click(Sender: TObject);
+Begin
+  PlaceSymbol('1');
+End;
+
+Procedure TForm1.btn2Click(Sender: TObject);
+Begin
+  PlaceSymbol('2');
+End;
+
+Procedure TForm1.btn3Click(Sender: TObject);
+Begin
+  PlaceSymbol('3');
+End;
+
+Procedure TForm1.btn4Click(Sender: TObject);
+Begin
+  PlaceSymbol('4');
+End;
+
+Procedure TForm1.btn5Click(Sender: TObject);
+Begin
+  PlaceSymbol('5');
+End;
+
+Procedure TForm1.btn6Click(Sender: TObject);
+Begin
+  PlaceSymbol('6');
+End;
+
+Procedure TForm1.btn7Click(Sender: TObject);
+Begin
+  PlaceSymbol('7');
+End;
+
+Procedure TForm1.btn8Click(Sender: TObject);
+Begin
+  PlaceSymbol('8');
+End;
+
+Procedure TForm1.btn9Click(Sender: TObject);
+Begin
+  PlaceSymbol('9');
+End;
+
+Procedure TForm1.btnCommaClick(Sender: TObject);
+Begin
+  PlaceSymbol('.');
+End;
+
+Procedure TForm1.btnClearAllClick(Sender: TObject);
+Begin
+  lblField.Caption:= '0';
+  ResetData();
+End;
+
+Procedure TForm1.btnEilerClick(Sender: TObject);
+Begin
+  lblField.Caption:= '2.718281828459045';
+End;
+
+Procedure TForm1.btnPeeClick(Sender: TObject);
+Begin
+  lblField.Caption:= '3.141592653589793';
+End;
+
+Procedure TForm1.btnTrigClick(Sender: TObject);
+Begin
+  Form3.show;
 End;
 
 Initialization

@@ -22,7 +22,8 @@ Uses
 //L - Local Variable Name
 //E - Enum Member Name
 //F - Formal Parameter Name
-Type
+Type 
+  TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL, EEXP, ETWO, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC);
   TLine = ^ELine;
   ELine = Record
     Data: Real;
@@ -30,11 +31,11 @@ Type
   End;
   TMem = Record
     Inp1, Inp2, Res: Real;
+    Op: TOp;
   End;
   TDisp = Record
     Inp1, Inp2, Res, Op: String;
   End;
-  TOp = (ENULL, EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, EDIVIDE, EFACTORIAL, EMINUS, EMULTIPLE, EPERCENT, EPLUS, EPOWER, ESIN, ESQRT, ETG, ESQUARE, ECUBE, ELG, ELN, ECH, ESH, ETH, ECTH, ETEN, EBACK, EDFACTORIAL, EEXP, ETWO, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC);
   TForm1 = Class(TForm)
     btn1: TButton;
     btn2: TButton;
@@ -141,7 +142,6 @@ Const
 Var
   Form1: TForm1;
   GDisp: TDisp;
-  GOp: TOp;
   GMem: TMem;
   GLine: Integer;
   GError, GClear: Boolean;
@@ -154,7 +154,7 @@ Uses Unit2,
 
 Procedure Calculate();
 Begin
-  Case GOp Of
+  Case GMem.Op Of
     EPLUS:
       GMem.Res:= GMem.Inp1 + GMem.Inp2;
     EMINUS:
@@ -243,7 +243,7 @@ End;
 
 Procedure ResetData();
 Begin
-  GOp:= ENULL;
+  GMem.Op:= ENULL;
   GError:= False;
   With GMem Do
   Begin
@@ -257,20 +257,20 @@ Procedure SaveData();
 Var
   LRes: String;
 Begin
-  If GOp <> ENULL Then
+  If GMem.Op <> ENULL Then
   Begin
-    GDisp.Op:= GOpView[GOp];
+    GDisp.Op:= GOpView[GMem.Op];
     GDisp.Inp1:= FloatToStr(GMem.Inp1);
     GDisp.Inp2:= FloatToStr(GMem.Inp2);
     GDisp.Res:= FloatToStr(GMem.Res);
 
-    If GOp In GHist1 Then
+    If GMem.Op In GHist1 Then
       LRes:= GDisp.Op + '(' + GDisp.Inp1 + ') = ' + GDisp.Res
     Else
-      If GOp In GHist2 Then
+      If GMem.Op In GHist2 Then
         LRes:= GDisp.Inp1 + ' ' + GDisp.Op + ' = ' + GDisp.Res
       Else
-        If GOp In GHist3 Then
+        If GMem.Op In GHist3 Then
           LRes:= GDisp.Op + ' ' + GDisp.Inp1 + ' = ' + GDisp.Res
         Else
           LRes:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
@@ -309,10 +309,10 @@ End;
 
 Procedure TForm1.Display();
 Begin
-  If (GOp = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
+  If (GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
     GError:= True;
 
-  If GOp <> ENULL Then
+  If GMem.Op <> ENULL Then
     If (Not GError) Then
     Begin
       Calculate();
@@ -338,7 +338,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= EBACK;
+  GMem.Op:= EBACK;
   GMem.Inp1:= ConvertSF(LInp);
   Display();
 End;
@@ -348,7 +348,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   If (Trunc(GMem.Inp1) <> GMem.Inp1) Or (GMem.Inp1 < 0) Or (GMem.Inp1 > FInt) Then
     GError:= True;
@@ -370,7 +370,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   If GMem.Inp1 >= FInt Then
     GError:= True;
@@ -407,7 +407,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   If GMem.Inp1 <= 0 Then
     GError:= True;
@@ -434,7 +434,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= ConvertSF(LInp);
   lblField.Caption:= '';
 End;
@@ -663,7 +663,7 @@ Begin
 
     CloseFile(LFile);
 
-    Case GOp Of
+    Case GMem.Op Of
       EPLUS:
         Begin
           LRes:= 0;
@@ -690,7 +690,7 @@ Begin
     If Not GError Then
     Begin
       lblField.Caption:= FloatToStr(LRes);
-      Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GOp] + ' = ' + FloatToStr(LRes));
+      Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GMem.Op] + ' = ' + FloatToStr(LRes));
     End
     Else
       lblField.Caption:= 'Error. No correct input';
@@ -700,7 +700,7 @@ Begin
 End;
 
 Initialization
-  GOp:= ENULL;
+  GMem.Op:= ENULL;
   GError:= False;
   DecimalSeparator:= '.';
 End.

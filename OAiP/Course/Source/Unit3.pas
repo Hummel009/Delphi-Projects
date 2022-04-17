@@ -76,7 +76,7 @@ Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 = 0) Then
     GError:= True;
@@ -88,7 +88,7 @@ Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
@@ -100,7 +100,7 @@ Var
   LInp: String;
 Begin
   LInp:= Form1.lblField.Caption;
-  GOp:= FOp;
+  GMem.Op:= FOp;
   GMem.Inp1:= Form1.ConvertSF(LInp);
   Form1.Display();
 End;

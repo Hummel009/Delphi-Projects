@@ -16,14 +16,11 @@ Uses
 
 Type
   TForm2 = Class(TForm)
-    btnSave: TButton;
-    btnLoad: TButton;
-    dlgOpen1: TOpenDialog;
-    dlgSave1: TSaveDialog;
     scrlbx1: TScrollBox;
     mmoHistory: TMemo;
-    Procedure btnLoadClick(Sender: TObject);
-    Procedure btnSaveClick(Sender: TObject);
+    Button1: TButton;
+    lbl1: TLabel;
+    Procedure btnClearClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -35,22 +32,20 @@ Var
 
 Implementation
 
+Uses Unit1;
 {$R *.dfm}
 
 //If pressed, load history from text file
 
-Procedure TForm2.btnLoadClick(Sender: TObject);
+Procedure TForm2.btnClearClick(Sender: TObject);
+Var
+  LFile: File Of TDisp;
 Begin
-  If dlgOpen1.Execute Then
-    Form2.mmoHistory.Lines.LoadFromFile(dlgOpen1.FileName);
-End;
-
-//If pressed, load history to text file
-
-Procedure TForm2.btnSaveClick(Sender: TObject);
-Begin
-  If dlgSave1.Execute Then
-    Form2.mmoHistory.Lines.SaveToFile(dlgSave1.FileName);
+  AssignFile(LFile, 'Hummel009.hzzn');
+  Rewrite(LFile);
+  CloseFile(LFile);
+  Form2.mmoHistory.Lines.Clear;
+  Form2.close;
 End;
 
 Initialization

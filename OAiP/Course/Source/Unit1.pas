@@ -34,7 +34,7 @@ Type
     Op: TOp;
   End;
   TDisp = Record
-    Inp1, Inp2, Res, Op: String;
+    Inp1, Inp2, Res, Op, Disp: String[50];
   End;
   TForm1 = Class(TForm)
     btn1: TButton;
@@ -255,7 +255,7 @@ End;
 
 Procedure SaveData();
 Var
-  LRes: String;
+  LFile: File Of TDisp;
 Begin
   If GMem.Op <> ENULL Then
   Begin
@@ -265,18 +265,28 @@ Begin
     GDisp.Res:= FloatToStr(GMem.Res);
 
     If GMem.Op In GHist1 Then
-      LRes:= GDisp.Op + '(' + GDisp.Inp1 + ') = ' + GDisp.Res
+      GDisp.Disp:= GDisp.Op + '(' + GDisp.Inp1 + ') = ' + GDisp.Res
     Else
       If GMem.Op In GHist2 Then
-        LRes:= GDisp.Inp1 + ' ' + GDisp.Op + ' = ' + GDisp.Res
+        GDisp.Disp:= GDisp.Inp1 + ' ' + GDisp.Op + ' = ' + GDisp.Res
       Else
         If GMem.Op In GHist3 Then
-          LRes:= GDisp.Op + ' ' + GDisp.Inp1 + ' = ' + GDisp.Res
+          GDisp.Disp:= GDisp.Op + ' ' + GDisp.Inp1 + ' = ' + GDisp.Res
         Else
-          LRes:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
+          GDisp.Disp:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
 
-    Form2.mmoHistory.Lines.Insert(GLine, LRes);
-    Inc(GLine);
+    If Not FileExists('Hummel009.hzzn') Then
+    Begin
+      AssignFile(LFile, 'Hummel009.hzzn');
+      Rewrite(LFile);
+      CloseFile(LFile);
+    End;
+
+    AssignFile(LFile, 'Hummel009.hzzn');
+    Reset(LFile);
+    Seek(LFile, FileSize(LFile));
+    Write(LFile, GDisp);
+    CloseFile(LFile);
   End;
 
   GClear:= True;
@@ -474,12 +484,24 @@ End;
 
 Procedure TForm1.btnHistClick(Sender: TObject);
 Var
-  LLine: Integer;
+  LFile: File Of TDisp;
+  Line: TDisp;
+  I: Integer;
 Begin
+  Form2.mmoHistory.Lines.Clear;
+
+  AssignFile(LFile, 'Hummel009.hzzn');
+  Reset(LFile);
+
+  GLine:= 0;
+  While Not Eof(LFile) Do
+  Begin
+    Read(LFile, Line);
+    Form2.mmoHistory.Lines.Insert(GLine, Line.Disp);
+    Inc(GLine);
+  End;
+
   Form2.show;
-  LLine:= Form2.mmoHistory.Lines.Count - 1;
-  If AnsiPos('mmoHistory', Form2.mmoHistory.Lines[LLine]) <> 0 Then
-    Form2.mmoHistory.Lines.Delete(LLine);
 End;
 
 Procedure TForm1.btnBulkClick(Sender: TObject);
@@ -546,10 +568,7 @@ Begin
     End;
 
     If Not GError Then
-    Begin
-      lblField.Caption:= FloatToStr(LRes);
-      Form2.mmoHistory.Lines.Insert(GLine, 'Bulk ' + GOpView[GMem.Op] + ' = ' + FloatToStr(LRes));
-    End
+      lblField.Caption:= FloatToStr(LRes)
     Else
       lblField.Caption:= 'Error. No correct input';
     Dispose(LLine1);

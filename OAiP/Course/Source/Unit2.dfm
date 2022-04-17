@@ -1,8 +1,8 @@
 object Form2: TForm2
-  Left = 1336
-  Top = 267
-  Width = 497
-  Height = 500
+  Left = 535
+  Top = 256
+  Width = 825
+  Height = 364
   AutoSize = True
   Caption = 'History'
   Color = clBtnFace
@@ -14,47 +14,30 @@ object Form2: TForm2
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object btnSave: TButton
-    Left = 0
-    Top = 416
-    Width = 241
-    Height = 57
-    Caption = 'Save'
+  object lbl1: TLabel
+    Left = 312
+    Top = 288
+    Width = 475
+    Height = 42
+    Caption = 'Reopen history to see changes'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -35
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 0
-    OnClick = btnSaveClick
-  end
-  object btnLoad: TButton
-    Left = 248
-    Top = 416
-    Width = 241
-    Height = 57
-    Caption = 'Load'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -35
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    OnClick = btnLoadClick
   end
   object scrlbx1: TScrollBox
     Left = 0
     Top = 0
-    Width = 489
-    Height = 409
-    TabOrder = 2
+    Width = 817
+    Height = 273
+    TabOrder = 0
     object mmoHistory: TMemo
       Left = -4
       Top = 4
-      Width = 469
-      Height = 585
+      Width = 797
+      Height = 1920
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -29
@@ -66,11 +49,19 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object dlgOpen1: TOpenDialog
-    Left = 248
-    Top = 592
-  end
-  object dlgSave1: TSaveDialog
-    Top = 592
+  object Button1: TButton
+    Left = 0
+    Top = 280
+    Width = 273
+    Height = 57
+    Caption = 'clear and close'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -35
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    OnClick = btnClearClick
   end
 end

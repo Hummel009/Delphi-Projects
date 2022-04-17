@@ -129,17 +129,15 @@ Type
     { Public declarations }
   End;
 
-Const
-  E = 2.718281828459045;
-  P = 3.141592653589793;
+Var
+  E: Real = 2.718281828459045;
+  P: Real = 3.141592653589793;
   GOpView: Array[TOp] Of String = ('?', 'arccos', 'arcctg', 'arcsin', 'arctg', 'cos', 'ctg', '/', '!', '-', '*', '%', '+', '', 'sin', 'sqrt', 'tg', ' 2', ' 3', 'lg', 'ln', 'ch', 'sh', 'th', 'cth', '10 ', '1 /', '!!', 'exp', '2 ', 'sec', 'cosec', 'arcsec', 'arccosec', 'sch', 'csch', 'versin', 'vercos', 'haversin', 'havercos', 'exsec', 'excosec');
   GFact1: Array[0..12] Of Integer = (1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600);
   GFact2: Array[0..19] Of Integer = (1, 1, 2, 3, 8, 15, 48, 105, 384, 945, 3840, 10395, 46080, 135135, 645120, 2027025, 10321920, 34459425, 185794560, 654729075);
   GHist1: Set Of TOp = [EARCCOS, EARCCTG, EARCSIN, EARCTG, ECOS, ECTG, ESIN, ESQRT, ETG, ELG, ELN, ECH, ESH, ETH, ECTH, EEXP, ESC, ECSC, EARCSC, EARCCSC, ESCH, ECSCH, EVERSIN, EVERCOS, EHAVERSIN, EHAVERCOS, EEXSC, EEXCSC];
   GHist2: Set Of TOp = [EFACTORIAL, EDFACTORIAL, ESQUARE, ECUBE];
   GHist3: Set Of TOp = [EBACK, ETEN, ETWO];
-
-Var
   Form1: TForm1;
   GDisp: TDisp;
   GMem: TMem;

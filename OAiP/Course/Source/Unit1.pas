@@ -485,7 +485,7 @@ End;
 Procedure TForm1.btnHistClick(Sender: TObject);
 Var
   LFile: File Of TDisp;
-  Line: TDisp;
+  LLine: TDisp;
   I: Integer;
 Begin
   Form2.mmoHistory.Lines.Clear;
@@ -496,8 +496,8 @@ Begin
   GLine:= 0;
   While Not Eof(LFile) Do
   Begin
-    Read(LFile, Line);
-    Form2.mmoHistory.Lines.Insert(GLine, Line.Disp);
+    Read(LFile, LLine);
+    Form2.mmoHistory.Lines.Insert(GLine, LLine.Disp);
     Inc(GLine);
   End;
 

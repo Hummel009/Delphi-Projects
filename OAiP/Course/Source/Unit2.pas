@@ -20,7 +20,7 @@ Type
     mmoHistory: TMemo;
     Button1: TButton;
     lbl1: TLabel;
-    Procedure btnClearClick(Sender: TObject);
+    Procedure btnClearFileClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -37,7 +37,7 @@ Uses Unit1;
 
 //If pressed, load history from text file
 
-Procedure TForm2.btnClearClick(Sender: TObject);
+Procedure TForm2.btnClearFileClick(Sender: TObject);
 Var
   LFile: File Of TDisp;
 Begin

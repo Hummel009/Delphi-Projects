@@ -62,6 +62,6 @@ object Form2: TForm2
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    OnClick = btnClearClick
+    OnClick = btnClearFileClick
   end
 end

@@ -152,100 +152,100 @@ Uses Unit2,
   Unit3;
 {$R *.dfm}
 
-Procedure Calculate();
+Procedure Calculate(var FRes: Real);
 Begin
   Case GMem.Op Of
     EPLUS:
-      GMem.Res:= GMem.Inp1 + GMem.Inp2;
+      FRes:= GMem.Inp1 + GMem.Inp2;
     EMINUS:
-      GMem.Res:= GMem.Inp1 - GMem.Inp2;
+      FRes:= GMem.Inp1 - GMem.Inp2;
     EMULTIPLE:
-      GMem.Res:= GMem.Inp1 * GMem.Inp2;
+      FRes:= GMem.Inp1 * GMem.Inp2;
     EARCSIN:
-      GMem.Res:= Arcsin(GMem.Inp1);
+      FRes:= Arcsin(GMem.Inp1);
     EARCCOS:
-      GMem.Res:= Arccos(GMem.Inp1);
+      FRes:= Arccos(GMem.Inp1);
     EARCTG:
-      GMem.Res:= Arctan(GMem.Inp1);
+      FRes:= Arctan(GMem.Inp1);
     EARCCTG:
-      GMem.Res:= Arccot(GMem.Inp1);
+      FRes:= Arccot(GMem.Inp1);
     ESIN:
-      GMem.Res:= Sin(GMem.Inp1);
+      FRes:= Sin(GMem.Inp1);
     ECOS:
-      GMem.Res:= Cos(GMem.Inp1);
+      FRes:= Cos(GMem.Inp1);
     ETG:
-      GMem.Res:= Tan(GMem.Inp1);
+      FRes:= Tan(GMem.Inp1);
     ECTG:
-      GMem.Res:= Cotan(GMem.Inp1);
+      FRes:= Cotan(GMem.Inp1);
     ESQRT:
-      GMem.Res:= Sqrt(GMem.Inp1);
+      FRes:= Sqrt(GMem.Inp1);
     EPOWER:
-      GMem.Res:= Power(GMem.Inp1, GMem.Inp2);
+      FRes:= Power(GMem.Inp1, GMem.Inp2);
     EFACTORIAL:
-      GMem.Res:= GFact1[Trunc(GMem.Inp1)];
+      FRes:= GFact1[Trunc(GMem.Inp1)];
     EDIVIDE:
-      GMem.Res:= GMem.Inp1 / GMem.Inp2;
+      FRes:= GMem.Inp1 / GMem.Inp2;
     EPERCENT:
-      GMem.Res:= GMem.Inp2 * GMem.Inp1 / 100;
+      FRes:= GMem.Inp2 * GMem.Inp1 / 100;
     ESQUARE:
-      GMem.Res:= Power(GMem.Inp1, 2);
+      FRes:= Power(GMem.Inp1, 2);
     ECUBE:
-      GMem.Res:= Power(GMem.Inp1, 3);
+      FRes:= Power(GMem.Inp1, 3);
     ELG:
-      GMem.Res:= Log10(GMem.Inp1);
+      FRes:= Log10(GMem.Inp1);
     ELN:
-      GMem.Res:= Ln(GMem.Inp1);
+      FRes:= Ln(GMem.Inp1);
     ECH:
-      GMem.Res:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2;
+      FRes:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2;
     ESH:
-      GMem.Res:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2;
+      FRes:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2;
     ETH:
-      GMem.Res:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1));
+      FRes:= (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1));
     ECTH:
-      GMem.Res:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1));
+      FRes:= (Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / (Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1));
     ETEN:
-      GMem.Res:= Power(10, GMem.Inp1);
+      FRes:= Power(10, GMem.Inp1);
     EBACK:
-      GMem.Res:= 1 / GMem.Inp1;
+      FRes:= 1 / GMem.Inp1;
     EDFACTORIAL:
-      GMem.Res:= GFact2[Trunc(GMem.Inp1)];
+      FRes:= GFact2[Trunc(GMem.Inp1)];
     ETWO:
-      GMem.Res:= Power(2, GMem.Inp1);
+      FRes:= Power(2, GMem.Inp1);
     EEXP:
-      GMem.Res:= Power(E, GMem.Inp1);
+      FRes:= Power(E, GMem.Inp1);
     ESC:
-      GMem.Res:= 1 / Cos(GMem.Inp1);
+      FRes:= 1 / Cos(GMem.Inp1);
     ECSC:
-      GMem.Res:= 1 / Sin(GMem.Inp1);
+      FRes:= 1 / Sin(GMem.Inp1);
     EARCSC:
-      GMem.Res:= 1 / Arccos(1 / GMem.Inp1);
+      FRes:= 1 / Arccos(1 / GMem.Inp1);
     EARCCSC:
-      GMem.Res:= 1 / Arcsin(1 / GMem.Inp1);
+      FRes:= 1 / Arcsin(1 / GMem.Inp1);
     ESCH:
-      GMem.Res:= 1 / ((Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2);
+      FRes:= 1 / ((Power(E, GMem.Inp1) + Power(E, (-1) * GMem.Inp1)) / 2);
     ECSCH:
-      GMem.Res:= 1 / ((Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2);
+      FRes:= 1 / ((Power(E, GMem.Inp1) - Power(E, (-1) * GMem.Inp1)) / 2);
     EVERSIN:
-      GMem.Res:= 1 - Cos(GMem.Inp1);
+      FRes:= 1 - Cos(GMem.Inp1);
     EVERCOS:
-      GMem.Res:= 1 - Sin(GMem.Inp1);
+      FRes:= 1 - Sin(GMem.Inp1);
     EHAVERSIN:
-      GMem.Res:= (1 - Cos(GMem.Inp1)) / 2;
+      FRes:= (1 - Cos(GMem.Inp1)) / 2;
     EHAVERCOS:
-      GMem.Res:= (1 - Sin(GMem.Inp1)) / 2;
+      FRes:= (1 - Sin(GMem.Inp1)) / 2;
     EEXSC:
-      GMem.Res:= (1 / Cos(GMem.Inp1)) - 1;
+      FRes:= (1 / Cos(GMem.Inp1)) - 1;
     EEXCSC:
-      GMem.Res:= (1 / Sin(GMem.Inp1)) - 1;
+      FRes:= (1 / Sin(GMem.Inp1)) - 1;
     ENULL:
   End;
 End;
 
-Procedure ResetData();
+Procedure ResetData(var FMem: TMem);
 Begin
   GMem.Op:= ENULL;
   GError:= False;
-  With GMem Do
+  With FMem Do
   Begin
     Inp1:= 0;
     Inp2:= 0;
@@ -293,6 +293,8 @@ Begin
 End;
 
 Procedure TForm1.Display();
+Var
+  TRes: Real;
 Begin
   If (GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
     GError:= True;
@@ -300,13 +302,14 @@ Begin
   If GMem.Op <> ENULL Then
     If (Not GError) Then
     Begin
-      Calculate();
+      Calculate(TRes);
+	    GMem.Res:=TRes;
       lblField.Caption:= FloatToStr(GMem.Res);
       SaveData();
     End
     Else
       lblField.Caption:= 'Error. No correct input';
-  ResetData();
+  ResetData(GMem);
 End;
 
 Function ConvertSF(Var FInp: String): Real;
@@ -572,7 +575,7 @@ Begin
     Else
       lblField.Caption:= 'Error. No correct input';
     Dispose(LLine1);
-    ResetData();
+    ResetData(GMem);
   End;
 End;
 
@@ -729,7 +732,7 @@ End;
 Procedure TForm1.btnClearAllClick(Sender: TObject);
 Begin
   lblField.Caption:= '0';
-  ResetData();
+  ResetData(GMem);
 End;
 
 Procedure TForm1.btnEilerClick(Sender: TObject);
@@ -752,4 +755,3 @@ Initialization
   GError:= False;
   DecimalSeparator:= '.';
 End.
-

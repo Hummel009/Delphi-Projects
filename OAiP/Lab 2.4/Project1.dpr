@@ -29,24 +29,27 @@ Var
 
 //Swaps 2 elements
 //A, B - elements
+
 Procedure Swap(Var A1, B1);
+Type
+  A = Integer;
+  B = Integer;
 Var
   T: Integer;
-  A: Integer absolute A1; 
-  B: Integer absolute B1;
   //T - temp
 Begin
-  T:= A;
-  A:= B;
-  B:= T;
+  T:= A(A1);
+  A(A1):= B(B1);
+  B(B1):= T;
 End;
 
 //Fills array with elements
 //Arr - array, N - array size, Opt - filler type
+
 Procedure Fill(Var Arr1; Const N, Opt: Integer);
 Var
   I: Integer;
-  Arr: TArr absolute Arr1;
+  Arr: TArr Absolute Arr1;
   //I - select type of filling
 Begin
   Randomize;
@@ -65,12 +68,13 @@ End;
 
 //Sorts an array and calculates the number of comparisons
 //Arr - array, N - array size, Comp - comparisons
+
 Procedure BubbleSort(Var Arr1; Const N: Integer; Var Comp1);
 Var
   I, J: Integer;
   Sorted: Boolean;
-  Arr: TArr absolute Arr1;     
-  Comp: Integer absolute Comp1;
+  Arr: TArr Absolute Arr1;
+  Comp: Integer Absolute Comp1;
   //I, J - loop params
   //Sorted - condition to exit
 Begin
@@ -94,12 +98,13 @@ End;
 
 //Sorts an array and calculates the number of comparisons
 //Arr - array, Node - current index, N - array size, Comp - comparisons
+
 Procedure SiftDown(Var Arr1; Node: Integer; Const N: Integer; Var Comp1);
 Var
   Root, Child: Integer;
   Sifted: Boolean;
-  Arr: TArr absolute Arr1;
-  Comp: Integer absolute Comp1;
+  Arr: TArr Absolute Arr1;
+  Comp: Integer Absolute Comp1;
   //Root, Child - indexes
   //Sifted - condition to exit
 Begin
@@ -123,11 +128,12 @@ End;
 
 //Sorts an array and calculates the number of comparisons
 //Arr - array, N - array size, Comp - comparisons
+
 Procedure HeapSort(Var Arr1; Const N: Integer; Var Comp1);
 Var
-  NodeLast, NodeCurr: Integer;   
-  Arr: TArr absolute Arr1;
-  Comp: Integer absolute Comp1;
+  NodeLast, NodeCurr: Integer;
+  Arr: TArr Absolute Arr1;
+  Comp: Integer Absolute Comp1;
   //NodeLast, NodeCurr - indexes
   //Comps - counter
 Begin
@@ -175,3 +181,5 @@ Begin
   End;
   ReadLn;
 End.
+.
+.

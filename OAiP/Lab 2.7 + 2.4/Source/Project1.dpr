@@ -15,7 +15,7 @@ Type
 
 //Declare vars
 Var      
-  Ssgz: Set of Char = ['á', 'â', 'ã', 'ä', 'æ', 'ç', 'ë', 'ì', 'í', 'ð'];
+  Ssgz: Set of Char = ['Ð±', 'Ð²', 'Ð³', 'Ð´', 'Ð¶', 'Ð·', 'Ð»', 'Ð¼', 'Ð½', 'Ñ€'];
   Str: String[255];
   Arr: TArr;
   I, N: Byte;   

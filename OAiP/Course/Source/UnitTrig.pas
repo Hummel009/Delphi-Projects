@@ -1,4 +1,4 @@
-Unit Unit3;
+Unit UnitTrig;
 
 Interface
 
@@ -15,7 +15,7 @@ Uses
   StdCtrls;
 
 Type
-  TForm3 = Class(TForm)
+  TFormTrig = Class(TForm)
     btnActg: TButton;
     btnAtg: TButton;
     btnAcos: TButton;
@@ -71,132 +71,132 @@ Type
   End;
 
 Var
-  Form3: TForm3;
+  FormTrig: TFormTrig;
 
 Implementation
 
-Uses Unit1;
+Uses UnitMain;
 
 {$R *.dfm}
 
-Procedure TForm3.btnCtgClick(Sender: TObject);
+Procedure TFormTrig.btnCtgClick(Sender: TObject);
 Begin
-  Form1.ZeroException(ECTG);
+  FormMain.ZeroException(ECTG);
 End;
 
-Procedure TForm3.btnCscClick(Sender: TObject);
+Procedure TFormTrig.btnCscClick(Sender: TObject);
 Begin
-  Form1.ZeroException(ECSC);
+  FormMain.ZeroException(ECSC);
 End;
 
-Procedure TForm3.btnCthClick(Sender: TObject);
+Procedure TFormTrig.btnCthClick(Sender: TObject);
 Begin
-  Form1.ZeroException(ECTH);
+  FormMain.ZeroException(ECTH);
 End;
 
-Procedure TForm3.btnAsinClick(Sender: TObject);
+Procedure TFormTrig.btnAsinClick(Sender: TObject);
 Begin
-  Form1.OneException(EARCSIN);
+  FormMain.OneException(EARCSIN);
 End;
 
-Procedure TForm3.btnAcosClick(Sender: TObject);
+Procedure TFormTrig.btnAcosClick(Sender: TObject);
 Begin
-  Form1.OneException(EARCCOS);
+  FormMain.OneException(EARCCOS);
 End;
 
-Procedure TForm3.btnAscClick(Sender: TObject);
+Procedure TFormTrig.btnAscClick(Sender: TObject);
 Begin
-  Form1.OneException(EARCSC);
+  FormMain.OneException(EARCSC);
 End;
 
-Procedure TForm3.btnAcscClick(Sender: TObject);
+Procedure TFormTrig.btnAcscClick(Sender: TObject);
 Begin
-  Form1.OneException(EARCCSC);
+  FormMain.OneException(EARCCSC);
 End;
 
-Procedure TForm3.btnSinClick(Sender: TObject);
+Procedure TFormTrig.btnSinClick(Sender: TObject);
 Begin
-  Form1.NoException(ESIN);
+  FormMain.NoException(ESIN);
 End;
 
-Procedure TForm3.btnCosClick(Sender: TObject);
+Procedure TFormTrig.btnCosClick(Sender: TObject);
 Begin
-  Form1.NoException(ECOS);
+  FormMain.NoException(ECOS);
 End;
 
-Procedure TForm3.btnTgClick(Sender: TObject);
+Procedure TFormTrig.btnTgClick(Sender: TObject);
 Begin
-  Form1.NoException(ETG);
+  FormMain.NoException(ETG);
 End;
 
-Procedure TForm3.btnScClick(Sender: TObject);
+Procedure TFormTrig.btnScClick(Sender: TObject);
 Begin
-  Form1.NoException(ESC);
+  FormMain.NoException(ESC);
 End;
 
-Procedure TForm3.btnAtgClick(Sender: TObject);
+Procedure TFormTrig.btnAtgClick(Sender: TObject);
 Begin
-  Form1.NoException(EARCTG);
+  FormMain.NoException(EARCTG);
 End;
 
-Procedure TForm3.btnActgClick(Sender: TObject);
+Procedure TFormTrig.btnActgClick(Sender: TObject);
 Begin
-  Form1.NoException(EARCCTG);
+  FormMain.NoException(EARCCTG);
 End;
 
-Procedure TForm3.btnShClick(Sender: TObject);
+Procedure TFormTrig.btnShClick(Sender: TObject);
 Begin
-  Form1.NoException(ESH);
+  FormMain.NoException(ESH);
 End;
 
-Procedure TForm3.btnChClick(Sender: TObject);
+Procedure TFormTrig.btnChClick(Sender: TObject);
 Begin
-  Form1.NoException(ECH);
+  FormMain.NoException(ECH);
 End;
 
-Procedure TForm3.btnThClick(Sender: TObject);
+Procedure TFormTrig.btnThClick(Sender: TObject);
 Begin
-  Form1.NoException(ETH);
+  FormMain.NoException(ETH);
 End;
 
-Procedure TForm3.btnSchClick(Sender: TObject);
+Procedure TFormTrig.btnSchClick(Sender: TObject);
 Begin
-  Form1.NoException(ESCH);
+  FormMain.NoException(ESCH);
 End;
 
-Procedure TForm3.btnCschClick(Sender: TObject);
+Procedure TFormTrig.btnCschClick(Sender: TObject);
 Begin
-  Form1.NoException(ECSCH);
+  FormMain.NoException(ECSCH);
 End;
 
-Procedure TForm3.btnVersinClick(Sender: TObject);
+Procedure TFormTrig.btnVersinClick(Sender: TObject);
 Begin
-  Form1.NoException(EVERSIN);
+  FormMain.NoException(EVERSIN);
 End;
 
-Procedure TForm3.btnVercosClick(Sender: TObject);
+Procedure TFormTrig.btnVercosClick(Sender: TObject);
 Begin
-  Form1.NoException(EVERCOS);
+  FormMain.NoException(EVERCOS);
 End;
 
-Procedure TForm3.btnHaversinClick(Sender: TObject);
+Procedure TFormTrig.btnHaversinClick(Sender: TObject);
 Begin
-  Form1.NoException(EHAVERSIN);
+  FormMain.NoException(EHAVERSIN);
 End;
 
-Procedure TForm3.btnHavercosClick(Sender: TObject);
+Procedure TFormTrig.btnHavercosClick(Sender: TObject);
 Begin
-  Form1.NoException(EHAVERCOS);
+  FormMain.NoException(EHAVERCOS);
 End;
 
-Procedure TForm3.btnExscClick(Sender: TObject);
+Procedure TFormTrig.btnExscClick(Sender: TObject);
 Begin
-  Form1.NoException(EEXSC);
+  FormMain.NoException(EEXSC);
 End;
 
-Procedure TForm3.btnExcscClick(Sender: TObject);
+Procedure TFormTrig.btnExcscClick(Sender: TObject);
 Begin
-  Form1.NoException(EEXCSC);
+  FormMain.NoException(EEXCSC);
 End;
 End.
 

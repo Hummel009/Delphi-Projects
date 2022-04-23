@@ -1,4 +1,4 @@
-object Form3: TForm3
+object FormTrig: TFormTrig
   Left = 215
   Top = 277
   Width = 433

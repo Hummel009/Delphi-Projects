@@ -1,4 +1,4 @@
-object Form2: TForm2
+object FormHist: TFormHist
   Left = 535
   Top = 256
   Width = 825
@@ -14,7 +14,7 @@ object Form2: TForm2
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object lbl1: TLabel
+  object lblInfo: TLabel
     Left = 312
     Top = 288
     Width = 475
@@ -27,7 +27,7 @@ object Form2: TForm2
     Font.Style = []
     ParentFont = False
   end
-  object scrlbx1: TScrollBox
+  object scrlbx: TScrollBox
     Left = 0
     Top = 0
     Width = 817
@@ -49,7 +49,7 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Button1: TButton
+  object btnClearFile: TButton
     Left = 0
     Top = 280
     Width = 273

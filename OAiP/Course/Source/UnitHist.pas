@@ -1,4 +1,4 @@
-Unit Unit2;
+Unit UnitHist;
 
 Interface
 
@@ -15,11 +15,11 @@ Uses
   StdCtrls;
 
 Type
-  TForm2 = Class(TForm)
-    scrlbx1: TScrollBox;
+  TFormHist = Class(TForm)
+    scrlbx: TScrollBox;
     mmoHistory: TMemo;
-    Button1: TButton;
-    lbl1: TLabel;
+    btnClearFile: TButton;
+    lblInfo: TLabel;
     Procedure btnClearFileClick(Sender: TObject);
   Private
     { Private declarations }
@@ -28,24 +28,24 @@ Type
   End;
 
 Var
-  Form2: TForm2;
+  FormHist: TFormHist;
 
 Implementation
 
-Uses Unit1;
+Uses UnitMain;
 {$R *.dfm}
 
 //If pressed, load history from text file
 
-Procedure TForm2.btnClearFileClick(Sender: TObject);
+Procedure TFormHist.btnClearFileClick(Sender: TObject);
 Var
   LFile: File Of TDisp;
 Begin
   AssignFile(LFile, 'Hummel009.hzzn');
   Rewrite(LFile);
   CloseFile(LFile);
-  Form2.mmoHistory.Lines.Clear;
-  Form2.close;
+  FormHist.mmoHistory.Lines.Clear;
+  FormHist.close;
 End;
 
 Initialization

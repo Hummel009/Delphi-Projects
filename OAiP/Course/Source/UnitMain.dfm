@@ -1,4 +1,4 @@
-object Form1: TForm1
+object FormMain: TFormMain
   Left = 596
   Top = 234
   Width = 721
@@ -14,7 +14,7 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object lblField: TLabel
+  object lblRes: TLabel
     Left = 0
     Top = 0
     Width = 713
@@ -182,7 +182,7 @@ object Form1: TForm1
     TabOrder = 9
     OnClick = btnPercentClick
   end
-  object btnComma: TButton
+  object btnDot: TButton
     Left = 432
     Top = 464
     Width = 137
@@ -195,7 +195,7 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 10
-    OnClick = btnCommaClick
+    OnClick = btnDotClick
   end
   object btnDivide: TButton
     Left = 576
@@ -602,22 +602,7 @@ object Form1: TForm1
     TabOrder = 37
     OnClick = btnFloatClick
   end
-  object mmoTemp: TMemo
-    Left = 16
-    Top = 0
-    Width = 1
-    Height = 1
-    Lines.Strings = (
-      'm'
-      'm'
-      'o'
-      'T'
-      'e'
-      'm'
-      'p')
-    TabOrder = 38
-  end
-  object dlgOpen1: TOpenDialog
+  object dlgOpen: TOpenDialog
     Top = 528
   end
 end

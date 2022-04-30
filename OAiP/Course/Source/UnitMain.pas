@@ -305,7 +305,7 @@ Begin
   ResetData(GMem);
 End;
 
-Function ConvertSF(Var FInp: String): Real;
+Procedure ConvertSF(Var FInp: String; var Res: Real);
 Var
   LInp: Real;
   LPos, LLim: Integer;
@@ -326,7 +326,7 @@ Begin
     If LPos <> 0 Then
       GError:= True
     Else
-      Result:= LInp;
+      Res:= LInp;
   End;
 End;
 
@@ -335,7 +335,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Inp2:= ConvertSF(LInp);
+  ConvertSF(LInp, GMem.Inp2);
   Display();
 End;
 
@@ -344,8 +344,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;         
+  ConvertSF(LInp, GMem.Inp1);
   If (GMem.Inp1 = 0) Then
     GError:= True;
   Display();
@@ -356,8 +356,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;                
+  ConvertSF(LInp, GMem.Inp1);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
   Display();
@@ -368,8 +368,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;       
+  ConvertSF(LInp, GMem.Inp1);
   Display();
 End;
 
@@ -378,8 +378,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;          
+  ConvertSF(LInp, GMem.Inp1);
   If (Trunc(GMem.Inp1) <> GMem.Inp1) Or (GMem.Inp1 < 0) Or (GMem.Inp1 > FInt) Then
     GError:= True;
   Display();
@@ -390,8 +390,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;           
+  ConvertSF(LInp, GMem.Inp1);
   If GMem.Inp1 >= FInt Then
     GError:= True;
   Display();
@@ -402,8 +402,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;             
+  ConvertSF(LInp, GMem.Inp1);
   If GMem.Inp1 <= 0 Then
     GError:= True;
   Display();
@@ -414,8 +414,8 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;
-  GMem.Inp1:= ConvertSF(LInp);
+  GMem.Op:= FOp;     
+  ConvertSF(LInp, GMem.Inp1);
   lblRes.Caption:= '';
 End;
 
@@ -524,8 +524,8 @@ Begin
     While Not EoF(LFile) Do
     Begin
       LLine2:= LLine1;
-      ReadLn(LFile, LData);
-      LLine1^.Data:= ConvertSF(LData);
+      ReadLn(LFile, LData); 
+      ConvertSF(LData, LLine1^.Data);
       New(LLine1);
       LLine2^.Next:= LLine1;
       LLine1^.Prev:= LLine2;

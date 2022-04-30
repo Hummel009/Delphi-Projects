@@ -268,14 +268,11 @@ Begin
         Else
           GDisp.Disp:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
 
-    If Not FileExists('Hummel009.hzzn') Then
-    Begin
-      AssignFile(LFile, 'Hummel009.hzzn');
-      Rewrite(LFile);
-      CloseFile(LFile);
-    End;
-
     AssignFile(LFile, 'Hummel009.hzzn');
+
+    If Not FileExists('Hummel009.hzzn') Then
+      Rewrite(LFile);
+
     Reset(LFile);
     Seek(LFile, FileSize(LFile));
     Write(LFile, GDisp);
@@ -289,7 +286,7 @@ Procedure TFormMain.Display();
 Var
   TRes: Real;
 Begin
-  If (GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143)) Then
+  If ((GMem.Op = EPOWER) And ((GMem.Inp1 > 143) Or (GMem.Inp2 > 143))) And ((GMem.Op = EDIVIDE) And (GMem.Inp2 = 0)) Then
     GError:= True;
 
   If GMem.Op <> ENULL Then
@@ -305,9 +302,8 @@ Begin
   ResetData(GMem);
 End;
 
-Procedure ConvertSF(Var FInp: String; var Res: Real);
+Procedure ConvertSF(Var FInp: String; Var FRes: Real);
 Var
-  LInp: Real;
   LPos, LLim: Integer;
   LPower: String;
 Begin
@@ -322,11 +318,9 @@ Begin
 
   If Not GError Then
   Begin
-    Val(FInp, LInp, LPos);
+    Val(FInp, FRes, LPos);
     If LPos <> 0 Then
       GError:= True
-    Else
-      Res:= LInp;
   End;
 End;
 
@@ -344,7 +338,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;         
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   If (GMem.Inp1 = 0) Then
     GError:= True;
@@ -356,7 +350,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;                
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   If (GMem.Inp1 > 1) Or (GMem.Inp1 < -1) Then
     GError:= True;
@@ -368,7 +362,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;       
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   Display();
 End;
@@ -378,7 +372,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;          
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   If (Trunc(GMem.Inp1) <> GMem.Inp1) Or (GMem.Inp1 < 0) Or (GMem.Inp1 > FInt) Then
     GError:= True;
@@ -390,7 +384,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;           
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   If GMem.Inp1 >= FInt Then
     GError:= True;
@@ -402,7 +396,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;             
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   If GMem.Inp1 <= 0 Then
     GError:= True;
@@ -414,7 +408,7 @@ Var
   LInp: String;
 Begin
   LInp:= lblRes.Caption;
-  GMem.Op:= FOp;     
+  GMem.Op:= FOp;
   ConvertSF(LInp, GMem.Inp1);
   lblRes.Caption:= '';
 End;
@@ -486,6 +480,9 @@ Begin
   FormHist.mmoHistory.Lines.Clear;
 
   AssignFile(LFile, 'Hummel009.hzzn');
+  If Not FileExists('Hummel009.hzzn') Then
+    Rewrite(LFile);
+
   Reset(LFile);
 
   GLine:= 0;
@@ -524,7 +521,7 @@ Begin
     While Not EoF(LFile) Do
     Begin
       LLine2:= LLine1;
-      ReadLn(LFile, LData); 
+      ReadLn(LFile, LData);
       ConvertSF(LData, LLine1^.Data);
       New(LLine1);
       LLine2^.Next:= LLine1;

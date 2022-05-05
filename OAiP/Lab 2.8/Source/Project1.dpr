@@ -111,7 +111,7 @@ Begin
         For M:= 1 To Amogus Do
         Begin
 
-          //Remove from start or from end
+          //Prevent from border
           If Length(Data[I]) >= K Then
           Begin
             Shift(Keys[J], Data[I], K, Res);
@@ -128,5 +128,3 @@ Begin
   Write('Saved to file Res.txt');
   ReadLn;
 End.
-
-

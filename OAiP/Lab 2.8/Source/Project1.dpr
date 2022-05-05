@@ -13,7 +13,7 @@ Var
   I, J, K, L, M, N, Amogus: Integer;
   Data, Keys: Array[1..100] Of String;
   //F - file
-  //I, J, K, L, M, N, O - counters
+  //I, J, K, L, M, N - counters
   //Amogus - amount of positions
   //Keys - array of dict
   //Data - array of data
@@ -21,7 +21,6 @@ Var
 
 //Calculates how many duplicates will be
 //Key - word, Sus - line, Amogus - amount
-
 Procedure Count(Key, Sus: String; Var Amogus: Integer);
 Begin
   While AnsiPos(Key, Sus) > 0 Do
@@ -33,49 +32,41 @@ End;
 
 //Does cycle shift
 //Key - word, Sus - line, K - length of step, Res - result
-
-Procedure Shift(var Key, Sus: String; K: Integer; Var Res: String);
+Procedure Shift(Var Key, Sus: String; K: Integer; Var Res: String);
 Var
   W: String;
   L: Integer;
 Begin
   Res:= Sus;
-  //Prevent breaking border
-  K:= K Mod Length(Res);
-
-  //Remove from start
   L:= AnsiPos(Key, Res) - K;
 
-  if L >= 0 then
-  begin
+  //Cut from start or end
+  If L >= 0 Then
+  Begin
     W:= Copy(Res, 1, L);
-    Delete(Res, 1, L);  
+    Delete(Res, 1, L);
     Res:= Res + W;
-  end
-  else
-  begin
+  End
+  Else
+  Begin
     W:= Copy(Res, Length(Res) + L + 1, Length(Res));
-    Delete(Res, Length(Res) + L + 1, Length(Res));  
+    Delete(Res, Length(Res) + L + 1, Length(Res));
     Res:= W + Res;
-  end;
-
-  //Append to end
+  End;
 
   //Prepare for the next key
   L:= AnsiPos(Key, Sus) + Length(Key);
   W:= Copy(Sus, 1, L);
   Delete(Sus, 1, L);
-  
+
   Sus:= Sus + W;
+
 End;
 
 Begin
   //Cyrillic support
   SetConsoleCP(1251);
   SetConsoleOutPutCP(1251);
-
-  Write('Enter K: ');
-  ReadLn(K);
 
   //Load dictionary
   AssignFile(F, 'F.txt');
@@ -99,6 +90,9 @@ Begin
   End;
   CloseFile(F);
 
+  Write('Enter K: ');
+  ReadLn(K);
+
   //Create file with shifted data
   AssignFile(F, 'Res.txt');
   Rewrite(F);
@@ -116,8 +110,15 @@ Begin
 
         For M:= 1 To Amogus Do
         Begin
-          Shift(Keys[J], Data[I], K, Res);
-          WriteLn(F, Res);
+
+          //Remove from start or from end
+          If Length(Data[I]) >= K Then
+          Begin
+            Shift(Keys[J], Data[I], K, Res);
+            WriteLn(F, Res);
+          End
+          Else
+            WriteLn(F, 'K is too big');
         End;
       End;
     End;

@@ -27,11 +27,12 @@ End;
            
 //This subprog calcs integral
 //Integral - data, Min, Max, Eps - borders and accuracy, res - result
-Procedure RightRec(Integral: TIntegral; Min, Max, Eps: Real; Var Res: Real);
+Function RightRec(Integral: TIntegral; Min, Max, Eps: Real): Real;
 Var
   I, N: Integer;
   H, Last, Delta: Real;
   Temp: Real;
+  Res: Real;
   //I, N - counters
   //H - step
   //Last, Delta - accuracy
@@ -55,16 +56,18 @@ Begin
 
     Delta:= Last - Res;
     N:= N + 10;
-  End;
+  End;  
+  Result:=Res;
 End;
       
 //This subprog calcs integral
 //Integral - data, Min, Max, Eps - borders and accuracy, res - result
-Procedure Trapezoid(Integral: TIntegral; Min, Max, Eps: Real; Var Res: Real);
+Function Trapezoid(Integral: TIntegral; Min, Max, Eps: Real): Real;
 Var
   I, N: Integer;
   H, Last, Delta: Real;
   Temp: Real;
+  Res: Real;
   //I, N - counters
   //H - step
   //Last, Delta - accuracy
@@ -94,6 +97,7 @@ Begin
     Delta:= Last - Res;
     N:= N + 10;
   End;
+  Result:=Res;
 End;    
 
 //This subprog shows logs
@@ -102,10 +106,10 @@ Procedure PrintInfo(Func: TIntegral; Left, Right, Eps: Real);
 Begin
   WriteLn('Eps: ', Eps: 8: 6);
   Write('1) ');
-  RightRec(Func, Left, Right, Eps, Res);
+  Res:= RightRec(Func, Left, Right, Eps);
   WriteLn('Square = ', Res: 10: 7);
   Write('2) ');
-  Trapezoid(Func, Left, Right, Eps, Res);
+  Res:= Trapezoid(Func, Left, Right, Eps);
   WriteLn('Square = ', Res: 10: 7);
 End;
 

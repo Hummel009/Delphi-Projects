@@ -11,12 +11,12 @@ Uses
 
 //Declare types
 Type
-  TArr = Array[1..10] Of String;
+  TArr = Array[1..11] Of String;
   TSet = Set Of Char;
 
 //Declare vars
 Var
-  Ssgz: TSet = ['б', 'в', 'г', 'д', 'ж', 'з', 'л', 'м', 'н', 'р'];
+  Ssgz: TSet = ['Р±', 'РІ', 'Рі', 'Рґ', 'Р¶', 'Р·', 'Р»', 'Рј', 'РЅ', 'СЂ'];
   Letr: TSet;
   Str: String;
   Arr: TArr;
@@ -50,7 +50,7 @@ Var
 Begin
   //Form an array for sort and showing
   N:= 1;
-  For S:= 'а' To 'я' Do
+  For S:= 'Р°' To 'СЏ' Do
   Begin
     If S In Enum Then
     Begin
@@ -75,7 +75,7 @@ Begin
   SetConsoleCP(1251);
   SetConsoleOutputCP(1251);
 
-  Write('Введите строку любой длины: ');
+  Write('Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ Р»СЋР±РѕР№ РґР»РёРЅС‹: ');
   ReadLn(Str);
 
   WriteLn;
@@ -88,7 +88,7 @@ Begin
   //Sort a set and form an array
   Sort(Letr, Arr, N);
         
-  Write('Звонкие согласные: ');
+  Write('Р—РІРѕРЅРєРёРµ СЃРѕРіР»Р°СЃРЅС‹Рµ: ');
 
   //Show the array
   For I:= 1 To N Do

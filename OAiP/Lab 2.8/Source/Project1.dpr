@@ -7,11 +7,13 @@ Uses
   SysUtils,
   Windows;
 
+Type
+  TArr = Array[1..100] Of String;
 Var
   F: TextFile;
   Res: String;
   I, J, K, L, M, N, Amogus: Integer;
-  Data, Keys: Array[1..100] Of String;
+  Data, Keys: TArr;
   //F - file
   //I, J, K, L, M, N - counters
   //Amogus - amount of positions
@@ -60,7 +62,21 @@ Begin
   Delete(Sus, 1, L);
 
   Sus:= Sus + W;
-
+End;
+ 
+//Loads file data into array
+//F - file, I - size, Keys - array, S - filename
+Procedure LoadFile(var F: TextFile; var I: Integer; var Keys: TArr; const S: String);
+Begin
+  AssignFile(F, S);
+  Reset(F);
+  I:= 1;
+  While Not Eof(F) Do
+  Begin
+    ReadLn(F, Keys[I]);
+    Inc(I);
+  End;
+  CloseFile(F);
 End;
 
 Begin
@@ -68,28 +84,10 @@ Begin
   SetConsoleCP(1251);
   SetConsoleOutPutCP(1251);
 
-  //Load dictionary
-  AssignFile(F, 'F.txt');
-  Reset(F);
-  L:= 1;
-  While Not Eof(F) Do
-  Begin
-    ReadLn(F, Keys[L]);
-    Inc(L);
-  End;
-  CloseFile(F);
-
-  //Load data
-  AssignFile(F, 'F1.txt');
-  Reset(F);
-  N:= 1;
-  While Not Eof(F) Do
-  Begin
-    ReadLn(F, Data[N]);
-    Inc(N);
-  End;
-  CloseFile(F);
-
+  //Load dictionary and data
+  LoadFile(F, L, Keys, 'F.txt');
+  LoadFile(F, N, Data, 'F1.txt');
+  
   Write('Enter K: ');
   ReadLn(K);
 

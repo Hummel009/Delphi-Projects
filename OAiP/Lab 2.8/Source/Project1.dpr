@@ -1,5 +1,4 @@
-Program Lab8;
-{Program loads key dict and does cycle shift}
+Program Lab8;{Program loads key dict and does cycle shift}
 
 {$APPTYPE CONSOLE}
 
@@ -66,14 +65,14 @@ End;
  
 //Loads file data into array
 //F - file, I - size, Keys - array, S - filename
-Procedure LoadFile(var F: TextFile; var I: Integer; var Keys: TArr; const S: String);
+Procedure LoadFile(var F: TextFile; var I: Integer; var Arr: TArr; const S: String);
 Begin
   AssignFile(F, S);
   Reset(F);
   I:= 1;
   While Not Eof(F) Do
   Begin
-    ReadLn(F, Keys[I]);
+    ReadLn(F, Arr[I]);
     Inc(I);
   End;
   CloseFile(F);

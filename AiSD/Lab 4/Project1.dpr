@@ -25,7 +25,7 @@ Var
   First: LElem;
   LastName, Number: String;
   Sort: Integer;
-  Flag: Boolean;  
+  Flag: Boolean;
 
 Procedure FindByLastName(X: LElem; LastName: String);
 Var

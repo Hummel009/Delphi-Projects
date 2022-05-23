@@ -6,7 +6,7 @@ Uses
   SysUtils;
 
 Type
-  pt = ^elem;
+  Pt = ^Elem;
   Elem = Record
     Prior: Integer;
     SubExp: String;
@@ -14,46 +14,43 @@ Type
     Prev: Pt;
   End;
 
-Function MakePrioretyOtn(S: Char): Integer;
+Procedure MakePrioretyOtn(S: Char; Var Result: Integer);
 Var
   Numbers: Set Of Char;
 Begin
   Numbers:= ['0'..'9'];
-  If S = '(' Then
-    Result:= 9;
-
-  If S = ')' Then
-    Result:= 0;
-
-  If (S = '+') Or (S = '-') Then
-    Result:= 1;
-
-  If (S = '*') Or (S = '/') Then
-    Result:= 3;
-
-  If S = '^' Then
-    Result:= 6;
+  Case S Of
+    '(':
+      Result:= 9;
+    ')':
+      Result:= 0;
+    '+', '-':
+      Result:= 1;
+    '*', '/':
+      Result:= 3;
+    '^':
+      Result:= 6;
+  End;
 
   If S In Numbers Then
     Result:= 7;
 End;
 
-Function MakePrioretyStack(S: Char): Integer;
+Procedure MakePrioretyStack(S: Char; var Result: Integer);
 Var
   Numbers: Set Of Char;
 Begin
-  Numbers:= ['0'..'9'];
-  If S = '(' Then
-    Result:= 0;
-
-  If (S = '+') Or (S = '-') Then
-    Result:= 2;
-
-  If (S = '*') Or (S = '/') Then
-    Result:= 4;
-
-  If S = '^' Then
-    Result:= 5;
+  Numbers:= ['0'..'9'];    
+  Case S Of
+    '(':
+      Result:= 0;
+    '+', '-':
+      Result:= 2;
+    '*', '/':
+      Result:= 4;
+    '^':
+      Result:= 5;
+  End;
 
   If S In Numbers Then
     Result:= 8;
@@ -102,11 +99,11 @@ Begin
       Temp:= S[I];
       I:= I + 1;
     End;
-    Prior:= MakePrioretyOtn(S[I - 1]);
+    MakePrioretyOtn(S[I - 1], Prior);
     If (Prior > Y.Prior) Or (Y.Prior = -2) Then
     Begin
       X.SubExp:= Temp;
-      X.Prior:= MakePrioretyStack(S[I - 1]);
+      MakePrioretyStack(S[I - 1], X.Prior);
       Y:= X;
       New(X);
       Y.Next:= X;
@@ -131,7 +128,7 @@ Begin
         If Prior <> 0 Then
         Begin
           X.SubExp:= Temp;
-          X.Prior:= MakePrioretyStack(S[I - 1]);
+          MakePrioretyStack(S[I - 1], X.Prior);
           Y:= X;
           New(X);
           Y.Next:= X;
@@ -162,20 +159,21 @@ Var
   Nums: Set Of Char = ['0'..'9'];
   N, I: Integer;
 Begin
+  Writeln('Enter the formula:');
   Readln(S);
-  S:= InfToPost(S);   
-  Writeln(S);
-  
+  S:= InfToPost(S);
+  Writeln('Polish note: ', S);
+
   N:= 1;
   For I:= 1 To Length(S) Do
-    If (S[I] in Nums) and (S[I-1] = ' ') Then
+    If (S[I] In Nums) And (S[I - 1] = ' ') Then
       Inc(N);
 
   For I:= 1 To Length(S) Do
-    If (S[I] in Syms) Then
+    If (S[I] In Syms) Then
       Dec(N);
 
-  Writeln(N);
+  Writeln('The rank: ', N);
   Readln;
 End.
 

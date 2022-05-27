@@ -41,7 +41,7 @@ Procedure TFormHist.btnClearFileClick(Sender: TObject);
 Var
   LFile: File Of TDisp;
 Begin
-  AssignFile(LFile, 'Hummel009.hzzn');
+  AssignFile(LFile, 'Hummel.009');
   Rewrite(LFile);
   CloseFile(LFile);
   FormHist.mmoHistory.Lines.Clear;

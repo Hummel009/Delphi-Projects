@@ -478,9 +478,9 @@ Begin
         Else
           GDisp.Disp:= GDisp.Inp1 + ' ' + GDisp.Op + ' ' + GDisp.Inp2 + ' = ' + GDisp.Res;
 
-    AssignFile(LFile, 'Hummel009.hzzn');
+    AssignFile(LFile, 'Hummel.009');
 
-    If Not FileExists('Hummel009.hzzn') Then
+    If Not FileExists('Hummel.009') Then
       Rewrite(LFile);
 
     Reset(LFile);
@@ -720,8 +720,8 @@ Var
 Begin
   FormHist.mmoHistory.Lines.Clear;
 
-  AssignFile(LFile, 'Hummel009.hzzn');
-  If Not FileExists('Hummel009.hzzn') Then
+  AssignFile(LFile, 'Hummel.009');
+  If Not FileExists('Hummel.009') Then
     Rewrite(LFile);
 
   Reset(LFile);

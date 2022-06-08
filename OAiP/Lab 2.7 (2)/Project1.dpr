@@ -1,7 +1,5 @@
 Program Lab7;
-{Show all the ssgz letters in our words}
 
-//Use app
 {$APPTYPE CONSOLE}
 
 Uses
@@ -16,7 +14,7 @@ Type
 
 Var
   Str: String;
-  MainSet: TSet = ['а', 'е', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я'];
+  MainSet: TSet = ['Р°', 'Рµ', 'Рё', 'Рѕ', 'Сѓ', 'С‹', 'СЌ', 'СЋ', 'СЏ'];
 
   ArrWords: TArrWords;
   ArrSets: TArrSets;   
@@ -80,7 +78,7 @@ Var
   C: Char;
 Begin
   FArrLen:= 1;
-  For C:= 'а' To 'я' Do
+  For C:= 'Р°' To 'СЏ' Do
   Begin
     If C In FSet Then
     Begin
@@ -91,11 +89,11 @@ Begin
 End;
 
 Begin
-  //Помощь при выводе кирилических символов
+  //РџРѕРјРѕС‰СЊ РїСЂРё РІС‹РІРѕРґРµ РєРёСЂРёР»РёС‡РµСЃРєРёС… СЃРёРјРІРѕР»РѕРІ
   SetConsoleCP(1251);
   SetConsoleOutputCP(1251);
 
-  Write('Введите строку (до 250 слов): ');
+  Write('Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ (РґРѕ 250 СЃР»РѕРІ): ');
   ReadLn(Str);
 
   WriteLn;
@@ -106,10 +104,10 @@ Begin
   GetFinalArr(FinalSet, FinalArr, FinalArrLen);
 
   If FinalSet = [] Then
-    Write('Таких элементов не найдено.')
+    Write('РўР°РєРёС… СЌР»РµРјРµРЅС‚РѕРІ РЅРµ РЅР°Р№РґРµРЅРѕ.')
   Else
   Begin
-    Write('Гласные буквы, входящие в каждое слово:');
+    Write('Р“Р»Р°СЃРЅС‹Рµ Р±СѓРєРІС‹, РІС…РѕРґСЏС‰РёРµ РІ РєР°Р¶РґРѕРµ СЃР»РѕРІРѕ:');
     WriteLn;
     For I:= 1 To FinalArrLen Do
       Write(FinalArr[I], ' ');

@@ -1,5 +1,7 @@
 Program Lab7;
+{Show all the ssgz letters in our words}
 
+//Use app
 {$APPTYPE CONSOLE}
 
 Uses
@@ -43,7 +45,7 @@ Begin
   End;
 End;
 
-Procedure GetArrayOfSets(AWords: TArrWords; Var ASets: TArrSets; const Quantity: Byte);
+Procedure GetArrayOfSets(const AWords: TArrWords; Var ASets: TArrSets; const Quantity: Byte);
 Var
   I, J: Byte;
 Begin
@@ -55,7 +57,7 @@ Begin
   End;
 End;
 
-Procedure GetFinalSet(ASets: TArrSets; Var FSet: TSet; const Quantity: Byte);
+Procedure GetFinalSet(const ASets: TArrSets; Var FSet: TSet; const Quantity: Byte);
 Var
   I: Byte;
 Begin
@@ -64,7 +66,7 @@ Begin
     FSet:= FSet * ASets[I];
 End;
 
-Procedure GetFinalArr(FSet: TSet; Var FArr: TArrLets; Var FArrLen: Byte);
+Procedure GetFinalArr(const FSet: TSet; Var FArr: TArrLets; Var FArrLen: Byte);
 Var
   C: Char;
 Begin

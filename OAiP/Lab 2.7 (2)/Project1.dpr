@@ -26,15 +26,6 @@ Var
 
   I: Byte;
 
-Procedure Swap(Var A, B: String);
-Var
-  T: String;
-Begin
-  T:= A;
-  A:= B;
-  B:= T;
-End;
-
 Procedure GetArrayOfWords(Str: String; Var AWords: TArrWords; Var Quantity: Byte);
 Var
   W: String;

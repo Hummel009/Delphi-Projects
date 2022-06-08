@@ -1,7 +1,5 @@
 Program Lab7;
-{Show all the ssgz letters in our words}
 
-//Use app
 {$APPTYPE CONSOLE}
 
 Uses
@@ -14,9 +12,11 @@ Type
   TArrSets = Array[1..250] Of TSet;
   TArrLets = Array[1..10] Of String;
 
+Const 
+  MainSet: TSet = ['а', 'е', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я'];
+  
 Var
   Str: String;
-  MainSet: TSet = ['а', 'е', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я'];
 
   ArrWords: TArrWords;
   ArrSets: TArrSets;   
@@ -82,7 +82,6 @@ Begin
 End;
 
 Begin
-  //Помощь при выводе кирилических символов
   SetConsoleCP(1251);
   SetConsoleOutputCP(1251);
 

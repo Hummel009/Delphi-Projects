@@ -32,8 +32,11 @@ Type
 
   TForm1 = Class(TForm)
     mmo1: TMemo;
-    btn1: TButton;
-    Procedure btn1Click(Sender: TObject);
+    btnKill: TButton;
+    btnEnter: TButton;
+    edtEnter: TEdit;
+    Procedure btnKillClick(Sender: TObject);      
+    Procedure btnEnterClick(Sender: TObject);
     Procedure FindByLastName(X: LElem; LastName: String; Var GL: Integer);
     Procedure Make(X: LElem; Var GL: Integer);
     Procedure Show(X: LElem; Var GL: Integer);
@@ -47,7 +50,8 @@ Type
   End;
 
 Var
-  Form1: TForm1;
+  Form1: TForm1;     
+  LastName: String;
 
 Implementation
 
@@ -60,7 +64,7 @@ End;
 
 Procedure TForm1.FindByLastName(X: LElem; LastName: String; Var GL: Integer);
 Var
-  Count, J: Integer;
+  Count: Integer;
   OptiString: String;
 Begin
   Count:= 0;
@@ -135,7 +139,6 @@ End;
 
 Procedure TForm1.Show(X: LElem; Var GL: Integer);
 Var
-  J: Integer;
   OptiString: String;
 Begin
   While (X <> Nil) Do
@@ -178,13 +181,11 @@ End;
 
 {$R *.dfm}
 
-Procedure TForm1.btn1Click(Sender: TObject);
+Procedure TForm1.btnKillClick(Sender: TObject);
 Var
   First: LElem;
-  LastName: String;
   LFile: File Of Num;
   LLine: Num;
-  J: Integer;
   GL: Integer;
   OptiString: String;
 Begin
@@ -208,7 +209,7 @@ Begin
 
   AssignFile(LFile, 'Slaves.jabroni');
   Reset(LFile);
-               
+
   HummelLn('', GL);
   HummelLn('Will be spanked', GL);
   HummelLn('', GL);
@@ -221,12 +222,17 @@ Begin
   End;
     
   HummelLn('', GL);
-  HummelLn('Enter the NLP to find his hot loads', GL);
-  LastName:= 'Van' + IntToStr(10 + Random(90));
+  HummelLn('Enter the NLP to find his hot loads', GL);    
   HummelLn('', GL);
   FindByLastName(First, LastName, GL);
   HummelLn('', GL);
   Dispose(First);
+End;
+
+
+Procedure TForm1.btnEnterClick(Sender: TObject);
+Begin
+  LastName:= edtEnter.Text;
 End;
 
 Initialization
